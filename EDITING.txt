@@ -22,3 +22,10 @@ Open gallery.html and change the emoji tiles to <img> elements when you have pho
 
 NOTE:
 The current guestbook stores messages in each visitor's browser. It is not yet a shared online guestbook.
+
+
+ADMIN BLOG
+- admin.html = private post editor
+- config.js = one-time Supabase connection settings
+- Do not put a Supabase secret/service_role key in config.js.
+- Blog posts are stored in Supabase and appear automatically on blog.html and the Home page.

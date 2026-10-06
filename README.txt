@@ -25,3 +25,10 @@ Do NOT put a Supabase `service_role` key in this website. Only the publishable/a
 
 ## Important
 Opening `index.html` directly on your computer is useful for previewing the design, but the shared guestbook needs the site to be hosted online and connected to Supabase.
+
+
+ADMIN BLOG
+- admin.html is the private admin page.
+- Add your Supabase publishable key to config.js once.
+- Open https://jojocl09.github.io/admin.html to log in and publish posts.
+- Only the UID configured in the database is allowed to create, edit, or delete posts.

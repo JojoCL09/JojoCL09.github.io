@@ -25,6 +25,25 @@ header{max-width:1180px;margin:auto;padding:42px 24px 25px;text-align:center;pos
 </nav>
 </header>
 <main class="page"><h2 class="page-title">blog ♡</h2><p class="page-sub">little thoughts, pretty days & things i love</p>
+
+<div id="dynamicPosts"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script>
+(async function(){
+  if(!SUPABASE_URL.startsWith("https://") || SUPABASE_PUBLISHABLE_KEY.includes("PASTE-YOUR")) return;
+  const client=supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+  const {data,error}=await client.from("posts").select("title,content,image_url,published_at").order("published_at",{ascending:false});
+  if(error || !data?.length) return;
+  const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+  document.getElementById("dynamicPosts").innerHTML=data.map(p=>{
+    const d=new Date(p.published_at).toLocaleDateString(undefined,{month:"short",day:"numeric"});
+    const photo=p.image_url ? `<img src="${esc(p.image_url)}" alt="" style="width:100%;height:190px;object-fit:cover;border-radius:12px;margin-bottom:14px">` : `<div class="photo">🎀　🩷　✨</div>`;
+    return `<article class="post"><span class="date">${esc(d)}</span><h2>${esc(p.title)}</h2>${photo}<p>${esc(p.content).replace(/\n/g,"<br>")}</p></article>`;
+  }).join("");
+})();
+</script>
+
 <div class="post"><span class="date">APR 12</span><h2>a perfect spring day ♡</h2><div class="photo">🌷　🩷　☕　🎀</div><p>today was one of those days that just felt so right. the sun was shining, i had my favorite drink, and everything felt a little lighter. these are the tiny moments i want to remember.</p></div>
 <div class="post"><span class="date">APR 09</span><h2>my current obsessions ♡</h2><div class="photo">💗　🕶️　🎀　📷　✨</div><p>from music to fashion to little everyday things — here are all the things i can't stop loving right now. pink bows, taking photos, dreamy playlists and slow mornings are definitely on the list.</p></div>
 <div class="post"><span class="date">APR 05</span><h2>little things lately ♡</h2><div class="photo">🌸　📖　🕯️　💌</div><p>a tiny collection of the moments that made this week feel extra sweet. pretty skies, handwritten notes, good music and lots of pink.</p></div>

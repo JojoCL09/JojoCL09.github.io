@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>admin · my little pink world</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Parisienne&family=Quicksand:wght@400;500;600&display=swap');
+:root{--pink:#f6b7ca;--light:#fff7fa;--pale:#fde8ef;--deep:#a85d78;--text:#72535f;--line:#f2c6d4}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#fffafb,#fdebf2);color:var(--text);font-family:Quicksand,sans-serif}
+.wrap{max-width:900px;margin:0 auto;padding:35px 20px 70px}.logo{text-align:center;font-family:Parisienne,cursive;font-size:58px;color:#e88eae;margin:0 0 5px}.sub{text-align:center;margin:0 0 25px}
+.box{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 7px 25px #e8b9c522;margin-bottom:20px}
+h2{font-family:"DM Serif Display",serif;font-weight:400;color:#91576d;margin-top:0}
+label{display:block;margin:14px 0 6px;font-weight:600}.input,.textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:11px;font:inherit;color:var(--text);background:#fffafa}.textarea{min-height:210px;resize:vertical}
+.btn{border:1px solid var(--pink);border-radius:20px;padding:10px 17px;color:#a95373;background:#fff;cursor:pointer;font:inherit}.btn:hover{background:var(--pale)}.primary{background:var(--pale)}.danger{border-color:#e7a9b9}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.msg{padding:10px 12px;background:#fff0f5;border-radius:10px;margin-top:12px;display:none}.post{border:1px solid var(--line);border-radius:14px;padding:15px;margin-top:12px;background:#fffafa}.post h3{margin:0 0 5px;color:#875467}.muted{font-size:13px;opacity:.8}.hidden{display:none!important}a{color:#a95373}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1 class="logo">my little pink world ♡</h1>
+  <p class="sub">private little admin corner 🎀</p>
+
+  <section id="loginBox" class="box">
+    <h2>log in ♡</h2>
+    <p>this page is only for the site owner.</p>
+    <label for="email">email</label>
+    <input id="email" class="input" type="email" autocomplete="username">
+    <label for="password">password</label>
+    <input id="password" class="input" type="password" autocomplete="current-password">
+    <div class="row" style="margin-top:15px">
+      <button class="btn primary" onclick="login()">log in ♡</button>
+      <a href="index.html">back to my little world</a>
+    </div>
+    <div id="loginMsg" class="msg"></div>
+  </section>
+
+  <section id="adminBox" class="hidden">
+    <div class="box">
+      <div class="row" style="justify-content:space-between">
+        <h2 style="margin-bottom:0">new blog post ♡</h2>
+        <button class="btn" onclick="logout()">log out</button>
+      </div>
+      <label for="title">title</label>
+      <input id="title" class="input" placeholder="a little day i want to remember ♡">
+      <label for="content">your post</label>
+      <textarea id="content" class="textarea" placeholder="write your blog post here..."></textarea>
+      <label for="imageUrl">photo URL <span class="muted">(optional for now)</span></label>
+      <input id="imageUrl" class="input" placeholder="https://...">
+      <div class="row" style="margin-top:15px">
+        <button class="btn primary" onclick="publishPost()">publish post ♡</button>
+        <button class="btn" onclick="clearForm()">clear</button>
+      </div>
+      <div id="postMsg" class="msg"></div>
+    </div>
+
+    <div class="box">
+      <h2>my posts ♡</h2>
+      <div id="posts">loading...</div>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script>
+let client=null, editingId=null;
+
+function configured(){
+  return SUPABASE_URL.startsWith("https://") &&
+    !SUPABASE_URL.includes("PASTE-YOUR") &&
+    SUPABASE_PUBLISHABLE_KEY.length > 20 &&
+    !SUPABASE_PUBLISHABLE_KEY.includes("PASTE-YOUR");
+}
+function msg(id,text){const e=document.getElementById(id);e.textContent=text;e.style.display="block";}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
+
+async function login(){
+  if(!configured()) return msg("loginMsg","one-time setup is still needed: add the Supabase publishable key to config.js ♡");
+  const email=document.getElementById("email").value.trim(), password=document.getElementById("password").value;
+  const {error}=await client.auth.signInWithPassword({email,password});
+  if(error) return msg("loginMsg",error.message);
+  await checkAdmin();
+}
+async function checkAdmin(){
+  const {data,error}=await client.rpc("is_admin");
+  if(error || data !== true){
+    await client.auth.signOut();
+    return msg("loginMsg","this account is not the site owner ♡");
+  }
+  document.getElementById("loginBox").classList.add("hidden");
+  document.getElementById("adminBox").classList.remove("hidden");
+  await loadPosts();
+}
+async function logout(){await client.auth.signOut();location.reload();}
+function clearForm(){editingId=null;document.getElementById("title").value="";document.getElementById("content").value="";document.getElementById("imageUrl").value="";document.getElementById("postMsg").style.display="none";}
+
+async function publishPost(){
+  const title=document.getElementById("title").value.trim();
+  const content=document.getElementById("content").value.trim();
+  const image_url=document.getElementById("imageUrl").value.trim() || null;
+  if(!title||!content) return msg("postMsg","please add a title and some text ♡");
+  let result;
+  if(editingId){
+    result=await client.from("posts").update({title,content,image_url}).eq("id",editingId);
+  }else{
+    result=await client.from("posts").insert({title,content,image_url});
+  }
+  if(result.error) return msg("postMsg",result.error.message);
+  msg("postMsg",editingId ? "post updated ♡" : "post published ♡");
+  clearForm();
+  await loadPosts();
+}
+async function loadPosts(){
+  const box=document.getElementById("posts");
+  const {data,error}=await client.from("posts").select("id,title,content,image_url,published_at").order("published_at",{ascending:false});
+  if(error){box.textContent="couldn't load posts yet ♡";return;}
+  box.innerHTML=data.length?data.map(p=>`
+    <div class="post">
+      <h3>${esc(p.title)}</h3>
+      <div class="muted">${new Date(p.published_at).toLocaleDateString()}</div>
+      <p>${esc(p.content).slice(0,240)}${p.content.length>240?"…":""}</p>
+      <div class="row">
+        <button class="btn" onclick='editPost(${JSON.stringify(p).replace(/</g,"\\u003c")})'>edit ♡</button>
+        <button class="btn danger" onclick="deletePost('${p.id}')">delete</button>
+      </div>
+    </div>`).join(""):"<p>no posts yet — write your first one above ♡</p>";
+}
+function editPost(p){
+  editingId=p.id;document.getElementById("title").value=p.title;document.getElementById("content").value=p.content;document.getElementById("imageUrl").value=p.image_url||"";
+  window.scrollTo({top:0,behavior:"smooth"});msg("postMsg","editing this post — publish to save changes ♡");
+}
+async function deletePost(id){
+  if(!confirm("delete this post?")) return;
+  const {error}=await client.from("posts").delete().eq("id",id);
+  if(error)return msg("postMsg",error.message);
+  await loadPosts();
+}
+async function init(){
+  if(!configured()){msg("loginMsg","one-time setup: add your Supabase publishable key to config.js ♡");return;}
+  client=supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+  const {data}=await client.auth.getSession();
+  if(data.session) await checkAdmin();
+}
+init();
+</script>
+</body>
+</html>
