@@ -1,0 +1,24 @@
+MY LITTLE PINK WORLD — EASY EDITING
+
+The top navigation now opens separate pages:
+- index.html = Home
+- blog.html = Blog
+- about.html = About Me
+- gallery.html = Gallery
+- guestbook.html = Guestbook
+- links.html = Links
+
+To change text:
+Open the relevant .html file and search for the text you want to change.
+
+To change colors:
+Open any page and edit the :root section near the top.
+
+To add a blog post:
+Open blog.html and copy one of the <div class="post">...</div> blocks.
+
+To change the gallery:
+Open gallery.html and change the emoji tiles to <img> elements when you have photos.
+
+NOTE:
+The current guestbook stores messages in each visitor's browser. It is not yet a shared online guestbook.
