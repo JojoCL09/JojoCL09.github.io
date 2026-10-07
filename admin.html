@@ -76,10 +76,17 @@ function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&l
 
 async function login(){
   if(!configured()) return msg("loginMsg","one-time setup is still needed: add the Supabase publishable key to config.js ♡");
-  const email=document.getElementById("email").value.trim(), password=document.getElementById("password").value;
+
+  const email=document.getElementById("email").value.trim();
+  const password=document.getElementById("password").value;
+
   const {error}=await client.auth.signInWithPassword({email,password});
+
   if(error) return msg("loginMsg",error.message);
+
   await checkAdmin();
+}
+
 async function checkAdmin(){
   const {data,error}=await client.auth.getUser();
 
@@ -90,6 +97,7 @@ async function checkAdmin(){
 
   document.getElementById("loginBox").classList.add("hidden");
   document.getElementById("adminBox").classList.remove("hidden");
+
   await loadPosts();
 }
 async function logout(){await client.auth.signOut();location.reload();}
