@@ -90,7 +90,7 @@ async function login(){
 async function checkAdmin(){
   const {data,error}=await client.auth.getUser();
 
-  if(error || !data.user || data.user.id !== "ac58e6b6-fd86-47d4-a83c-6aa01a7d5b01"){
+if(error || !data.user || data.user.id !== "ac58e6b6-fd86-47a4-a83c-6aa01a7d5b01"){
     await client.auth.signOut();
     return msg("loginMsg","this account is not the site owner ♡");
   }
