@@ -101,7 +101,13 @@ async function checkAdmin(){
   await loadPosts();
 }
 async function logout(){await client.auth.signOut();location.reload();}
-function clearForm(){editingId=null;document.getElementById("title").value="";document.getElementById("content").value="";document.getElementById("imageUrl").value="";document.getElementById("postMsg").style.display="none";}
+function clearForm(){
+  editingId=null;
+  document.getElementById("title").value="";
+  document.getElementById("content").value="";
+  document.getElementById("imageUrl").value="";
+  document.getElementById("postMsg").style.display="none";
+}
 
 async function publishPost(){
   const title=document.getElementById("title").value.trim();
