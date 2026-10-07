@@ -115,6 +115,7 @@ if(error || !data.user || data.user.id !== "ac58e6b6-fd86-47a4-a83c-6aa01a7d5b01
   document.getElementById("adminBox").classList.remove("hidden");
 
   await loadPosts();
+  await loadSiteContent();
 }
 async function logout(){await client.auth.signOut();location.reload();}
 function clearForm(){
@@ -165,6 +166,45 @@ async function deletePost(id){
   const {error}=await client.from("posts").delete().eq("id",id);
   if(error)return msg("postMsg",error.message);
   await loadPosts();
+}
+  async function loadSiteContent(){
+  const {data,error}=await client
+    .from("site_content")
+    .select("section,content");
+
+  if(error) return msg("siteMsg",error.message);
+
+  const content={};
+  data.forEach(item => content[item.section]=item.content);
+
+  document.getElementById("homeText").value=content.homepage || "";
+  document.getElementById("aboutText").value=content.about || "";
+  document.getElementById("currentlyText").value=content.currently || "";
+}
+
+async function saveSiteContent(){
+  const items=[
+    {
+      section:"homepage",
+      content:document.getElementById("homeText").value
+    },
+    {
+      section:"about",
+      content:document.getElementById("aboutText").value
+    },
+    {
+      section:"currently",
+      content:document.getElementById("currentlyText").value
+    }
+  ];
+
+  const {error}=await client
+    .from("site_content")
+    .upsert(items,{onConflict:"section"});
+
+  if(error) return msg("siteMsg",error.message);
+
+  msg("siteMsg","site content saved ♡");
 }
 async function init(){
   if(!configured()){msg("loginMsg","one-time setup: add your Supabase publishable key to config.js ♡");return;}
