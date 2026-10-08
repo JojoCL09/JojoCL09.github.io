@@ -1326,15 +1326,37 @@ function bindBlogForm(){
   };
 
 
-  $('cancelEdit').onclick = ()=>{
+ $('cancelEdit').onclick = ()=>{
 
-    blogEditor();
+  blogEditor();
 
-  };
-
-}
+};
 
 
+window.editPost = async id => {
+
+  let p = posts.find(x => x.id === id);
+
+  if(!p) return;
+
+  $('pt').value = p.title || '';
+
+  $('pc').value = p.content || '';
+
+  $('pi').value = p.image_url || '';
+
+  $('addp').textContent = 'save changes ♡';
+
+  $('addp').dataset.editingId = id;
+
+  $('cancelEdit').style.display = 'inline-block';
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+
+  preview();
 
 };
 
