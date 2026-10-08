@@ -167,5 +167,98 @@ function linksEditor(){$('editor').innerHTML=`<h1>links ♡</h1><p class="muted"
 function img(u,a){
   return u ? `<img src="${esc(u)}" alt="${esc(a)}">` : '';
 }
+  function preview(){
+  $('preview').innerHTML=`
+    <div class="site">
+
+      <div class="siteHead">
+        <div class="siteTitle">${esc(home.home_title)}</div>
+        <div class="tag">${esc(home.home_tagline)}</div>
+      </div>
+
+      <div class="navfake">
+        HOME ♡　 BLOG ♡　 ARTICLES ♡　 ABOUT ME ♡　 LINKS ♡　 GUESTBOOK ♡
+      </div>
+
+      <div class="cols">
+
+        <div>
+          <div class="card">
+            <h3>about me ♡</h3>
+
+            ${about.about_image
+              ? `<div class="photo">
+                   <img src="${esc(about.about_image)}" alt="about me">
+                 </div>`
+              : ''
+            }
+
+            ${br(home.home_about)}
+          </div>
+
+          <div class="card">
+            <h3>little updates</h3>
+            ${br(home.home_updates)}
+          </div>
+        </div>
+
+        <div>
+          <div class="card">
+            <h3>welcome ♡</h3>
+            ${br(home.home_welcome)}
+          </div>
+
+          ${
+            posts.slice(0,2).map(p=>`
+              <div class="post">
+                ${
+                  p.image_url
+                  ? `<div class="photo" style="aspect-ratio:16/7">
+                       ${img(p.image_url,p.title)}
+                     </div>`
+                  : ''
+                }
+
+                <h2>${esc(p.title)}</h2>
+                <p>
+                  ${br(p.content).slice(0,500)}
+                  ${p.content.length>500?'…':''}
+                </p>
+              </div>
+            `).join('')
+            ||
+            `<div class="post">
+              <h2>a new little world ♡</h2>
+              <p>your blog posts will appear here.</p>
+            </div>`
+          }
+        </div>
+
+        <div>
+          <div class="card">
+            <h3>currently ♡</h3>
+            ${br(home.home_currently)}
+          </div>
+
+          <div class="card">
+            <h3>categories</h3>
+            ${br(home.home_categories)}
+          </div>
+
+          <div class="card">
+            <h3>little reminder</h3>
+            ${br(home.home_reminder)}
+          </div>
+        </div>
+
+      </div>
+
+      <div style="text-align:center;padding:10px;font-size:9px;color:#a98796;border-top:1px solid #ecd8e2">
+        ${esc(home.home_footer)}
+      </div>
+
+    </div>
+  `;
+}
 sb.auth.onAuthStateChange(()=>{});(async()=>{if(await admin())await load()})();
 </script></body></html>
