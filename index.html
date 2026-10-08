@@ -545,14 +545,18 @@ have something to say?<br>
   );
 
 
-  if(content.home_image){
+if(content.home_image){
 
-    document.getElementById("homeImage").innerHTML =
-      '<img src="' +
-      content.home_image.replace(/"/g,"&quot;") +
-      '" alt="homepage photo">';
+  document.getElementById("homeImage").innerHTML =
+    '<img src="' +
+    content.home_image.replace(/"/g,"&quot;") +
+    '" alt="homepage photo">';
 
-  }
+}else{
+
+  document.getElementById("homeImage").style.display = "none";
+
+}
 
 
   const {data:posts,error} =
