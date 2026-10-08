@@ -1,61 +1,694 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="description" content="my little pink world — a soft pastel pink personal blog."><title>home · my little pink world</title><style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="my little pink world — a soft pastel pink personal blog.">
+<title>home · my little pink world</title>
+
+<style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Parisienne&family=Quicksand:wght@400;500;600&display=swap');
-:root{--pink:#f6b7ca;--light:#fff7fa;--pale:#fde8ef;--deep:#a85d78;--text:#72535f;--line:#f2c6d4}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(180deg,#fffafb,#fdebf2);color:var(--text);font-family:Quicksand,sans-serif}
-a{color:inherit;text-decoration:none}.top{padding:12px 7%;border-bottom:1px solid var(--line);font-size:13px;letter-spacing:.5px;background:#fff}
-header{max-width:1180px;margin:auto;padding:42px 24px 25px;text-align:center;position:relative}.logo{font-family:Parisienne,cursive;font-size:68px;color:#e88eae;text-shadow:0 2px #fff,0 4px 12px #f3c5d4;margin:0}.tag{font-family:"DM Serif Display",serif;letter-spacing:4px;font-size:14px;margin:7px 0 28px;color:#916372}.bow{position:absolute;right:8%;top:55px;font-size:42px}
-.nav{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;border:1px solid var(--line);border-radius:22px;padding:8px;background:#fff8fb;box-shadow:0 5px 20px #efcbd733}.nav a{padding:11px 22px;border-radius:18px;font-size:14px}.nav a:hover,.nav a.active{background:var(--pale);color:#b05274}
-.grid{max-width:1180px;margin:20px auto 70px;padding:0 20px;display:grid;grid-template-columns:260px 1fr 240px;gap:22px}.card{background:#fffafa;border:1px solid var(--line);border-radius:16px;margin-bottom:20px;overflow:hidden;box-shadow:0 7px 25px #e8b9c522}.card h3{margin:0;padding:12px 17px;background:linear-gradient(90deg,#fde1ea,#fff8fb);font-family:"DM Serif Display",serif;font-weight:400;color:#9b5c71;font-size:20px}.pad{padding:17px;line-height:1.7;font-size:14px}.avatar{height:190px;background:linear-gradient(135deg,#f6d4df,#fff);display:flex;align-items:center;justify-content:center;font-size:75px}
-.post{background:#fff;border:1px solid var(--line);border-radius:15px;padding:22px;margin-bottom:20px}.date{display:inline-block;background:var(--pale);border-radius:10px;padding:8px 12px;font-size:12px;color:#a45a75;margin-bottom:12px}.post h2{font-family:"DM Serif Display",serif;font-weight:400;font-size:30px;color:#875467;margin:0 0 13px}.photo{height:190px;border-radius:12px;background:linear-gradient(135deg,#f9dce6,#f4b9cd 50%,#fff1f5);display:flex;align-items:center;justify-content:center;font-size:65px;margin-bottom:14px}.btn{display:inline-block;margin-top:8px;padding:8px 15px;border:1px solid var(--pink);border-radius:18px;color:#a95373;background:#fff}.btn:hover{background:var(--pale)}ul{list-style:none;padding:0;margin:0}li{padding:5px 0}li:before{content:"♡ ";color:#e997b2}.quote{background:#fff0f5;padding:18px;border-radius:12px;text-align:center;font-family:"DM Serif Display",serif}.page{max-width:900px;margin:25px auto 70px;padding:0 20px}.page-title{text-align:center;font-family:"DM Serif Display",serif;font-size:38px;color:#91576d;font-weight:400}.page-sub{text-align:center;margin-bottom:28px}.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.tile{height:190px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(135deg,#fde5ed,#fff);display:flex;align-items:center;justify-content:center;font-size:60px}.formbox{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px}.input,.textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font:inherit;color:var(--text);background:#fffafa}.textarea{height:110px;resize:vertical}.guest{background:#fff0f5;border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:12px}.guest b{color:#9b5c71}footer{text-align:center;padding:28px;border-top:1px solid var(--line);font-size:13px;background:#fff}
-@media(max-width:980px){.grid{grid-template-columns:220px 1fr}.grid>aside:last-child{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.grid>aside:last-child .card{margin-bottom:0}}
-@media(max-width:700px){.grid{grid-template-columns:1fr}.grid>aside:last-child{display:block}.grid>aside:last-child .card{margin-bottom:20px}.logo{font-size:50px}.bow{display:none}.gallery{grid-template-columns:1fr 1fr}}
-</style></head><body>
-<div class="top">♡ welcome to my little pink world ♡</div>
+
+:root{
+  --pink:#f6b7ca;
+  --light:#fff7fa;
+  --pale:#fde8ef;
+  --deep:#a85d78;
+  --text:#72535f;
+  --line:#f2c6d4
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:linear-gradient(180deg,#fffafb,#fdebf2);
+  color:var(--text);
+  font-family:Quicksand,sans-serif
+}
+
+a{
+  color:inherit;
+  text-decoration:none
+}
+
+.top{
+  padding:12px 7%;
+  border-bottom:1px solid var(--line);
+  font-size:13px;
+  letter-spacing:.5px;
+  background:#fff
+}
+
+header{
+  max-width:1180px;
+  margin:auto;
+  padding:42px 24px 25px;
+  text-align:center;
+  position:relative
+}
+
+.logo{
+  font-family:Parisienne,cursive;
+  font-size:68px;
+  color:#e88eae;
+  text-shadow:0 2px #fff,0 4px 12px #f3c5d4;
+  margin:0
+}
+
+.tag{
+  font-family:"DM Serif Display",serif;
+  letter-spacing:4px;
+  font-size:14px;
+  margin:7px 0 28px;
+  color:#916372
+}
+
+.bow{
+  position:absolute;
+  right:8%;
+  top:55px;
+  font-size:42px
+}
+
+.nav{
+  display:flex;
+  justify-content:center;
+  gap:7px;
+  flex-wrap:wrap;
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:8px;
+  background:#fff8fb;
+  box-shadow:0 5px 20px #efcbd733
+}
+
+.nav a{
+  padding:11px 22px;
+  border-radius:18px;
+  font-size:14px
+}
+
+.nav a:hover,
+.nav a.active{
+  background:var(--pale);
+  color:#b05274
+}
+
+.grid{
+  max-width:1180px;
+  margin:20px auto 70px;
+  padding:0 20px;
+  display:grid;
+  grid-template-columns:260px 1fr 240px;
+  gap:22px
+}
+
+.card{
+  background:#fffafa;
+  border:1px solid var(--line);
+  border-radius:16px;
+  margin-bottom:20px;
+  overflow:hidden;
+  box-shadow:0 7px 25px #e8b9c522
+}
+
+.card h3{
+  margin:0;
+  padding:12px 17px;
+  background:linear-gradient(90deg,#fde1ea,#fff8fb);
+  font-family:"DM Serif Display",serif;
+  font-weight:400;
+  color:#9b5c71;
+  font-size:20px
+}
+
+.pad{
+  padding:17px;
+  line-height:1.7;
+  font-size:14px
+}
+
+.avatar{
+  min-height:190px;
+  background:linear-gradient(135deg,#f6d4df,#fff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:75px;
+  overflow:hidden
+}
+
+.avatar img{
+  width:100%;
+  height:100%;
+  min-height:190px;
+  object-fit:cover
+}
+
+.post{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:22px;
+  margin-bottom:20px
+}
+
+.date{
+  display:inline-block;
+  background:var(--pale);
+  border-radius:10px;
+  padding:8px 12px;
+  font-size:12px;
+  color:#a45a75;
+  margin-bottom:12px
+}
+
+.post h2{
+  font-family:"DM Serif Display",serif;
+  font-weight:400;
+  font-size:30px;
+  color:#875467;
+  margin:0 0 13px
+}
+
+.photo{
+  height:190px;
+  border-radius:12px;
+  background:linear-gradient(135deg,#f9dce6,#f4b9cd 50%,#fff1f5);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:65px;
+  margin-bottom:14px;
+  overflow:hidden
+}
+
+.photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:12px
+}
+
+.btn{
+  display:inline-block;
+  margin-top:8px;
+  padding:8px 15px;
+  border:1px solid var(--pink);
+  border-radius:18px;
+  color:#a95373;
+  background:#fff
+}
+
+.btn:hover{
+  background:var(--pale)
+}
+
+ul{
+  list-style:none;
+  padding:0;
+  margin:0
+}
+
+li{
+  padding:5px 0
+}
+
+li:before{
+  content:"♡ ";
+  color:#e997b2
+}
+
+.quote{
+  background:#fff0f5;
+  padding:18px;
+  border-radius:12px;
+  text-align:center;
+  font-family:"DM Serif Display",serif
+}
+
+footer{
+  text-align:center;
+  padding:28px;
+  border-top:1px solid var(--line);
+  font-size:13px;
+  background:#fff
+}
+
+@media(max-width:980px){
+  .grid{
+    grid-template-columns:220px 1fr
+  }
+
+  .grid>aside:last-child{
+    grid-column:1/-1;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px
+  }
+
+  .grid>aside:last-child .card{
+    margin-bottom:0
+  }
+}
+
+@media(max-width:700px){
+  .grid{
+    grid-template-columns:1fr
+  }
+
+  .grid>aside:last-child{
+    display:block
+  }
+
+  .grid>aside:last-child .card{
+    margin-bottom:20px
+  }
+
+  .logo{
+    font-size:50px
+  }
+
+  .bow{
+    display:none
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top" id="topText">
+  ♡ welcome to my little pink world ♡
+</div>
+
 <header>
+
 <div class="bow">🎀</div>
-<h1 class="logo">my little pink world ♡</h1>
-<div class="tag">life　♡　fashion　♡　dreams　♡　pretty things</div>
+
+<h1 class="logo" id="siteTitle">
+  my little pink world ♡
+</h1>
+
+<div class="tag" id="siteTagline">
+  life　♡　fashion　♡　dreams　♡　pretty things
+</div>
+
 <nav class="nav">
-<a href="index.html">⌂ Home</a>
-<a href="blog.html">♡ Blog</a>
-<a href="about.html">♡ About Me</a>
-
-<a href="guestbook.html">♡ Guestbook</a>
-<a href="links.html">♡ Links</a>
+  <a href="index.html" class="active">⌂ Home</a>
+  <a href="blog.html">♡ Blog</a>
+  <a href="articles.html">♡ Articles</a>
+  <a href="about.html">♡ About Me</a>
+  <a href="links.html">♡ Links</a>
+  <a href="guestbook.html">♡ Guestbook</a>
 </nav>
+
 </header>
+
 <main class="grid">
+
 <aside>
-<section class="card"><h3>about me ♡</h3><div class="avatar">🎀</div><div class="pad"><b>hiii! ♡</b><br>welcome to my little corner of the internet!<br>here i share bits of my life, favorite things, pretty pictures and everything that makes me happy.<br><br><i>so happy you're here! ♡</i><br><a class="btn" href="about.html">read more ♡</a></div></section>
-<section class="card"><h3>little updates ♡</h3><div class="pad"><ul><li>new blog post soon!</li><li>currently loving pink bows</li><li>spring is my favorite</li><li>trying new playlists</li></ul></div></section>
-<section class="card"><h3>currently ♡</h3><div class="pad"><div style="font-size:25px">☕ 🎧 🎀</div><p><b>feeling:</b> dreamy</p><p><b>drinking:</b> iced matcha</p><p><b>watching:</b> comfort shows</p></div></section>
-</aside>
-<section>
 
-<div id="latestPosts"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script>
-<script>
-(async function(){
-  if(!SUPABASE_URL.startsWith("https://") || SUPABASE_PUBLISHABLE_KEY.includes("PASTE-YOUR")) return;
-  const client=supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
-  const {data,error}=await client.from("posts").select("title,content,image_url,published_at").order("published_at",{ascending:false}).limit(2);
-  if(error || !data?.length) return;
-  const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
-  document.getElementById("latestPosts").innerHTML=data.map(p=>{
-    const d=new Date(p.published_at).toLocaleDateString(undefined,{month:"short",day:"numeric"});
-    const photo=p.image_url ? `<img src="${esc(p.image_url)}" alt="" style="width:100%;height:190px;object-fit:cover;border-radius:12px;margin-bottom:14px">` : `<div class="photo">🎀　🩷　✨</div>`;
-    return `<article class="post"><span class="date">${esc(d)}</span><h2>${esc(p.title)}</h2>${photo}<p>${esc(p.content).slice(0,220)}${p.content.length>220?"…":""}</p><a class="btn" href="blog.html">read the blog ♡</a></article>`;
-  }).join("");
-})();
-</script>
+<section class="card">
 
+<h3>about me ♡</h3>
+
+<div class="avatar" id="homeImage">
+  🎀
+</div>
+
+<div class="pad" id="homeAbout">
+  welcome to my little corner of the internet! ♡
+</div>
 
 </section>
-<aside>
-<section class="card"><h3>categories ♡</h3><div class="pad"><ul><li>daily life</li><li>fashion</li><li>beauty</li><li>music</li><li>travel</li><li>thoughts</li><li>inspiration</li><li>random</li></ul></div></section>
 
-<section class="card"><h3>little reminder ♡</h3><div class="pad"><div class="quote">you are enough<br>just as you are ♡</div></div></section>
-<section class="card"><h3>guestbook ♡</h3><div class="pad">have something to say?<br><a class="btn" href="guestbook.html">write a message ♡</a></div></section>
+
+<section class="card">
+
+<h3>little updates ♡</h3>
+
+<div class="pad" id="homeUpdates">
+  new here ♡
+</div>
+
+</section>
+
+
+<section class="card">
+
+<h3>currently ♡</h3>
+
+<div class="pad" id="homeCurrently">
+  🎀 ♡
+</div>
+
+</section>
+
 </aside>
-</main><footer>made with ♡ & pink sparkles · my little pink world</footer></body></html>
+
+
+<section>
+
+<div id="latestPosts">
+
+<div class="post">
+  <p>loading my little world ♡</p>
+</div>
+
+</div>
+
+</section>
+
+
+<aside>
+
+<section class="card">
+
+<h3>categories ♡</h3>
+
+<div class="pad" id="homeCategories">
+  daily life<br>
+  fashion<br>
+  beauty<br>
+  music<br>
+  travel<br>
+  thoughts
+</div>
+
+</section>
+
+
+<section class="card">
+
+<h3>little reminder ♡</h3>
+
+<div class="pad">
+
+<div class="quote" id="homeReminder">
+  you are enough<br>
+  just as you are ♡
+</div>
+
+</div>
+
+</section>
+
+
+<section class="card">
+
+<h3>guestbook ♡</h3>
+
+<div class="pad">
+
+have something to say?<br>
+
+<a class="btn" href="guestbook.html">
+  write a message ♡
+</a>
+
+</div>
+
+</section>
+
+</aside>
+
+</main>
+
+
+<footer id="homeFooter">
+  made with ♡ & pink sparkles · my little pink world
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+
+<script>
+
+(async function(){
+
+  const client =
+    supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+  const keys = [
+    "home_title",
+    "home_tagline",
+    "home_welcome",
+    "home_about",
+    "home_currently",
+    "home_updates",
+    "home_categories",
+    "home_reminder",
+    "home_footer",
+    "home_image"
+  ];
+
+
+  const {data:contentRows} =
+    await client
+      .from("site_content")
+      .select("section,content")
+      .in("section",keys);
+
+
+  const content = {};
+
+  (contentRows || []).forEach(row=>{
+    content[row.section] = row.content;
+  });
+
+
+  function setText(id,key,fallback){
+
+    const value =
+      content[key] !== undefined &&
+      content[key] !== ""
+        ? content[key]
+        : fallback;
+
+    document.getElementById(id).innerHTML =
+      String(value).replace(/\n/g,"<br>");
+  }
+
+
+  document.title =
+    (content.home_title ||
+    "my little pink world ♡")
+    .replace(/<[^>]*>/g,"")
+    + " · home";
+
+
+  setText(
+    "topText",
+    "home_welcome",
+    "♡ welcome to my little pink world ♡"
+  );
+
+
+  setText(
+    "siteTitle",
+    "home_title",
+    "my little pink world ♡"
+  );
+
+
+  setText(
+    "siteTagline",
+    "home_tagline",
+    "life　♡　fashion　♡　dreams　♡　pretty things"
+  );
+
+
+  setText(
+    "homeAbout",
+    "home_about",
+    "welcome to my little corner of the internet! ♡"
+  );
+
+
+  setText(
+    "homeUpdates",
+    "home_updates",
+    "new here ♡"
+  );
+
+
+  setText(
+    "homeCurrently",
+    "home_currently",
+    "🎀 ♡"
+  );
+
+
+  setText(
+    "homeCategories",
+    "home_categories",
+    "daily life\nfashion\nbeauty\nmusic\ntravel\nthoughts"
+  );
+
+
+  setText(
+    "homeReminder",
+    "home_reminder",
+    "you are enough\njust as you are ♡"
+  );
+
+
+  setText(
+    "homeFooter",
+    "home_footer",
+    "made with ♡ & pink sparkles · my little pink world"
+  );
+
+
+  if(content.home_image){
+
+    document.getElementById("homeImage").innerHTML =
+      '<img src="' +
+      content.home_image.replace(/"/g,"&quot;") +
+      '" alt="homepage photo">';
+
+  }
+
+
+  const {data:posts,error} =
+    await client
+      .from("posts")
+      .select(
+        "title,content,image_url,published_at"
+      )
+      .lte(
+        "published_at",
+        new Date().toISOString()
+      )
+      .order(
+        "published_at",
+        {ascending:false}
+      )
+      .limit(2);
+
+
+  const esc = s =>
+    String(s ?? "")
+      .replace(
+        /[&<>"']/g,
+        c=>({
+          "&":"&amp;",
+          "<":"&lt;",
+          ">":"&gt;",
+          '"':"&quot;",
+          "'":"&#039;"
+        }[c])
+      );
+
+
+  if(error){
+
+    document.getElementById(
+      "latestPosts"
+    ).innerHTML =
+      '<div class="post"><p>♡</p></div>';
+
+    return;
+  }
+
+
+  if(!posts || !posts.length){
+
+    document.getElementById(
+      "latestPosts"
+    ).innerHTML =
+      '<article class="post">' +
+      '<span class="date">welcome ♡</span>' +
+      '<h2>my little pink world ♡</h2>' +
+      '<p>' +
+      esc(
+        content.home_welcome ||
+        "welcome to my little pink world ♡"
+      ) +
+      '</p>' +
+      '</article>';
+
+    return;
+  }
+
+
+  document.getElementById(
+    "latestPosts"
+  ).innerHTML =
+
+    posts.map(p=>{
+
+      const d =
+        new Date(
+          p.published_at
+        ).toLocaleDateString(
+          undefined,
+          {
+            month:"short",
+            day:"numeric"
+          }
+        );
+
+
+      const photo =
+        p.image_url
+
+        ?
+
+        '<div class="photo">' +
+        '<img src="' +
+        esc(p.image_url) +
+        '" alt="' +
+        esc(p.title) +
+        '">' +
+        '</div>'
+
+        :
+
+        '<div class="photo">' +
+        '🎀　🩷　✨' +
+        '</div>';
+
+
+      return (
+
+        '<article class="post">' +
+
+        '<span class="date">' +
+        esc(d) +
+        '</span>' +
+
+        '<h2>' +
+        esc(p.title) +
+        '</h2>' +
+
+        photo +
+
+        '<p>' +
+        esc(p.content).slice(0,220) +
+        (p.content.length > 220 ? "…" : "") +
+        '</p>' +
+
+        '<a class="btn" href="blog.html">' +
+        'read the blog ♡' +
+        '</a>' +
+
+        '</article>'
+
+      );
+
+    }).join("");
+
+})();
+
+</script>
+
+</body>
+</html>
