@@ -259,7 +259,150 @@ function articleEditor(){
   $('af').onchange=e=>
     upload(e.target.files[0],'articles',u=>$('ai').value=u);
 }
-window.editArticle=async id=>{let a=articles.find(x=>x.id===id);if(!a)return;let title=prompt('Article title:',a.title);if(title===null)return;let content=prompt('Article text:',a.content);if(content===null)return;let image_url=prompt('Image URL (optional):',a.image_url||'');if(image_url===null)return;let {error}=await sb.from('articles').update({title,content,image_url:image_url||null}).eq('id',id);if(error)alert(error.message);else{await load();status('article updated ♡')}};window.delArticle=async id=>{if(!confirm('Delete this article?'))return;let {error}=await sb.from('articles').delete().eq('id',id);if(error)alert(error.message);else{await load();status('article deleted')}};
+window.editArticle=async id=>{
+  let a=articles.find(x=>x.id===id);
+  if(!a)return;
+
+  let old=document.getElementById('editArticleModal');
+  if(old)old.remove();
+
+  let localDate='';
+
+  if(a.published_at){
+    const d=new Date(a.published_at);
+    const pad=n=>String(n).padStart(2,'0');
+
+    localDate =
+      d.getFullYear()+'-'+
+      pad(d.getMonth()+1)+'-'+
+      pad(d.getDate())+'T'+
+      pad(d.getHours())+':'+
+      pad(d.getMinutes());
+  }
+
+  document.body.insertAdjacentHTML('beforeend',`
+    <div id="editArticleModal" style="
+      position:fixed;
+      inset:0;
+      z-index:100;
+      background:rgba(80,40,60,.35);
+      display:grid;
+      place-items:center;
+      padding:20px;
+    ">
+
+      <div style="
+        width:min(650px,100%);
+        max-height:90vh;
+        overflow:auto;
+        background:#fffafd;
+        border:1px solid #ecd7e2;
+        border-radius:20px;
+        padding:24px;
+        box-shadow:0 15px 50px rgba(100,50,75,.25);
+      ">
+
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+          gap:10px
+        ">
+          <div>
+            <h2 style="margin:0;color:#75455b">
+              edit article ♡
+            </h2>
+
+            <p class="muted" style="margin:5px 0 0">
+              Change anything about this article.
+            </p>
+          </div>
+
+          <button class="btn" id="closeEditArticle">×</button>
+        </div>
+
+        <div class="field">
+          <label>article title</label>
+          <input id="editArticleTitle" value="${esc(a.title)}">
+        </div>
+
+        <div class="field">
+          <label>article</label>
+          <textarea id="editArticleContent" style="min-height:220px">${esc(a.content)}</textarea>
+        </div>
+
+        <div class="field">
+          <label>image URL</label>
+          <input id="editArticleImage" value="${esc(a.image_url||'')}" placeholder="image URL">
+        </div>
+
+        <div class="field">
+          <label>publish date & time</label>
+          <input id="editArticlePublished" type="datetime-local" value="${localDate}">
+
+          <small class="muted">
+            Change when this article becomes visible.
+          </small>
+        </div>
+
+        <div class="actions" style="margin-top:20px">
+          <button class="btn" id="cancelEditArticle">
+            cancel
+          </button>
+
+          <button class="btn primary" id="saveEditArticle">
+            save changes ♡
+          </button>
+        </div>
+
+      </div>
+    </div>
+  `);
+
+  const modal=$('editArticleModal');
+
+  $('closeEditArticle').onclick=()=>modal.remove();
+  $('cancelEditArticle').onclick=()=>modal.remove();
+
+  $('saveEditArticle').onclick=async()=>{
+
+    let title=$('editArticleTitle').value.trim();
+    let content=$('editArticleContent').value.trim();
+    let image_url=$('editArticleImage').value.trim()||null;
+    let publishValue=$('editArticlePublished').value;
+
+    if(!title||!content){
+      alert('Please add a title and article text.');
+      return;
+    }
+
+    if(!publishValue){
+      alert('Please choose a publish date and time.');
+      return;
+    }
+
+    let published_at=new Date(publishValue).toISOString();
+
+    let {error}=await sb
+      .from('articles')
+      .update({
+        title,
+        content,
+        image_url,
+        published_at
+      })
+      .eq('id',id);
+
+    if(error){
+      alert(error.message);
+      return;
+    }
+
+    modal.remove();
+    await load();
+    status('article updated ♡');
+  };
+};
 function linksEditor(){$('editor').innerHTML=`<h1>links ♡</h1><p class="muted">Manage the links visitors see.</p><div class="field"><label>name</label><input id="lt"></div><div class="field"><label>URL</label><input id="lu"></div><div class="field"><label>description</label><textarea id="ld" style="min-height:75px"></textarea></div><div class="actions"><button class="btn primary" id="addl">add link ♡</button></div><div class="list">${links.map(l=>`<div class="item"><div><b>${esc(l.title)}</b><br><small>${esc(l.url)}</small></div><div><button class="btn" onclick="editLink('${l.id}')">edit</button> <button class="btn danger" onclick="delLink('${l.id}')">delete</button></div></div>`).join('')||'<div class="muted">no links yet ♡</div>'}</div>`;$('addl').onclick=async()=>{let title=$('lt').value.trim(),url=$('lu').value.trim(),description=$('ld').value.trim();if(!title||!url)return alert('Add a name and URL first.');let {error}=await sb.from('links').insert({title,url,description});if(error)return alert(error.message);await load();status('link added ♡')}}window.editLink=async id=>{let l=links.find(x=>x.id===id);if(!l)return;let title=prompt('Name:',l.title);if(title===null)return;let url=prompt('URL:',l.url);if(url===null)return;let description=prompt('Description:',l.description||'');if(description===null)return;let {error}=await sb.from('links').update({title,url,description}).eq('id',id);if(error)alert(error.message);else{await load();status('link updated ♡')}};window.delLink=async id=>{if(!confirm('Delete this link?'))return;let {error}=await sb.from('links').delete().eq('id',id);if(error)alert(error.message);else{await load();status('link deleted')}};
 function img(u,a){
   return u ? `<img src="${esc(u)}" alt="${esc(a)}">` : '';
