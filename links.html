@@ -24,7 +24,87 @@ header{max-width:1180px;margin:auto;padding:42px 24px 25px;text-align:center;pos
 <a href="guestbook.html">♡ Guestbook</a>
 </nav>
 </header>
-<main class="page"><h2 class="page-title">links ♡</h2><p class="page-sub">my favorite little corners of the internet</p>
+<main class="page">
+
+  <h2 class="page-title">links ♡</h2>
+
+  <p class="page-sub">
+    my favorite little corners of the internet
+  </p>
+
+  <div class="card">
+
+    <div class="pad">
+
+      <ul id="linksList">
+        <li>loading my little links ♡</li>
+      </ul>
+
+    </div>
+
+  </div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+
+<script>
+(async function(){
+
+  const client = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+  const { data, error } = await client
+    .from("links")
+    .select("title,url,description")
+    .order("created_at", { ascending: true });
+
+  if(error){
+    console.error(error);
+    return;
+  }
+
+  const esc = s => String(s ?? "").replace(/[&<>"']/g,c=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  }[c]));
+
+  const list = document.getElementById("linksList");
+
+  if(!data || data.length === 0){
+    list.innerHTML = "<li>no links yet ♡</li>";
+    return;
+  }
+
+  list.innerHTML = data.map(link => `
+    <li style="margin-bottom:14px;">
+      <a
+        href="${esc(link.url)}"
+        target="_blank"
+        rel="noopener"
+        style="color:#a95373;font-weight:600;"
+      >
+        ♡ ${esc(link.title)}
+      </a>
+
+      ${
+        link.description
+          ? `<div style="font-size:13px;margin-top:3px;">
+               ${esc(link.description)}
+             </div>`
+          : ""
+      }
+    </li>
+  `).join("");
+
+})();
+</script>
 <div class="card"><div class="pad"><ul>
 <li><a href="blog.html">♡ my blog</a></li><li><a href="gallery.html">♡ my photo diary</a></li><li><a href="guestbook.html">♡ guestbook</a></li><li><a href="about.html">♡ about me</a></li>
 </ul></div></div></main><footer>made with ♡ & pink sparkles · my little pink world</footer></body></html>
