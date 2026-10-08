@@ -161,7 +161,104 @@ window.editPost=async id=>{
     status('post updated ♡');
   };
 };
-function articleEditor(){$('editor').innerHTML=`<h1>articles ♡</h1><p class="muted">Longer writing, separate from your normal blog.</p><div class="field"><label>title</label><input id="at"></div><div class="field"><label>article</label><textarea id="ac" style="min-height:220px"></textarea></div><div class="field"><label>image URL</label><input id="ai"></div><div class="actions"><label class="btn">🖼️ upload image<input id="af" type="file" accept="image/*" style="display:none"></label><button class="btn primary" id="adda">publish article ♡</button></div><div class="list">${articles.map(a=>`<div class="item"><div><b>${esc(a.title)}</b><br><small>${esc((a.content||'').slice(0,100))}</small></div><div><button class="btn" onclick="editArticle('${a.id}')">edit</button> <button class="btn danger" onclick="delArticle('${a.id}')">delete</button></div></div>`).join('')||'<div class="muted">no articles yet ♡</div>'}</div>`;$('adda').onclick=async()=>{let title=$('at').value.trim(),content=$('ac').value.trim(),image_url=$('ai').value.trim()||null;if(!title||!content)return alert('Add a title and article first.');let {error}=await sb.from('articles').insert({title,content,image_url,published_at:new Date().toISOString()});if(error)return alert(error.message);await load();status('article published ♡')};$('af').onchange=e=>upload(e.target.files[0],'articles',u=>$('ai').value=u)}
+function articleEditor(){
+  $('editor').innerHTML=`
+    <h1>articles ♡</h1>
+    <p class="muted">Longer writing, separate from your normal blog.</p>
+
+    <div class="field">
+      <label>title</label>
+      <input id="at">
+    </div>
+
+    <div class="field">
+      <label>article</label>
+      <textarea id="ac" style="min-height:220px"></textarea>
+    </div>
+
+    <div class="field">
+      <label>image URL</label>
+      <input id="ai">
+    </div>
+
+    <div class="field">
+      <label>publish date & time</label>
+      <input id="ap" type="datetime-local">
+      <small class="muted">
+        Choose when this article should become visible on the website.
+      </small>
+    </div>
+
+    <div class="actions">
+      <label class="btn">
+        🖼️ upload image
+        <input id="af" type="file" accept="image/*" style="display:none">
+      </label>
+
+      <button class="btn primary" id="adda">
+        publish article ♡
+      </button>
+    </div>
+
+    <div class="list">
+      ${articles.map(a=>`
+        <div class="item">
+          <div>
+            <b>${esc(a.title)}</b><br>
+            <small>
+              ${esc((a.content||'').slice(0,100))}
+            </small>
+          </div>
+
+          <div>
+            <button class="btn" onclick="editArticle('${a.id}')">
+              edit
+            </button>
+
+            <button class="btn danger" onclick="delArticle('${a.id}')">
+              delete
+            </button>
+          </div>
+        </div>
+      `).join('') || '<div class="muted">no articles yet ♡</div>'}
+    </div>
+  `;
+
+  $('adda').onclick=async()=>{
+
+    let title=$('at').value.trim();
+    let content=$('ac').value.trim();
+    let image_url=$('ai').value.trim()||null;
+    let publishValue=$('ap').value;
+
+    if(!title || !content){
+      return alert('Add a title and article first.');
+    }
+
+    if(!publishValue){
+      return alert('Choose a publish date and time first.');
+    }
+
+    let published_at=new Date(publishValue).toISOString();
+
+    let {error}=await sb
+      .from('articles')
+      .insert({
+        title,
+        content,
+        image_url,
+        published_at
+      });
+
+    if(error)return alert(error.message);
+
+    await load();
+    status('article scheduled ♡');
+  };
+
+  $('af').onchange=e=>
+    upload(e.target.files[0],'articles',u=>$('ai').value=u);
+}
 window.editArticle=async id=>{let a=articles.find(x=>x.id===id);if(!a)return;let title=prompt('Article title:',a.title);if(title===null)return;let content=prompt('Article text:',a.content);if(content===null)return;let image_url=prompt('Image URL (optional):',a.image_url||'');if(image_url===null)return;let {error}=await sb.from('articles').update({title,content,image_url:image_url||null}).eq('id',id);if(error)alert(error.message);else{await load();status('article updated ♡')}};window.delArticle=async id=>{if(!confirm('Delete this article?'))return;let {error}=await sb.from('articles').delete().eq('id',id);if(error)alert(error.message);else{await load();status('article deleted')}};
 function linksEditor(){$('editor').innerHTML=`<h1>links ♡</h1><p class="muted">Manage the links visitors see.</p><div class="field"><label>name</label><input id="lt"></div><div class="field"><label>URL</label><input id="lu"></div><div class="field"><label>description</label><textarea id="ld" style="min-height:75px"></textarea></div><div class="actions"><button class="btn primary" id="addl">add link ♡</button></div><div class="list">${links.map(l=>`<div class="item"><div><b>${esc(l.title)}</b><br><small>${esc(l.url)}</small></div><div><button class="btn" onclick="editLink('${l.id}')">edit</button> <button class="btn danger" onclick="delLink('${l.id}')">delete</button></div></div>`).join('')||'<div class="muted">no links yet ♡</div>'}</div>`;$('addl').onclick=async()=>{let title=$('lt').value.trim(),url=$('lu').value.trim(),description=$('ld').value.trim();if(!title||!url)return alert('Add a name and URL first.');let {error}=await sb.from('links').insert({title,url,description});if(error)return alert(error.message);await load();status('link added ♡')}}window.editLink=async id=>{let l=links.find(x=>x.id===id);if(!l)return;let title=prompt('Name:',l.title);if(title===null)return;let url=prompt('URL:',l.url);if(url===null)return;let description=prompt('Description:',l.description||'');if(description===null)return;let {error}=await sb.from('links').update({title,url,description}).eq('id',id);if(error)alert(error.message);else{await load();status('link updated ♡')}};window.delLink=async id=>{if(!confirm('Delete this link?'))return;let {error}=await sb.from('links').delete().eq('id',id);if(error)alert(error.message);else{await load();status('link deleted')}};
 function img(u,a){
