@@ -1123,7 +1123,7 @@ function blogEditor(){
     <h1>blog ♡</h1>
 
     <p class="muted">
-      Short everyday posts.
+      Create a new post or edit an existing one.
     </p>
 
     <div class="field">
@@ -1133,7 +1133,10 @@ function blogEditor(){
 
     <div class="field">
       <label>post</label>
-      <textarea id="pc"></textarea>
+      <textarea
+        id="pc"
+        style="min-height:220px"
+      ></textarea>
     </div>
 
     <div class="field">
@@ -1160,6 +1163,14 @@ function blogEditor(){
         publish post ♡
       </button>
 
+      <button
+        class="btn"
+        id="cancelEdit"
+        style="display:none"
+      >
+        cancel edit
+      </button>
+
     </div>
 
     <div class="list">
@@ -1170,11 +1181,16 @@ function blogEditor(){
           <div class="item">
 
             <div>
+
               <b>${esc(p.title)}</b>
+
               <br>
+
               <small>
                 ${esc((p.content||'').slice(0,100))}
+                ${(p.content||'').length>100 ? '…' : ''}
               </small>
+
             </div>
 
             <div>
@@ -1198,7 +1214,9 @@ function blogEditor(){
           </div>
 
         `).join('')
+
         ||
+
         '<div class="muted">no posts yet ♡</div>'
       }
 
@@ -1207,31 +1225,98 @@ function blogEditor(){
   `;
 
 
-  $('addp').onclick=async()=>{
+  bindBlogForm();
 
-    let title=$('pt').value.trim();
-    let content=$('pc').value.trim();
-    let image_url=$('pi').value.trim()||null;
 
-    if(!title||!content)
+  $('pf').onchange =
+    e =>
+      upload(
+        e.target.files[0],
+        'posts',
+        u => $('pi').value = u
+      );
+
+}
+
+
+function bindBlogForm(){
+
+  $('addp').onclick = async()=>{
+
+    let title =
+      $('pt').value.trim();
+
+    let content =
+      $('pc').value.trim();
+
+    let image_url =
+      $('pi').value.trim() || null;
+
+
+    if(!title || !content){
+
       return alert(
         'Add a title and post first.'
       );
 
+    }
 
-    let {error}=
+
+    let editingId =
+      $('addp').dataset.editingId;
+
+
+    if(editingId){
+
+      let {error} =
+        await sb
+          .from('posts')
+          .update({
+            title,
+            content,
+            image_url
+          })
+          .eq('id',editingId);
+
+
+      if(error){
+
+        alert(error.message);
+        return;
+
+      }
+
+
+      await load();
+
+      status('post updated ♡');
+
+      return;
+
+    }
+
+
+    let {error} =
       await sb
         .from('posts')
         .insert({
+
           title,
           content,
           image_url,
-          published_at:new Date().toISOString()
+
+          published_at:
+            new Date().toISOString()
+
         });
 
 
-    if(error)
-      return alert(error.message);
+    if(error){
+
+      alert(error.message);
+      return;
+
+    }
 
 
     await load();
@@ -1241,15 +1326,55 @@ function blogEditor(){
   };
 
 
-  $('pf').onchange=
-    e=>
-      upload(
-        e.target.files[0],
-        'posts',
-        u=>$('pi').value=u
-      );
+  $('cancelEdit').onclick = ()=>{
+
+    blogEditor();
+
+  };
 
 }
+
+
+window.editPost = async id =>{
+
+  let p =
+    posts.find(x => x.id === id);
+
+
+  if(!p)
+    return;
+
+
+  $('pt').value =
+    p.title || '';
+
+  $('pc').value =
+    p.content || '';
+
+  $('pi').value =
+    p.image_url || '';
+
+
+  $('addp').textContent =
+    'save changes ♡';
+
+  $('addp').dataset.editingId =
+    id;
+
+
+  $('cancelEdit').style.display =
+    'inline-block';
+
+
+  window.scrollTo({
+    top:0,
+    behavior:'smooth'
+  });
+
+
+  preview();
+
+};
 
 
 window.editPost=async id=>{
