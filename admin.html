@@ -211,17 +211,14 @@ function articleEditor(){
           </div>
 
           <div>
-            <button class="btn" onclick="editArticle('${a.id}')">
-              edit
-            </button>
+  <button class="btn" onclick="editArticle('${a.id}')">
+    edit
+  </button>
 
-            <button class="btn danger" onclick="delArticle('${a.id}')">
-              delete
-            </button>
-          </div>
-        </div>
-      `).join('') || '<div class="muted">no articles yet ♡</div>'}
-    </div>
+  <button class="btn danger" onclick="window.delArticle('${a.id}')">
+    delete
+  </button>
+</div>
   `;
 
   $('adda').onclick=async()=>{
