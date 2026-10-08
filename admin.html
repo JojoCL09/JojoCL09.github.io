@@ -1,501 +1,2660 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin ♡ my little pink world</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="config.js"></script><style>
-*{box-sizing:border-box}body{margin:0;background:#fff8fc;color:#654858;font-family:Georgia,serif}.top{position:sticky;top:0;z-index:5;background:#fffafd;border-bottom:1px solid #ecd7e2;padding:14px 18px;display:flex;justify-content:space-between;align-items:center}.brand{font-size:22px;color:#75455b}.btn{border:1px solid #e0bfd0;background:white;color:#7b5063;border-radius:11px;padding:9px 12px;cursor:pointer}.primary{background:#d889ad;color:white;border-color:#d889ad}.danger{color:#b55372;background:#fff0f4}.layout{max-width:1500px;margin:auto;padding:16px;display:grid;grid-template-columns:190px 1fr 420px;gap:16px}.panel{background:#fff;border:1px solid #ecd7e2;border-radius:18px;box-shadow:0 8px 28px #9d587d18}.side{padding:12px;align-self:start;position:sticky;top:75px}.side b{display:block;padding:8px;color:#a0667e;font-size:12px;text-transform:uppercase}.nav{width:100%;border:0;background:transparent;text-align:left;padding:11px;border-radius:10px;color:#704d5d;cursor:pointer}.nav.active,.nav:hover{background:#fff0f6;color:#b04f78}.edit{padding:22px}.edit h1{margin:0 0 5px;color:#75455b}.muted{font-size:13px;color:#a0808e}.field{margin-top:13px}.field label{display:block;font-size:13px;margin-bottom:5px;color:#80596a}.field input,.field textarea{width:100%;border:1px solid #e3cbd7;border-radius:10px;padding:10px;background:#fff;color:#654858;font:inherit}.field textarea{min-height:110px;resize:vertical}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.list{display:grid;gap:8px;margin-top:16px}.item{border:1px solid #ecd7e2;border-radius:12px;padding:10px;display:flex;justify-content:space-between;gap:8px;background:#fffafd}.item small{color:#9c7c89}.preview{padding:12px;position:sticky;top:75px;align-self:start}.previewHead{padding:10px;color:#94677b;font-size:13px;border-bottom:1px solid #ecd7e2}.site{border:1px solid #ead8e2;border-radius:12px;overflow:hidden;margin-top:12px;background:#fffafd}.siteHead{text-align:center;padding:24px 10px;border-bottom:1px solid #ecd8e2}.siteTitle{font-size:26px;color:#77455c}.tag{font-size:11px;color:#a8788e}.navfake{text-align:center;padding:8px;border-bottom:1px solid #ecd8e2;font-size:10px;color:#98667d}.cols{display:grid;grid-template-columns:1fr 1.7fr 1fr;gap:7px;padding:8px}.card{background:#fff;border:1px solid #ecd8e2;border-radius:9px;padding:9px;margin-bottom:7px;font-size:10px;line-height:1.45}.card h3{font-size:11px;color:#955a73;margin:0 0 5px}.photo{aspect-ratio:1;border-radius:7px;background:#f9dfeb;display:grid;place-items:center;overflow:hidden;margin-bottom:6px}.photo img{width:100%;height:100%;object-fit:cover}.post{background:#fff;border:1px solid #ecd8e2;border-radius:9px;padding:10px;margin-bottom:7px}.post h2{font-size:14px;color:#77455c;margin:0 0 4px}.post p{font-size:10px;line-height:1.45;margin:0}.login{min-height:100vh;display:grid;place-items:center;padding:20px}.loginbox{width:min(420px,100%);background:white;border:1px solid #ecd7e2;border-radius:20px;padding:28px;text-align:center;box-shadow:0 8px 30px #9d587d18}.hidden{display:none}.status{position:fixed;right:18px;bottom:18px;background:#754b5f;color:#fff;padding:10px 14px;border-radius:10px;display:none}.status.on{display:block}@media(max-width:1050px){.layout{grid-template-columns:180px 1fr}.preview{grid-column:1/-1;position:static}}@media(max-width:700px){.layout{grid-template-columns:1fr}.side{position:static}.row{grid-template-columns:1fr}.cols{grid-template-columns:1fr}}
-</style></head><body>
-<div id="login" class="login"><div class="loginbox"><div style="font-size:40px">🎀</div><h1>my little pink world ♡</h1><p class="muted">private visual editor</p><div class="field"><label>email</label><input id="email" type="email"></div><div class="field"><label>password</label><input id="password" type="password"></div><div class="actions"><button class="btn primary" id="loginBtn" style="width:100%">log in ♡</button></div><p id="msg" class="muted"></p></div></div>
-<div id="app" class="hidden"><header class="top"><div class="brand">my little pink world ♡ <small style="display:block;font-size:11px;color:#a27a8c">visual editor</small></div><div class="actions" style="margin:0"><a class="btn" href="index.html" target="_blank">view site ↗</a><button class="btn" id="logout">log out</button></div></header><main class="layout"><aside class="panel side"><b>edit</b><button class="nav active" data-tab="home">🏠 homepage</button><button class="nav" data-tab="blog">📝 blog</button><button class="nav" data-tab="articles">📖 articles</button><button class="nav" data-tab="about">💗 about me</button><button class="nav" data-tab="links">🔗 links</button><b style="margin-top:10px">site</b><button class="nav" onclick="openGuestbook()">💌 guestbook</button></aside><section class="panel edit" id="editor"></section><aside class="panel preview"><div class="previewHead">👀 live preview · <span id="mode">homepage</span></div><div id="preview"></div></aside></main></div><div id="status" class="status"></div>
-<script>
-const ADMIN_UID='ac58e6b6-fd86-47a4-a83c-6aa01a7d5b01';const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);let tab='home';let home={home_title:'my little pink world ♡',home_tagline:'life ♡ fashion ♡ dreams ♡ pretty things',home_welcome:'welcome to my little pink world ♡',home_about:'a little corner of the internet for my thoughts, favorites and pretty things.',home_currently:'currently loving: pink things, music, cozy days ♡',home_updates:'new here ♡\nworking on my little blog',home_categories:'life\nfashion\ndreams\npretty things',home_reminder:'you are enough just as you are ♡',home_footer:'made with love & lots of pink ♡',home_image:''};let about={about_title:'about me ♡',about_subtitle:'hi, i\'m me!',about_content:'welcome to my little corner of the internet ♡',about_image:''};let posts=[],articles=[],links=[];const $=x=>document.getElementById(x),esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),br=x=>esc(x).replace(/\n/g,'<br>');function status(t){$('status').textContent=t;$('status').classList.add('on');clearTimeout(status.t);status.t=setTimeout(()=>$('status').classList.remove('on'),1800)}
-async function admin(){let {data:{session}}=await sb.auth.getSession();if(!session||session.user.id!==ADMIN_UID){showLogin(session?'This account is not the admin account.':'');return false}$('login').classList.add('hidden');$('app').classList.remove('hidden');return true}function showLogin(m){$('login').classList.remove('hidden');$('app').classList.add('hidden');$('msg').textContent=m}function openGuestbook(){window.open('guestbook.html','_blank')}
-$('loginBtn').onclick=async()=>{let {error}=await sb.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});if(error){$('msg').textContent=error.message;return}if(await admin())load()};$('logout').onclick=async()=>{await sb.auth.signOut();showLogin('')};
-async function load(){let s=Object.keys(home).concat(Object.keys(about));let {data}=await sb.from('site_content').select('section,content').in('section',s);(data||[]).forEach(x=>{if(x.section in home)home[x.section]=x.content;if(x.section in about)about[x.section]=x.content});let p=await sb.from('posts').select('*').order('published_at',{ascending:false});posts=p.data||[];let a=await sb.from('articles').select('*').order('published_at',{ascending:false});articles=a.data||[];let l=await sb.from('links').select('*').order('created_at',{ascending:true});links=l.data||[];render()}
-async function save(obj){let rows=Object.entries(obj).map(([section,content])=>({section,content:String(content||''),updated_at:new Date().toISOString()}));let {error}=await sb.from('site_content').upsert(rows,{onConflict:'section'});if(error)throw error;status('saved ♡')}
-function field(obj,key,label,ta=false){return `<div class="field"><label>${label}</label>${ta?`<textarea data-key="${key}">${esc(obj[key])}</textarea>`:`<input data-key="${key}" value="${esc(obj[key])}">`}</div>`}function bind(obj){document.querySelectorAll('[data-key]').forEach(e=>e.oninput=()=>{obj[e.dataset.key]=e.value;preview()})}
-function render(){document.querySelectorAll('.nav[data-tab]').forEach(x=>x.classList.toggle('active',x.dataset.tab===tab));$('mode').textContent=tab;if(tab==='home')homeEditor();if(tab==='about')aboutEditor();if(tab==='blog')blogEditor();if(tab==='articles')articleEditor();if(tab==='links')linksEditor();preview()}
-document.querySelectorAll('.nav[data-tab]').forEach(x=>x.onclick=()=>{tab=x.dataset.tab;render()});
-function homeEditor(){$('editor').innerHTML=`<h1>homepage ♡</h1><p class="muted">Edit the homepage and watch the preview change while you type.</p>${field(home,'home_title','site title')}${field(home,'home_tagline','tagline')}${field(home,'home_welcome','welcome','textarea')}${field(home,'home_about','about me card','textarea')}<div class="row">${field(home,'home_currently','currently','textarea')}${field(home,'home_updates','little updates','textarea')}</div><div class="row">${field(home,'home_categories','categories','textarea')}${field(home,'home_reminder','little reminder','textarea')}</div>${field(home,'home_footer','footer','textarea')}${field(home,'home_image','homepage image URL')}<div class="actions"><label class="btn">🖼️ upload image<input id="homeFile" type="file" accept="image/*" style="display:none"></label><button class="btn primary" id="saveHome">save homepage ♡</button></div>`;bind(home);$('saveHome').onclick=()=>save(home);$('homeFile').onchange=e=>upload(e.target.files[0],'homepage',u=>{home.home_image=u;render()})}
-function aboutEditor(){$('editor').innerHTML=`<h1>about me ♡</h1><p class="muted">Edit your About Me page.</p>${field(about,'about_title','page title')}${field(about,'about_subtitle','subtitle')}${field(about,'about_content','about me text','textarea')}${field(about,'about_image','photo URL')}<div class="actions"><label class="btn">🖼️ upload photo<input id="aboutFile" type="file" accept="image/*" style="display:none"></label><button class="btn primary" id="saveAbout">save about me ♡</button></div>`;bind(about);$('saveAbout').onclick=()=>save(about);$('aboutFile').onchange=e=>upload(e.target.files[0],'about',u=>{about.about_image=u;render()})}
-async function upload(file,folder,done){if(!file)return;let path=folder+'/'+Date.now()+'-'+file.name.replace(/[^a-zA-Z0-9._-]/g,'_');let {error}=await sb.storage.from('site-images').upload(path,file);if(error){alert(error.message);return}let {data}=sb.storage.from('site-images').getPublicUrl(path);done(data.publicUrl);status('image uploaded ♡')}
-function blogEditor(){$('editor').innerHTML=`<h1>blog ♡</h1><p class="muted">Short everyday posts.</p><div class="field"><label>title</label><input id="pt"></div><div class="field"><label>post</label><textarea id="pc"></textarea></div><div class="field"><label>image URL</label><input id="pi"></div><div class="actions"><label class="btn">🖼️ upload image<input id="pf" type="file" accept="image/*" style="display:none"></label><button class="btn primary" id="addp">publish post ♡</button></div><div class="list">${posts.map(p=>`<div class="item"><div><b>${esc(p.title)}</b><br><small>${esc((p.content||'').slice(0,100))}</small></div><div><button class="btn" onclick="editPost('${p.id}')">edit</button> <button class="btn danger" onclick="delPost('${p.id}')">delete</button></div></div>`).join('')||'<div class="muted">no posts yet ♡</div>'}</div>`;$('addp').onclick=async()=>{let title=$('pt').value.trim(),content=$('pc').value.trim(),image_url=$('pi').value.trim()||null;if(!title||!content)return alert('Add a title and post first.');let {error}=await sb.from('posts').insert({title,content,image_url,published_at:new Date().toISOString()});if(error)return alert(error.message);await load();status('post published ♡')};$('pf').onchange=e=>upload(e.target.files[0],'posts',u=>$('pi').value=u)}
-window.editPost=async id=>{
-  let p=posts.find(x=>x.id===id);
-  if(!p)return;
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin ♡ my little pink world</title>
 
-  let old=document.getElementById('editPostModal');
-  if(old)old.remove();
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
 
-  document.body.insertAdjacentHTML('beforeend',`
-    <div id="editPostModal" style="
-      position:fixed;
-      inset:0;
-      z-index:100;
-      background:rgba(80,40,60,.35);
-      display:grid;
-      place-items:center;
-      padding:20px;
-    ">
-      <div style="
-        width:min(650px,100%);
-        max-height:90vh;
-        overflow:auto;
-        background:#fffafd;
-        border:1px solid #ecd7e2;
-        border-radius:20px;
-        padding:24px;
-        box-shadow:0 15px 50px rgba(100,50,75,.25);
-      ">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
-          <div>
-            <h2 style="margin:0;color:#75455b">edit post ♡</h2>
-            <p class="muted" style="margin:5px 0 0">Change anything about this post.</p>
-          </div>
-          <button class="btn" id="closeEditPost">×</button>
-        </div>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:#fff8fc;
+  color:#654858;
+  font-family:Georgia,serif
+}
+.top{
+  position:sticky;
+  top:0;
+  z-index:5;
+  background:#fffafd;
+  border-bottom:1px solid #ecd7e2;
+  padding:14px 18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center
+}
+.brand{
+  font-size:22px;
+  color:#75455b
+}
+.btn{
+  border:1px solid #e0bfd0;
+  background:white;
+  color:#7b5063;
+  border-radius:11px;
+  padding:9px 12px;
+  cursor:pointer
+}
+.primary{
+  background:#d889ad;
+  color:white;
+  border-color:#d889ad
+}
+.danger{
+  color:#b55372;
+  background:#fff0f4
+}
+.layout{
+  max-width:1500px;
+  margin:auto;
+  padding:16px;
+  display:grid;
+  grid-template-columns:190px 1fr 420px;
+  gap:16px
+}
+.panel{
+  background:#fff;
+  border:1px solid #ecd7e2;
+  border-radius:18px;
+  box-shadow:0 8px 28px #9d587d18
+}
+.side{
+  padding:12px;
+  align-self:start;
+  position:sticky;
+  top:75px
+}
+.side b{
+  display:block;
+  padding:8px;
+  color:#a0667e;
+  font-size:12px;
+  text-transform:uppercase
+}
+.nav{
+  width:100%;
+  border:0;
+  background:transparent;
+  text-align:left;
+  padding:11px;
+  border-radius:10px;
+  color:#704d5d;
+  cursor:pointer
+}
+.nav.active,
+.nav:hover{
+  background:#fff0f6;
+  color:#b04f78
+}
+.edit{
+  padding:22px
+}
+.edit h1{
+  margin:0 0 5px;
+  color:#75455b
+}
+.muted{
+  font-size:13px;
+  color:#a0808e
+}
+.field{
+  margin-top:13px
+}
+.field label{
+  display:block;
+  font-size:13px;
+  margin-bottom:5px;
+  color:#80596a
+}
+.field input,
+.field textarea{
+  width:100%;
+  border:1px solid #e3cbd7;
+  border-radius:10px;
+  padding:10px;
+  background:#fff;
+  color:#654858;
+  font:inherit
+}
+.field textarea{
+  min-height:110px;
+  resize:vertical
+}
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px
+}
+.actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:14px
+}
+.list{
+  display:grid;
+  gap:8px;
+  margin-top:16px
+}
+.item{
+  border:1px solid #ecd7e2;
+  border-radius:12px;
+  padding:10px;
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  background:#fffafd
+}
+.item small{
+  color:#9c7c89
+}
+.preview{
+  padding:12px;
+  position:sticky;
+  top:75px;
+  align-self:start
+}
+.previewHead{
+  padding:10px;
+  color:#94677b;
+  font-size:13px;
+  border-bottom:1px solid #ecd7e2
+}
+.site{
+  border:1px solid #ead8e2;
+  border-radius:12px;
+  overflow:hidden;
+  margin-top:12px;
+  background:#fffafd
+}
+.siteHead{
+  text-align:center;
+  padding:24px 10px;
+  border-bottom:1px solid #ecd8e2
+}
+.siteTitle{
+  font-size:26px;
+  color:#77455c
+}
+.tag{
+  font-size:11px;
+  color:#a8788e
+}
+.navfake{
+  text-align:center;
+  padding:8px;
+  border-bottom:1px solid #ecd8e2;
+  font-size:10px;
+  color:#98667d
+}
+.cols{
+  display:grid;
+  grid-template-columns:1fr 1.7fr 1fr;
+  gap:7px;
+  padding:8px
+}
+.card{
+  background:#fff;
+  border:1px solid #ecd8e2;
+  border-radius:9px;
+  padding:9px;
+  margin-bottom:7px;
+  font-size:10px;
+  line-height:1.45
+}
+.card h3{
+  font-size:11px;
+  color:#955a73;
+  margin:0 0 5px
+}
+.photo{
+  aspect-ratio:1;
+  border-radius:7px;
+  background:#f9dfeb;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  margin-bottom:6px
+}
+.photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover
+}
+.post{
+  background:#fff;
+  border:1px solid #ecd8e2;
+  border-radius:9px;
+  padding:10px;
+  margin-bottom:7px
+}
+.post h2{
+  font-size:14px;
+  color:#77455c;
+  margin:0 0 4px
+}
+.post p{
+  font-size:10px;
+  line-height:1.45;
+  margin:0
+}
+.login{
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  padding:20px
+}
+.loginbox{
+  width:min(420px,100%);
+  background:white;
+  border:1px solid #ecd7e2;
+  border-radius:20px;
+  padding:28px;
+  text-align:center;
+  box-shadow:0 8px 30px #9d587d18
+}
+.hidden{
+  display:none
+}
+.status{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  background:#754b5f;
+  color:#fff;
+  padding:10px 14px;
+  border-radius:10px;
+  display:none
+}
+.status.on{
+  display:block
+}
 
-        <div class="field">
-          <label>post title</label>
-          <input id="editPostTitle" value="${esc(p.title)}">
-        </div>
+@media(max-width:1050px){
+  .layout{
+    grid-template-columns:180px 1fr
+  }
+  .preview{
+    grid-column:1/-1;
+    position:static
+  }
+}
 
-        <div class="field">
-          <label>post</label>
-          <textarea id="editPostContent" style="min-height:220px">${esc(p.content)}</textarea>
-        </div>
+@media(max-width:700px){
+  .layout{
+    grid-template-columns:1fr
+  }
+  .side{
+    position:static
+  }
+  .row{
+    grid-template-columns:1fr
+  }
+  .cols{
+    grid-template-columns:1fr
+  }
+}
+</style>
+</head>
 
-        <div class="field">
-          <label>photo</label>
+<body>
 
-          <div id="editPostImagePreview" style="
-            margin-bottom:8px;
-            border-radius:12px;
-            overflow:hidden;
-            background:#f9dfeb;
-            min-height:80px;
-            display:${p.image_url?'block':'none'};
-          ">
-            ${p.image_url?`<img src="${esc(p.image_url)}" style="width:100%;max-height:260px;object-fit:cover">`:''}
-          </div>
+<div id="login" class="login">
+  <div class="loginbox">
+    <div style="font-size:40px">🎀</div>
 
-          <input id="editPostImage" value="${esc(p.image_url||'')}" placeholder="image URL">
+    <h1>my little pink world ♡</h1>
 
-          <div class="actions">
-            <label class="btn">
-              🖼️ replace photo
-              <input id="editPostFile" type="file" accept="image/*" style="display:none">
-            </label>
-
-            <button class="btn danger" id="removePostImage" type="button">
-              🗑️ remove photo
-            </button>
-          </div>
-        </div>
-
-        <div class="actions" style="margin-top:20px">
-          <button class="btn" id="cancelEditPost">cancel</button>
-          <button class="btn primary" id="saveEditPost">save changes ♡</button>
-        </div>
-      </div>
-    </div>
-  `);
-
-  const modal=$('editPostModal');
-  const imageInput=$('editPostImage');
-  const imagePreview=$('editPostImagePreview');
-
-  $('closeEditPost').onclick=()=>modal.remove();
-  $('cancelEditPost').onclick=()=>modal.remove();
-
-  $('removePostImage').onclick=()=>{
-    imageInput.value='';
-    imagePreview.innerHTML='';
-    imagePreview.style.display='none';
-  };
-
-  $('editPostFile').onchange=async e=>{
-    let file=e.target.files[0];
-    if(!file)return;
-
-    await upload(file,'posts',url=>{
-      imageInput.value=url;
-      imagePreview.innerHTML=`<img src="${esc(url)}" style="width:100%;max-height:260px;object-fit:cover">`;
-      imagePreview.style.display='block';
-    });
-  };
-
-  imageInput.oninput=()=>{
-    let url=imageInput.value.trim();
-
-    if(url){
-      imagePreview.innerHTML=`<img src="${esc(url)}" style="width:100%;max-height:260px;object-fit:cover">`;
-      imagePreview.style.display='block';
-    }else{
-      imagePreview.innerHTML='';
-      imagePreview.style.display='none';
-    }
-  };
-
-  $('saveEditPost').onclick=async()=>{
-    let title=$('editPostTitle').value.trim();
-    let content=$('editPostContent').value.trim();
-    let image_url=$('editPostImage').value.trim()||null;
-
-    if(!title||!content){
-      alert('Please add a title and post text.');
-      return;
-    }
-
-    let {error}=await sb.from('posts')
-      .update({
-        title,
-        content,
-        image_url
-      })
-      .eq('id',id);
-
-    if(error){
-      alert(error.message);
-      return;
-    }
-
-    modal.remove();
-    await load();
-    status('post updated ♡');
-  };
-};
-function articleEditor(){
-  $('editor').innerHTML=`
-    <h1>articles ♡</h1>
-    <p class="muted">Longer writing, separate from your normal blog.</p>
+    <p class="muted">private visual editor</p>
 
     <div class="field">
-      <label>title</label>
-      <input id="at">
+      <label>email</label>
+      <input id="email" type="email">
     </div>
 
     <div class="field">
-      <label>article</label>
-      <textarea id="ac" style="min-height:220px"></textarea>
-    </div>
-
-    <div class="field">
-      <label>image URL</label>
-      <input id="ai">
-    </div>
-
-    <div class="field">
-      <label>publish date & time</label>
-      <input id="ap" type="datetime-local">
-      <small class="muted">
-        Choose when this article should become visible on the website.
-      </small>
+      <label>password</label>
+      <input id="password" type="password">
     </div>
 
     <div class="actions">
-      <label class="btn">
-        🖼️ upload image
-        <input id="af" type="file" accept="image/*" style="display:none">
-      </label>
-
-      <button class="btn primary" id="adda">
-        publish article ♡
+      <button class="btn primary" id="loginBtn" style="width:100%">
+        log in ♡
       </button>
     </div>
 
-    <div class="list">
-      ${articles.map(a=>`
-        <div class="item">
-          <div>
-            <b>${esc(a.title)}</b><br>
-            <small>
-              ${esc((a.content||'').slice(0,100))}
-            </small>
-          </div>
-
-          <div>
-  <button class="btn" onclick="editArticle('${a.id}')">
-    edit
-  </button>
-
-  <button class="btn danger" onclick="window.delArticle('${a.id}')">
-    delete
-  </button>
+    <p id="msg" class="muted"></p>
+  </div>
 </div>
+
+
+<div id="app" class="hidden">
+
+<header class="top">
+
+  <div class="brand">
+    my little pink world ♡
+    <small style="display:block;font-size:11px;color:#a27a8c">
+      visual editor
+    </small>
+  </div>
+
+  <div class="actions" style="margin:0">
+
+    <a
+      class="btn"
+      href="index.html"
+      target="_blank"
+    >
+      view site ↗
+    </a>
+
+    <button class="btn" id="logout">
+      log out
+    </button>
+
+  </div>
+
+</header>
+
+
+<main class="layout">
+
+<aside class="panel side">
+
+  <b>edit</b>
+
+  <button class="nav active" data-tab="home">
+    🏠 homepage
+  </button>
+
+  <button class="nav" data-tab="blog">
+    📝 blog
+  </button>
+
+  <button class="nav" data-tab="articles">
+    📖 articles
+  </button>
+
+  <button class="nav" data-tab="about">
+    💗 about me
+  </button>
+
+  <button class="nav" data-tab="links">
+    🔗 links
+  </button>
+
+  <b style="margin-top:10px">
+    site
+  </b>
+
+  <button class="nav" onclick="openGuestbook()">
+    💌 guestbook
+  </button>
+
+</aside>
+
+
+<section class="panel edit" id="editor"></section>
+
+
+<aside class="panel preview">
+
+  <div class="previewHead">
+    👀 live preview ·
+    <span id="mode">homepage</span>
+  </div>
+
+  <div id="preview"></div>
+
+</aside>
+
+</main>
+
+</div>
+
+
+<div id="status" class="status"></div>
+
+
+<script>
+
+const ADMIN_UID =
+'ac58e6b6-fd86-47a4-a83c-6aa01a7d5b01';
+
+const sb =
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
+let tab='home';
+
+
+let home={
+  home_title:'my little pink world ♡',
+  home_tagline:'life ♡ fashion ♡ dreams ♡ pretty things',
+  home_welcome:'welcome to my little pink world ♡',
+  home_about:'a little corner of the internet for my thoughts, favorites and pretty things.',
+  home_currently:'currently loving: pink things, music, cozy days ♡',
+  home_updates:'new here ♡\nworking on my little blog',
+  home_categories:'life\nfashion\ndreams\npretty things',
+  home_reminder:'you are enough just as you are ♡',
+  home_footer:'made with love & lots of pink ♡',
+  home_image:''
+};
+
+
+let about={
+  about_title:'about me ♡',
+  about_subtitle:'hi, i\'m me!',
+  about_content:'welcome to my little corner of the internet ♡',
+  about_image:''
+};
+
+
+let posts=[];
+let articles=[];
+let links=[];
+
+
+const $=x=>document.getElementById(x);
+
+
+const esc=x=>
+String(x??'').replace(
+  /[&<>"']/g,
+  c=>({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#39;'
+  }[c])
+);
+
+
+const br=x=>
+esc(x).replace(/\n/g,'<br>');
+
+
+function status(t){
+
+  $('status').textContent=t;
+
+  $('status').classList.add('on');
+
+  clearTimeout(status.t);
+
+  status.t=setTimeout(
+    ()=>$('status').classList.remove('on'),
+    1800
+  );
+
+}
+
+
+async function admin(){
+
+  let {
+    data:{session}
+  }=await sb.auth.getSession();
+
+  if(
+    !session ||
+    session.user.id!==ADMIN_UID
+  ){
+
+    showLogin(
+      session
+      ? 'This account is not the admin account.'
+      : ''
+    );
+
+    return false;
+  }
+
+  $('login').classList.add('hidden');
+
+  $('app').classList.remove('hidden');
+
+  return true;
+}
+
+
+function showLogin(m){
+
+  $('login').classList.remove('hidden');
+
+  $('app').classList.add('hidden');
+
+  $('msg').textContent=m;
+
+}
+
+
+function openGuestbook(){
+
+  window.open(
+    'guestbook.html',
+    '_blank'
+  );
+
+}
+
+
+$('loginBtn').onclick=async()=>{
+
+  let {error}=
+    await sb.auth.signInWithPassword({
+      email:$('email').value.trim(),
+      password:$('password').value
+    });
+
+  if(error){
+
+    $('msg').textContent=
+      error.message;
+
+    return;
+  }
+
+  if(await admin())
+    load();
+
+};
+
+
+$('logout').onclick=async()=>{
+
+  await sb.auth.signOut();
+
+  showLogin('');
+
+};
+
+
+async function load(){
+
+  let s=
+    Object.keys(home)
+    .concat(Object.keys(about));
+
+  let {data}=
+    await sb
+      .from('site_content')
+      .select('section,content')
+      .in('section',s);
+
+  (data||[]).forEach(x=>{
+
+    if(x.section in home)
+      home[x.section]=x.content;
+
+    if(x.section in about)
+      about[x.section]=x.content;
+
+  });
+
+
+  let p=
+    await sb
+      .from('posts')
+      .select('*')
+      .order(
+        'published_at',
+        {ascending:false}
+      );
+
+  posts=p.data||[];
+
+
+  let a=
+    await sb
+      .from('articles')
+      .select('*')
+      .order(
+        'published_at',
+        {ascending:false}
+      );
+
+  articles=a.data||[];
+
+
+  let l=
+    await sb
+      .from('links')
+      .select('*')
+      .order(
+        'created_at',
+        {ascending:true}
+      );
+
+  links=l.data||[];
+
+
+  render();
+
+}
+
+
+async function save(obj){
+
+  let rows=
+    Object.entries(obj).map(
+      ([section,content])=>({
+        section,
+        content:String(content||''),
+        updated_at:new Date().toISOString()
+      })
+    );
+
+
+  let {error}=
+    await sb
+      .from('site_content')
+      .upsert(
+        rows,
+        {onConflict:'section'}
+      );
+
+
+  if(error)
+    throw error;
+
+
+  status('saved ♡');
+
+}
+
+
+function field(
+  obj,
+  key,
+  label,
+  ta=false
+){
+
+  return `
+    <div class="field">
+
+      <label>${label}</label>
+
+      ${
+        ta
+        ?
+        `<textarea data-key="${key}">
+          ${esc(obj[key])}
+        </textarea>`
+        :
+        `<input
+          data-key="${key}"
+          value="${esc(obj[key])}"
+        >`
+      }
+
+    </div>
   `;
 
-  $('adda').onclick=async()=>{
+}
 
-    let title=$('at').value.trim();
-    let content=$('ac').value.trim();
-    let image_url=$('ai').value.trim()||null;
-    let publishValue=$('ap').value;
 
-    if(!title || !content){
-      return alert('Add a title and article first.');
-    }
+function bind(obj){
 
-    if(!publishValue){
-      return alert('Choose a publish date and time first.');
-    }
+  document
+    .querySelectorAll('[data-key]')
+    .forEach(e=>{
 
-    let published_at=new Date(publishValue).toISOString();
+      e.oninput=()=>{
 
-    let {error}=await sb
-      .from('articles')
-      .insert({
-        title,
-        content,
-        image_url,
-        published_at
-      });
+        obj[e.dataset.key]=e.value;
 
-    if(error)return alert(error.message);
+        preview();
+
+      };
+
+    });
+
+}
+
+
+function render(){
+
+  document
+    .querySelectorAll('.nav[data-tab]')
+    .forEach(x=>
+      x.classList.toggle(
+        'active',
+        x.dataset.tab===tab
+      )
+    );
+
+
+  $('mode').textContent=tab;
+
+
+  if(tab==='home')
+    homeEditor();
+
+  if(tab==='about')
+    aboutEditor();
+
+  if(tab==='blog')
+    blogEditor();
+
+  if(tab==='articles')
+    articleEditor();
+
+  if(tab==='links')
+    linksEditor();
+
+
+  preview();
+
+}
+
+
+document
+  .querySelectorAll('.nav[data-tab]')
+  .forEach(x=>{
+
+    x.onclick=()=>{
+
+      tab=x.dataset.tab;
+
+      render();
+
+    };
+
+  });
+
+
+function homeEditor(){
+
+  $('editor').innerHTML=`
+
+    <h1>homepage ♡</h1>
+
+    <p class="muted">
+      Edit the homepage and watch the preview change while you type.
+    </p>
+
+    ${field(home,'home_title','site title')}
+
+    ${field(home,'home_tagline','tagline')}
+
+    ${field(
+      home,
+      'home_welcome',
+      'welcome',
+      'textarea'
+    )}
+
+    ${field(
+      home,
+      'home_about',
+      'about me card',
+      'textarea'
+    )}
+
+    <div class="row">
+
+      ${field(
+        home,
+        'home_currently',
+        'currently',
+        'textarea'
+      )}
+
+      ${field(
+        home,
+        'home_updates',
+        'little updates',
+        'textarea'
+      )}
+
+    </div>
+
+
+    <div class="row">
+
+      ${field(
+        home,
+        'home_categories',
+        'categories',
+        'textarea'
+      )}
+
+      ${field(
+        home,
+        'home_reminder',
+        'little reminder',
+        'textarea'
+      )}
+
+    </div>
+
+
+    ${field(
+      home,
+      'home_footer',
+      'footer',
+      'textarea'
+    )}
+
+
+    ${field(
+      home,
+      'home_image',
+      'homepage image URL'
+    )}
+
+
+    <div class="actions">
+
+      <label class="btn">
+
+        🖼️ upload image
+
+        <input
+          id="homeFile"
+          type="file"
+          accept="image/*"
+          style="display:none"
+        >
+
+      </label>
+
+
+      <button
+        class="btn primary"
+        id="saveHome"
+      >
+        save homepage ♡
+      </button>
+
+    </div>
+
+  `;
+
+
+  bind(home);
+
+
+  $('saveHome').onclick=
+    ()=>save(home);
+
+
+  $('homeFile').onchange=
+    e=>
+      upload(
+        e.target.files[0],
+        'homepage',
+        u=>{
+          home.home_image=u;
+          render();
+        }
+      );
+
+}
+
+
+function aboutEditor(){
+
+  $('editor').innerHTML=`
+
+    <h1>about me ♡</h1>
+
+    <p class="muted">
+      Edit your About Me page.
+    </p>
+
+    ${field(
+      about,
+      'about_title',
+      'page title'
+    )}
+
+    ${field(
+      about,
+      'about_subtitle',
+      'subtitle'
+    )}
+
+    ${field(
+      about,
+      'about_content',
+      'about me text',
+      'textarea'
+    )}
+
+    ${field(
+      about,
+      'about_image',
+      'photo URL'
+    )}
+
+
+    <div class="actions">
+
+      <label class="btn">
+
+        🖼️ upload photo
+
+        <input
+          id="aboutFile"
+          type="file"
+          accept="image/*"
+          style="display:none"
+        >
+
+      </label>
+
+
+      <button
+        class="btn primary"
+        id="saveAbout"
+      >
+        save about me ♡
+      </button>
+
+    </div>
+
+  `;
+
+
+  bind(about);
+
+
+  $('saveAbout').onclick=
+    ()=>save(about);
+
+
+  $('aboutFile').onchange=
+    e=>
+      upload(
+        e.target.files[0],
+        'about',
+        u=>{
+          about.about_image=u;
+          render();
+        }
+      );
+
+}
+
+
+async function upload(
+  file,
+  folder,
+  done
+){
+
+  if(!file)
+    return;
+
+
+  let path=
+    folder+
+    '/' +
+    Date.now()+
+    '-' +
+    file.name.replace(
+      /[^a-zA-Z0-9._-]/g,
+      '_'
+    );
+
+
+  let {error}=
+    await sb
+      .storage
+      .from('site-images')
+      .upload(
+        path,
+        file
+      );
+
+
+  if(error){
+
+    alert(error.message);
+
+    return;
+
+  }
+
+
+  let {data}=
+    sb
+      .storage
+      .from('site-images')
+      .getPublicUrl(path);
+
+
+  done(data.publicUrl);
+
+  status('image uploaded ♡');
+
+}
+
+
+function blogEditor(){
+
+  $('editor').innerHTML=`
+
+    <h1>blog ♡</h1>
+
+    <p class="muted">
+      Short everyday posts.
+    </p>
+
+
+    <div class="field">
+      <label>title</label>
+      <input id="pt">
+    </div>
+
+
+    <div class="field">
+      <label>post</label>
+      <textarea id="pc"></textarea>
+    </div>
+
+
+    <div class="field">
+      <label>image URL</label>
+      <input id="pi">
+    </div>
+
+
+    <div class="actions">
+
+      <label class="btn">
+
+        🖼️ upload image
+
+        <input
+          id="pf"
+          type="file"
+          accept="image/*"
+          style="display:none"
+        >
+
+      </label>
+
+
+      <button
+        class="btn primary"
+        id="addp"
+      >
+        publish post ♡
+      </button>
+
+    </div>
+
+
+    <div class="list">
+
+      ${
+        posts.map(p=>`
+
+          <div class="item">
+
+            <div>
+
+              <b>
+                ${esc(p.title)}
+              </b>
+
+              <br>
+
+              <small>
+                ${esc(
+                  (p.content||'')
+                    .slice(0,100)
+                )}
+              </small>
+
+            </div>
+
+
+            <div>
+
+              <button
+                class="btn"
+                onclick="editPost('${p.id}')"
+              >
+                edit
+              </button>
+
+              <button
+                class="btn danger"
+                onclick="delPost('${p.id}')"
+              >
+                delete
+              </button>
+
+            </div>
+
+          </div>
+
+        `).join('')
+        ||
+        '<div class="muted">no posts yet ♡</div>'
+      }
+
+    </div>
+
+  `;
+
+
+  $('addp').onclick=async()=>{
+
+    let title=
+      $('pt').value.trim();
+
+    let content=
+      $('pc').value.trim();
+
+    let image_url=
+      $('pi').value.trim()||null;
+
+
+    if(!title||!content)
+      return alert(
+        'Add a title and post first.'
+      );
+
+
+    let {error}=
+      await sb
+        .from('posts')
+        .insert({
+          title,
+          content,
+          image_url,
+          published_at:
+            new Date().toISOString()
+        });
+
+
+    if(error)
+      return alert(error.message);
+
 
     await load();
-    status('article scheduled ♡');
+
+    status('post published ♡');
+
   };
 
-  $('af').onchange=e=>
-    upload(e.target.files[0],'articles',u=>$('ai').value=u);
-}
-window.editArticle=async id=>{
-  let a=articles.find(x=>x.id===id);
-  if(!a)return;
 
-  let old=document.getElementById('editArticleModal');
-  if(old)old.remove();
+  $('pf').onchange=
+    e=>
+      upload(
+        e.target.files[0],
+        'posts',
+        u=>$('pi').value=u
+      );
+
+}
+
+
+window.editPost=async id=>{
+
+  let p=
+    posts.find(x=>x.id===id);
+
+  if(!p)
+    return;
+
+
+  let old=
+    document.getElementById(
+      'editPostModal'
+    );
+
+  if(old)
+    old.remove();
+
+
+  document.body.insertAdjacentHTML(
+    'beforeend',
+    `
+
+    <div
+      id="editPostModal"
+      style="
+        position:fixed;
+        inset:0;
+        z-index:100;
+        background:rgba(80,40,60,.35);
+        display:grid;
+        place-items:center;
+        padding:20px;
+      "
+    >
+
+      <div
+        style="
+          width:min(650px,100%);
+          max-height:90vh;
+          overflow:auto;
+          background:#fffafd;
+          border:1px solid #ecd7e2;
+          border-radius:20px;
+          padding:24px;
+          box-shadow:0 15px 50px rgba(100,50,75,.25);
+        "
+      >
+
+        <div
+          style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:10px
+          "
+        >
+
+          <div>
+
+            <h2
+              style="
+                margin:0;
+                color:#75455b
+              "
+            >
+              edit post ♡
+            </h2>
+
+            <p
+              class="muted"
+              style="margin:5px 0 0"
+            >
+              Change anything about this post.
+            </p>
+
+          </div>
+
+
+          <button
+            class="btn"
+            id="closeEditPost"
+          >
+            ×
+          </button>
+
+        </div>
+
+
+        <div class="field">
+
+          <label>post title</label>
+
+          <input
+            id="editPostTitle"
+            value="${esc(p.title)}"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label>post</label>
+
+          <textarea
+            id="editPostContent"
+            style="min-height:220px"
+          >${esc(p.content)}</textarea>
+
+        </div>
+
+
+        <div class="field">
+
+          <label>photo</label>
+
+
+          <div
+            id="editPostImagePreview"
+            style="
+              margin-bottom:8px;
+              border-radius:12px;
+              overflow:hidden;
+              background:#f9dfeb;
+              min-height:80px;
+              display:${p.image_url?'block':'none'};
+            "
+          >
+
+            ${
+              p.image_url
+              ?
+              `<img
+                src="${esc(p.image_url)}"
+                style="
+                  width:100%;
+                  max-height:260px;
+                  object-fit:cover
+                "
+              >`
+              :
+              ''
+            }
+
+          </div>
+
+
+          <input
+            id="editPostImage"
+            value="${esc(p.image_url||'')}"
+            placeholder="image URL"
+          >
+
+
+          <div class="actions">
+
+            <label class="btn">
+
+              🖼️ replace photo
+
+              <input
+                id="editPostFile"
+                type="file"
+                accept="image/*"
+                style="display:none"
+              >
+
+            </label>
+
+
+            <button
+              class="btn danger"
+              id="removePostImage"
+              type="button"
+            >
+              🗑️ remove photo
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="actions"
+          style="margin-top:20px"
+        >
+
+          <button
+            class="btn"
+            id="cancelEditPost"
+          >
+            cancel
+          </button>
+
+
+          <button
+            class="btn primary"
+            id="saveEditPost"
+          >
+            save changes ♡
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    `
+  );
+
+
+  const modal=
+    $('editPostModal');
+
+  const imageInput=
+    $('editPostImage');
+
+  const imagePreview=
+    $('editPostImagePreview');
+
+
+  $('closeEditPost').onclick=
+    ()=>modal.remove();
+
+
+  $('cancelEditPost').onclick=
+    ()=>modal.remove();
+
+
+  $('removePostImage').onclick=()=>{
+
+    imageInput.value='';
+
+    imagePreview.innerHTML='';
+
+    imagePreview.style.display='none';
+
+  };
+
+
+  $('editPostFile').onchange=
+    async e=>{
+
+      let file=
+        e.target.files[0];
+
+      if(!file)
+        return;
+
+
+      await upload(
+        file,
+        'posts',
+        url=>{
+
+          imageInput.value=url;
+
+          imagePreview.innerHTML=
+            `<img
+              src="${esc(url)}"
+              style="
+                width:100%;
+                max-height:260px;
+                object-fit:cover
+              "
+            >`;
+
+          imagePreview.style.display=
+            'block';
+
+        }
+      );
+
+    };
+
+
+  imageInput.oninput=()=>{
+
+    let url=
+      imageInput.value.trim();
+
+
+    if(url){
+
+      imagePreview.innerHTML=
+        `<img
+          src="${esc(url)}"
+          style="
+            width:100%;
+            max-height:260px;
+            object-fit:cover
+          "
+        >`;
+
+      imagePreview.style.display=
+        'block';
+
+    }else{
+
+      imagePreview.innerHTML='';
+
+      imagePreview.style.display=
+        'none';
+
+    }
+
+  };
+
+
+  $('saveEditPost').onclick=
+    async()=>{
+
+      let title=
+        $('editPostTitle')
+          .value
+          .trim();
+
+      let content=
+        $('editPostContent')
+          .value
+          .trim();
+
+      let image_url=
+        $('editPostImage')
+          .value
+          .trim()||null;
+
+
+      if(!title||!content){
+
+        alert(
+          'Please add a title and post text.'
+        );
+
+        return;
+
+      }
+
+
+      let {error}=
+        await sb
+          .from('posts')
+          .update({
+            title,
+            content,
+            image_url
+          })
+          .eq('id',id);
+
+
+      if(error){
+
+        alert(error.message);
+
+        return;
+
+      }
+
+
+      modal.remove();
+
+      await load();
+
+      status('post updated ♡');
+
+    };
+
+};
+
+
+window.delPost=async id=>{
+
+  if(
+    !confirm(
+      'Delete this post?'
+    )
+  )
+    return;
+
+
+  let {error}=
+    await sb
+      .from('posts')
+      .delete()
+      .eq('id',id);
+
+
+  if(error){
+
+    alert(error.message);
+
+    return;
+
+  }
+
+
+  await load();
+
+  status('post deleted ♡');
+
+};
+
+
+function articleEditor(){
+
+  $('editor').innerHTML=`
+
+    <h1>articles ♡</h1>
+
+    <p class="muted">
+      Longer writing, separate from your normal blog.
+    </p>
+
+
+    <div class="field">
+
+      <label>title</label>
+
+      <input id="at">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>article</label>
+
+      <textarea
+        id="ac"
+        style="min-height:220px"
+      ></textarea>
+
+    </div>
+
+
+    <div class="field">
+
+      <label>image URL</label>
+
+      <input id="ai">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>publish date & time</label>
+
+      <input
+        id="ap"
+        type="datetime-local"
+      >
+
+      <small class="muted">
+        Choose when this article should become visible on the website.
+      </small>
+
+    </div>
+
+
+    <div class="actions">
+
+      <label class="btn">
+
+        🖼️ upload image
+
+        <input
+          id="af"
+          type="file"
+          accept="image/*"
+          style="display:none"
+        >
+
+      </label>
+
+
+      <button
+        class="btn primary"
+        id="adda"
+      >
+        publish article ♡
+      </button>
+
+    </div>
+
+
+    <div class="list">
+
+      ${
+        articles.map(a=>`
+
+          <div class="item">
+
+            <div>
+
+              <b>
+                ${esc(a.title)}
+              </b>
+
+              <br>
+
+              <small>
+                ${esc(
+                  (a.content||'')
+                    .slice(0,100)
+                )}
+              </small>
+
+            </div>
+
+
+            <div>
+
+              <button
+                class="btn"
+                onclick="window.editArticle('${a.id}')"
+              >
+                edit
+              </button>
+
+
+              <button
+                class="btn danger"
+                onclick="window.delArticle('${a.id}')"
+              >
+                delete
+              </button>
+
+            </div>
+
+          </div>
+
+        `).join('')
+        ||
+        '<div class="muted">no articles yet ♡</div>'
+      }
+
+    </div>
+
+  `;
+
+
+  $('adda').onclick=
+    async()=>{
+
+      let title=
+        $('at').value.trim();
+
+      let content=
+        $('ac').value.trim();
+
+      let image_url=
+        $('ai').value.trim()||null;
+
+      let publishValue=
+        $('ap').value;
+
+
+      if(!title||!content){
+
+        return alert(
+          'Add a title and article first.'
+        );
+
+      }
+
+
+      if(!publishValue){
+
+        return alert(
+          'Choose a publish date and time first.'
+        );
+
+      }
+
+
+      let published_at=
+        new Date(
+          publishValue
+        ).toISOString();
+
+
+      let {error}=
+        await sb
+          .from('articles')
+          .insert({
+            title,
+            content,
+            image_url,
+            published_at
+          });
+
+
+      if(error)
+        return alert(
+          error.message
+        );
+
+
+      await load();
+
+      status(
+        'article scheduled ♡'
+      );
+
+    };
+
+
+  $('af').onchange=
+    e=>
+      upload(
+        e.target.files[0],
+        'articles',
+        u=>$('ai').value=u
+      );
+
+}
+
+
+window.editArticle=async id=>{
+
+  let a=
+    articles.find(
+      x=>x.id===id
+    );
+
+  if(!a)
+    return;
+
+
+  let old=
+    document.getElementById(
+      'editArticleModal'
+    );
+
+  if(old)
+    old.remove();
+
 
   let localDate='';
 
-  if(a.published_at){
-    const d=new Date(a.published_at);
-    const pad=n=>String(n).padStart(2,'0');
 
-    localDate =
+  if(a.published_at){
+
+    const d=
+      new Date(
+        a.published_at
+      );
+
+    const pad=
+      n=>String(n).padStart(2,'0');
+
+
+    localDate=
       d.getFullYear()+'-'+
       pad(d.getMonth()+1)+'-'+
       pad(d.getDate())+'T'+
       pad(d.getHours())+':'+
       pad(d.getMinutes());
+
   }
 
-  document.body.insertAdjacentHTML('beforeend',`
-    <div id="editArticleModal" style="
-      position:fixed;
-      inset:0;
-      z-index:100;
-      background:rgba(80,40,60,.35);
-      display:grid;
-      place-items:center;
-      padding:20px;
-    ">
 
-      <div style="
-        width:min(650px,100%);
-        max-height:90vh;
-        overflow:auto;
-        background:#fffafd;
-        border:1px solid #ecd7e2;
-        border-radius:20px;
-        padding:24px;
-        box-shadow:0 15px 50px rgba(100,50,75,.25);
-      ">
+  document.body.insertAdjacentHTML(
+    'beforeend',
+    `
 
-        <div style="
-          display:flex;
-          justify-content:space-between;
-          align-items:center;
-          gap:10px
-        ">
+    <div
+      id="editArticleModal"
+      style="
+        position:fixed;
+        inset:0;
+        z-index:100;
+        background:rgba(80,40,60,.35);
+        display:grid;
+        place-items:center;
+        padding:20px;
+      "
+    >
+
+      <div
+        style="
+          width:min(650px,100%);
+          max-height:90vh;
+          overflow:auto;
+          background:#fffafd;
+          border:1px solid #ecd7e2;
+          border-radius:20px;
+          padding:24px;
+          box-shadow:0 15px 50px rgba(100,50,75,.25);
+        "
+      >
+
+        <div
+          style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:10px
+          "
+        >
+
           <div>
-            <h2 style="margin:0;color:#75455b">
+
+            <h2
+              style="
+                margin:0;
+                color:#75455b
+              "
+            >
               edit article ♡
             </h2>
 
-            <p class="muted" style="margin:5px 0 0">
+            <p
+              class="muted"
+              style="margin:5px 0 0"
+            >
               Change anything about this article.
             </p>
+
           </div>
 
-          <button class="btn" id="closeEditArticle">×</button>
+
+          <button
+            class="btn"
+            id="closeEditArticle"
+          >
+            ×
+          </button>
+
         </div>
 
+
         <div class="field">
+
           <label>article title</label>
-          <input id="editArticleTitle" value="${esc(a.title)}">
+
+          <input
+            id="editArticleTitle"
+            value="${esc(a.title)}"
+          >
+
         </div>
 
+
         <div class="field">
+
           <label>article</label>
-          <textarea id="editArticleContent" style="min-height:220px">${esc(a.content)}</textarea>
+
+          <textarea
+            id="editArticleContent"
+            style="min-height:220px"
+          >${esc(a.content)}</textarea>
+
         </div>
 
+
         <div class="field">
+
           <label>image URL</label>
-          <input id="editArticleImage" value="${esc(a.image_url||'')}" placeholder="image URL">
+
+          <input
+            id="editArticleImage"
+            value="${esc(a.image_url||'')}"
+            placeholder="image URL"
+          >
+
         </div>
 
+
         <div class="field">
+
           <label>publish date & time</label>
-          <input id="editArticlePublished" type="datetime-local" value="${localDate}">
+
+          <input
+            id="editArticlePublished"
+            type="datetime-local"
+            value="${localDate}"
+          >
 
           <small class="muted">
             Change when this article becomes visible.
           </small>
+
         </div>
 
-        <div class="actions" style="margin-top:20px">
-          <button class="btn" id="cancelEditArticle">
+
+        <div
+          class="actions"
+          style="margin-top:20px"
+        >
+
+          <button
+            class="btn"
+            id="cancelEditArticle"
+          >
             cancel
           </button>
 
-          <button class="btn primary" id="saveEditArticle">
+
+          <button
+            class="btn primary"
+            id="saveEditArticle"
+          >
             save changes ♡
           </button>
+
         </div>
 
       </div>
+
     </div>
-  `);
 
-  const modal=$('editArticleModal');
+    `
+  );
 
-  $('closeEditArticle').onclick=()=>modal.remove();
-  $('cancelEditArticle').onclick=()=>modal.remove();
 
-  $('saveEditArticle').onclick=async()=>{
+  const modal=
+    $('editArticleModal');
 
-    let title=$('editArticleTitle').value.trim();
-    let content=$('editArticleContent').value.trim();
-    let image_url=$('editArticleImage').value.trim()||null;
-    let publishValue=$('editArticlePublished').value;
 
-    if(!title||!content){
-      alert('Please add a title and article text.');
-      return;
-    }
+  $('closeEditArticle').onclick=
+    ()=>modal.remove();
 
-    if(!publishValue){
-      alert('Please choose a publish date and time.');
-      return;
-    }
 
-    let published_at=new Date(publishValue).toISOString();
+  $('cancelEditArticle').onclick=
+    ()=>modal.remove();
 
-    let {error}=await sb
+
+  $('saveEditArticle').onclick=
+    async()=>{
+
+      let title=
+        $('editArticleTitle')
+          .value
+          .trim();
+
+      let content=
+        $('editArticleContent')
+          .value
+          .trim();
+
+      let image_url=
+        $('editArticleImage')
+          .value
+          .trim()||null;
+
+      let publishValue=
+        $('editArticlePublished')
+          .value;
+
+
+      if(!title||!content){
+
+        alert(
+          'Please add a title and article text.'
+        );
+
+        return;
+
+      }
+
+
+      if(!publishValue){
+
+        alert(
+          'Please choose a publish date and time.'
+        );
+
+        return;
+
+      }
+
+
+      let published_at=
+        new Date(
+          publishValue
+        ).toISOString();
+
+
+      let {error}=
+        await sb
+          .from('articles')
+          .update({
+            title,
+            content,
+            image_url,
+            published_at
+          })
+          .eq('id',id);
+
+
+      if(error){
+
+        alert(error.message);
+
+        return;
+
+      }
+
+
+      modal.remove();
+
+      await load();
+
+      status(
+        'article updated ♡'
+      );
+
+    };
+
+};
+
+
+/* THIS WAS THE MISSING FUNCTION 💗 */
+
+window.delArticle=async id=>{
+
+  if(
+    !confirm(
+      'Delete this article?'
+    )
+  )
+    return;
+
+
+  let {error}=
+    await sb
       .from('articles')
+      .delete()
+      .eq('id',id);
+
+
+  if(error){
+
+    alert(error.message);
+
+    return;
+
+  }
+
+
+  await load();
+
+  status(
+    'article deleted ♡'
+  );
+
+};
+
+
+function linksEditor(){
+
+  $('editor').innerHTML=`
+
+    <h1>links ♡</h1>
+
+    <p class="muted">
+      Manage the links visitors see.
+    </p>
+
+
+    <div class="field">
+
+      <label>name</label>
+
+      <input id="lt">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>URL</label>
+
+      <input id="lu">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>description</label>
+
+      <textarea
+        id="ld"
+        style="min-height:75px"
+      ></textarea>
+
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        class="btn primary"
+        id="addl"
+      >
+        add link ♡
+      </button>
+
+    </div>
+
+
+    <div class="list">
+
+      ${
+        links.map(l=>`
+
+          <div class="item">
+
+            <div>
+
+              <b>
+                ${esc(l.title)}
+              </b>
+
+              <br>
+
+              <small>
+                ${esc(l.url)}
+              </small>
+
+            </div>
+
+
+            <div>
+
+              <button
+                class="btn"
+                onclick="editLink('${l.id}')"
+              >
+                edit
+              </button>
+
+              <button
+                class="btn danger"
+                onclick="delLink('${l.id}')"
+              >
+                delete
+              </button>
+
+            </div>
+
+          </div>
+
+        `).join('')
+        ||
+        '<div class="muted">no links yet ♡</div>'
+      }
+
+    </div>
+
+  `;
+
+
+  $('addl').onclick=
+    async()=>{
+
+      let title=
+        $('lt').value.trim();
+
+      let url=
+        $('lu').value.trim();
+
+      let description=
+        $('ld').value.trim();
+
+
+      if(!title||!url)
+        return alert(
+          'Add a name and URL first.'
+        );
+
+
+      let {error}=
+        await sb
+          .from('links')
+          .insert({
+            title,
+            url,
+            description
+          });
+
+
+      if(error)
+        return alert(
+          error.message
+        );
+
+
+      await load();
+
+      status(
+        'link added ♡'
+      );
+
+    };
+
+}
+
+
+window.editLink=async id=>{
+
+  let l=
+    links.find(
+      x=>x.id===id
+    );
+
+  if(!l)
+    return;
+
+
+  let title=
+    prompt(
+      'Name:',
+      l.title
+    );
+
+  if(title===null)
+    return;
+
+
+  let url=
+    prompt(
+      'URL:',
+      l.url
+    );
+
+  if(url===null)
+    return;
+
+
+  let description=
+    prompt(
+      'Description:',
+      l.description||''
+    );
+
+  if(description===null)
+    return;
+
+
+  let {error}=
+    await sb
+      .from('links')
       .update({
         title,
-        content,
-        image_url,
-        published_at
+        url,
+        description
       })
       .eq('id',id);
 
-    if(error){
-      alert(error.message);
-      return;
-    }
 
-    modal.remove();
+  if(error)
+    alert(error.message);
+
+  else{
+
     await load();
-    status('article updated ♡');
-  };
+
+    status(
+      'link updated ♡'
+    );
+
+  }
+
 };
-function linksEditor(){$('editor').innerHTML=`<h1>links ♡</h1><p class="muted">Manage the links visitors see.</p><div class="field"><label>name</label><input id="lt"></div><div class="field"><label>URL</label><input id="lu"></div><div class="field"><label>description</label><textarea id="ld" style="min-height:75px"></textarea></div><div class="actions"><button class="btn primary" id="addl">add link ♡</button></div><div class="list">${links.map(l=>`<div class="item"><div><b>${esc(l.title)}</b><br><small>${esc(l.url)}</small></div><div><button class="btn" onclick="editLink('${l.id}')">edit</button> <button class="btn danger" onclick="delLink('${l.id}')">delete</button></div></div>`).join('')||'<div class="muted">no links yet ♡</div>'}</div>`;$('addl').onclick=async()=>{let title=$('lt').value.trim(),url=$('lu').value.trim(),description=$('ld').value.trim();if(!title||!url)return alert('Add a name and URL first.');let {error}=await sb.from('links').insert({title,url,description});if(error)return alert(error.message);await load();status('link added ♡')}}window.editLink=async id=>{let l=links.find(x=>x.id===id);if(!l)return;let title=prompt('Name:',l.title);if(title===null)return;let url=prompt('URL:',l.url);if(url===null)return;let description=prompt('Description:',l.description||'');if(description===null)return;let {error}=await sb.from('links').update({title,url,description}).eq('id',id);if(error)alert(error.message);else{await load();status('link updated ♡')}};window.delLink=async id=>{if(!confirm('Delete this link?'))return;let {error}=await sb.from('links').delete().eq('id',id);if(error)alert(error.message);else{await load();status('link deleted')}};
+
+
+window.delLink=async id=>{
+
+  if(
+    !confirm(
+      'Delete this link?'
+    )
+  )
+    return;
+
+
+  let {error}=
+    await sb
+      .from('links')
+      .delete()
+      .eq('id',id);
+
+
+  if(error)
+    alert(error.message);
+
+  else{
+
+    await load();
+
+    status(
+      'link deleted'
+    );
+
+  }
+
+};
+
+
 function img(u,a){
-  return u ? `<img src="${esc(u)}" alt="${esc(a)}">` : '';
+
+  return u
+    ?
+    `<img
+      src="${esc(u)}"
+      alt="${esc(a)}"
+    >`
+    :
+    '';
+
 }
-  function preview(){
+
+
+function preview(){
+
   $('preview').innerHTML=`
+
     <div class="site">
 
+
       <div class="siteHead">
-        <div class="siteTitle">${esc(home.home_title)}</div>
-        <div class="tag">${esc(home.home_tagline)}</div>
+
+        <div class="siteTitle">
+          ${esc(home.home_title)}
+        </div>
+
+        <div class="tag">
+          ${esc(home.home_tagline)}
+        </div>
+
       </div>
 
+
       <div class="navfake">
-        HOME ♡　 BLOG ♡　 ARTICLES ♡　 ABOUT ME ♡　 LINKS ♡　 GUESTBOOK ♡
+
+        HOME ♡　
+        BLOG ♡　
+        ARTICLES ♡　
+        ABOUT ME ♡　
+        LINKS ♡　
+        GUESTBOOK ♡
+
       </div>
+
 
       <div class="cols">
 
-        <div>
-          <div class="card">
-            <h3>about me ♡</h3>
 
-            ${about.about_image
-              ? `<div class="photo">
-                   <img src="${esc(about.about_image)}" alt="about me">
-                 </div>`
-              : ''
+        <div>
+
+          <div class="card">
+
+            <h3>
+              about me ♡
+            </h3>
+
+
+            ${
+              about.about_image
+              ?
+              `<div class="photo">
+
+                <img
+                  src="${esc(about.about_image)}"
+                  alt="about me"
+                >
+
+              </div>`
+              :
+              ''
             }
 
+
             ${br(home.home_about)}
+
           </div>
 
+
           <div class="card">
-            <h3>little updates</h3>
+
+            <h3>
+              little updates
+            </h3>
+
             ${br(home.home_updates)}
+
           </div>
+
         </div>
 
+
         <div>
+
           <div class="card">
-            <h3>welcome ♡</h3>
+
+            <h3>
+              welcome ♡
+            </h3>
+
             ${br(home.home_welcome)}
+
           </div>
+
 
           ${
-            posts.slice(0,2).map(p=>`
-              <div class="post">
-                ${
-                  p.image_url
-                  ? `<div class="photo" style="aspect-ratio:16/7">
-                       ${img(p.image_url,p.title)}
-                     </div>`
-                  : ''
-                }
+            posts
+              .slice(0,2)
+              .map(p=>`
 
-                <h2>${esc(p.title)}</h2>
-                <p>
-                  ${br(p.content).slice(0,500)}
-                  ${p.content.length>500?'…':''}
-                </p>
-              </div>
-            `).join('')
+                <div class="post">
+
+                  ${
+                    p.image_url
+                    ?
+                    `<div
+                      class="photo"
+                      style="aspect-ratio:16/7"
+                    >
+                      ${img(
+                        p.image_url,
+                        p.title
+                      )}
+                    </div>`
+                    :
+                    ''
+                  }
+
+
+                  <h2>
+                    ${esc(p.title)}
+                  </h2>
+
+
+                  <p>
+
+                    ${br(
+                      p.content
+                    ).slice(0,500)}
+
+                    ${
+                      p.content.length>500
+                      ?
+                      '…'
+                      :
+                      ''
+                    }
+
+                  </p>
+
+                </div>
+
+              `).join('')
             ||
-            `<div class="post">
-              <h2>a new little world ♡</h2>
-              <p>your blog posts will appear here.</p>
-            </div>`
+
+            `
+            <div class="post">
+
+              <h2>
+                a new little world ♡
+              </h2>
+
+              <p>
+                your blog posts will appear here.
+              </p>
+
+            </div>
+            `
           }
+
         </div>
+
 
         <div>
+
           <div class="card">
-            <h3>currently ♡</h3>
+
+            <h3>
+              currently ♡
+            </h3>
+
             ${br(home.home_currently)}
+
           </div>
 
+
           <div class="card">
-            <h3>categories</h3>
+
+            <h3>
+              categories
+            </h3>
+
             ${br(home.home_categories)}
+
           </div>
 
+
           <div class="card">
-            <h3>little reminder</h3>
+
+            <h3>
+              little reminder
+            </h3>
+
             ${br(home.home_reminder)}
+
           </div>
+
         </div>
+
 
       </div>
 
-      <div style="text-align:center;padding:10px;font-size:9px;color:#a98796;border-top:1px solid #ecd8e2">
+
+      <div
+        style="
+          text-align:center;
+          padding:10px;
+          font-size:9px;
+          color:#a98796;
+          border-top:1px solid #ecd8e2
+        "
+      >
         ${esc(home.home_footer)}
       </div>
 
+
     </div>
+
   `;
+
 }
-sb.auth.onAuthStateChange(()=>{});(async()=>{if(await admin())await load()})();
-</script></body></html>
+
+
+sb.auth.onAuthStateChange(
+  ()=>{}
+);
+
+
+(async()=>{
+
+  if(await admin())
+    await load();
+
+})();
+
+</script>
+
+</body>
+</html>
