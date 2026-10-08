@@ -24,5 +24,84 @@ header{max-width:1180px;margin:auto;padding:42px 24px 25px;text-align:center;pos
 <a href="guestbook.html">♡ Guestbook</a>
 </nav>
 </header>
-<main class="page"><h2 class="page-title">about me ♡</h2><p class="page-sub">a tiny introduction to the girl behind the blog</p>
-<div class="card"><div class="pad"><h2 style="font-family:'DM Serif Display',serif;font-weight:400;color:#91576d">hiii ♡</h2><p>welcome to my little pink world! this is my online diary where i can share thoughts, favorite things, photos, playlists and little moments that make me happy.</p><p>i wanted this space to feel soft, personal and a little bit like the blogs from the early internet — just with a cleaner pastel look.</p><p>stay for a while and have a look around. ♡</p></div></div></main><footer>made with ♡ & pink sparkles · my little pink world</footer></body></html>
+<main class="page">
+
+  <h2 class="page-title" id="aboutTitle">about me ♡</h2>
+
+  <p class="page-sub" id="aboutSubtitle">
+    a tiny introduction to the girl behind the blog
+  </p>
+
+  <div class="card">
+
+    <div id="aboutPhoto"></div>
+
+    <div class="pad" id="aboutContent">
+      welcome to my little pink world! ♡
+    </div>
+
+  </div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+
+<script>
+(async function(){
+
+  const client = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+  const {data,error} = await client
+    .from("site_content")
+    .select("section,content")
+    .in("section",[
+      "about_title",
+      "about_subtitle",
+      "about_content",
+      "about_image"
+    ]);
+
+  if(error){
+    console.error(error);
+    return;
+  }
+
+  const content={};
+
+  (data || []).forEach(row=>{
+    content[row.section]=row.content;
+  });
+
+  const esc=s=>String(s ?? "").replace(/[&<>"']/g,c=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  }[c]));
+
+  document.getElementById("aboutTitle").innerHTML =
+    esc(content.about_title || "about me ♡");
+
+  document.getElementById("aboutSubtitle").innerHTML =
+    esc(content.about_subtitle || "a tiny introduction to the girl behind the blog");
+
+  document.getElementById("aboutContent").innerHTML =
+    esc(content.about_content || "welcome to my little pink world! ♡")
+      .replace(/\n/g,"<br>");
+
+  if(content.about_image){
+
+    document.getElementById("aboutPhoto").innerHTML =
+      `<img src="${esc(content.about_image)}"
+        alt="about me"
+        style="width:100%;max-height:400px;object-fit:cover;display:block;">`;
+
+  }
+
+})();
+</script>
