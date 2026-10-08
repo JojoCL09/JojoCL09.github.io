@@ -246,7 +246,8 @@ body{
   padding:8px;
   border-bottom:1px solid #ecd8e2;
   font-size:10px;
-  color:#98667d
+  color:#98667d;
+  white-space:nowrap
 }
 
 .cols{
@@ -306,6 +307,26 @@ body{
   font-size:10px;
   line-height:1.45;
   margin:0
+}
+
+.date{
+  font-size:9px;
+  color:#ad8495;
+  margin-bottom:5px
+}
+
+.pagePreview{
+  padding:10px
+}
+
+.previewButton{
+  display:inline-block;
+  border:1px solid #e0bfd0;
+  padding:6px 9px;
+  border-radius:8px;
+  color:#b04f78;
+  font-size:9px;
+  margin-top:7px
 }
 
 .login{
@@ -510,6 +531,7 @@ window.supabase.createClient(
 
 let tab='home';
 
+
 let home={
   home_title:'my little pink world ♡',
   home_tagline:'life ♡ fashion ♡ dreams ♡ pretty things',
@@ -523,6 +545,7 @@ let home={
   home_image:''
 };
 
+
 let about={
   about_title:'about me ♡',
   about_subtitle:'hi, i\'m me!',
@@ -530,12 +553,15 @@ let about={
   about_image:''
 };
 
+
 let posts=[];
 let articles=[];
 let links=[];
 let guestbook=[];
 
+
 const $=x=>document.getElementById(x);
+
 
 const esc=x=>
 String(x??'').replace(
@@ -548,6 +574,7 @@ String(x??'').replace(
     "'":'&#39;'
   }[c])
 );
+
 
 const br=x=>
 esc(x).replace(/\n/g,'<br>');
@@ -937,10 +964,13 @@ function homeEditor(){
 
   `;
 
+
   bind(home);
+
 
   $('saveHome').onclick=
     ()=>save(home);
+
 
   $('homeFile').onchange=
     e=>
@@ -1014,10 +1044,13 @@ function aboutEditor(){
 
   `;
 
+
   bind(about);
+
 
   $('saveAbout').onclick=
     ()=>save(about);
+
 
   $('aboutFile').onchange=
     e=>
@@ -1052,6 +1085,7 @@ async function upload(
       '_'
     );
 
+
   let {error}=
     await sb
       .storage
@@ -1061,16 +1095,19 @@ async function upload(
         file
       );
 
+
   if(error){
     alert(error.message);
     return;
   }
+
 
   let {data}=
     sb
       .storage
       .from('site-images')
       .getPublicUrl(path);
+
 
   done(data.publicUrl);
 
@@ -1181,6 +1218,7 @@ function blogEditor(){
         'Add a title and post first.'
       );
 
+
     let {error}=
       await sb
         .from('posts')
@@ -1191,8 +1229,10 @@ function blogEditor(){
           published_at:new Date().toISOString()
         });
 
+
     if(error)
       return alert(error.message);
+
 
     await load();
 
@@ -1219,6 +1259,7 @@ window.editPost=async id=>{
   if(!p)
     return;
 
+
   let title=prompt(
     'Post title:',
     p.title
@@ -1226,6 +1267,7 @@ window.editPost=async id=>{
 
   if(title===null)
     return;
+
 
   let content=prompt(
     'Post:',
@@ -1235,6 +1277,7 @@ window.editPost=async id=>{
   if(content===null)
     return;
 
+
   let image_url=prompt(
     'Image URL:',
     p.image_url||''
@@ -1242,6 +1285,7 @@ window.editPost=async id=>{
 
   if(image_url===null)
     return;
+
 
   let {error}=
     await sb
@@ -1253,10 +1297,12 @@ window.editPost=async id=>{
       })
       .eq('id',id);
 
+
   if(error){
     alert(error.message);
     return;
   }
+
 
   await load();
 
@@ -1270,16 +1316,19 @@ window.delPost=async id=>{
   if(!confirm('Delete this post?'))
     return;
 
+
   let {error}=
     await sb
       .from('posts')
       .delete()
       .eq('id',id);
 
+
   if(error){
     alert(error.message);
     return;
   }
+
 
   await load();
 
@@ -1305,7 +1354,10 @@ function articleEditor(){
 
     <div class="field">
       <label>article</label>
-      <textarea id="ac" style="min-height:220px"></textarea>
+      <textarea
+        id="ac"
+        style="min-height:220px"
+      ></textarea>
     </div>
 
     <div class="field">
@@ -1314,24 +1366,34 @@ function articleEditor(){
     </div>
 
     <div class="field">
-      <label>publish date & time</label>
-      <input id="ap" type="datetime-local">
+
+      <label>
+        publish date & time
+      </label>
+
+      <input
+        id="ap"
+        type="datetime-local"
+      >
 
       <small class="muted">
         Choose when this article should become visible on the website.
       </small>
+
     </div>
 
     <div class="actions">
 
       <label class="btn">
         🖼️ upload image
+
         <input
           id="af"
           type="file"
           accept="image/*"
           style="display:none"
         >
+
       </label>
 
       <button
@@ -1351,11 +1413,15 @@ function articleEditor(){
           <div class="item">
 
             <div>
+
               <b>${esc(a.title)}</b>
+
               <br>
+
               <small>
                 ${esc((a.content||'').slice(0,100))}
               </small>
+
             </div>
 
             <div>
@@ -1395,18 +1461,22 @@ function articleEditor(){
     let image_url=$('ai').value.trim()||null;
     let publishValue=$('ap').value;
 
+
     if(!title||!content)
       return alert(
         'Add a title and article first.'
       );
+
 
     if(!publishValue)
       return alert(
         'Choose a publish date and time first.'
       );
 
+
     let published_at=
       new Date(publishValue).toISOString();
+
 
     let {error}=
       await sb
@@ -1418,8 +1488,10 @@ function articleEditor(){
           published_at
         });
 
+
     if(error)
       return alert(error.message);
+
 
     await load();
 
@@ -1446,6 +1518,7 @@ window.editArticle=async id=>{
   if(!a)
     return;
 
+
   let title=prompt(
     'Article title:',
     a.title
@@ -1453,6 +1526,7 @@ window.editArticle=async id=>{
 
   if(title===null)
     return;
+
 
   let content=prompt(
     'Article:',
@@ -1462,6 +1536,7 @@ window.editArticle=async id=>{
   if(content===null)
     return;
 
+
   let image_url=prompt(
     'Image URL:',
     a.image_url||''
@@ -1470,7 +1545,9 @@ window.editArticle=async id=>{
   if(image_url===null)
     return;
 
+
   let currentDate='';
+
 
   if(a.published_at){
 
@@ -1488,6 +1565,7 @@ window.editArticle=async id=>{
 
   }
 
+
   let date=prompt(
     'Publish date/time (YYYY-MM-DDTHH:MM):',
     currentDate
@@ -1496,8 +1574,10 @@ window.editArticle=async id=>{
   if(date===null)
     return;
 
+
   let published_at=
     new Date(date).toISOString();
+
 
   let {error}=
     await sb
@@ -1510,10 +1590,12 @@ window.editArticle=async id=>{
       })
       .eq('id',id);
 
+
   if(error){
     alert(error.message);
     return;
   }
+
 
   await load();
 
@@ -1527,16 +1609,19 @@ window.delArticle=async id=>{
   if(!confirm('Delete this article?'))
     return;
 
+
   let {error}=
     await sb
       .from('articles')
       .delete()
       .eq('id',id);
 
+
   if(error){
     alert(error.message);
     return;
   }
+
 
   await load();
 
@@ -1567,7 +1652,10 @@ function linksEditor(){
 
     <div class="field">
       <label>description</label>
-      <textarea id="ld" style="min-height:75px"></textarea>
+      <textarea
+        id="ld"
+        style="min-height:75px"
+      ></textarea>
     </div>
 
     <div class="actions">
@@ -1589,9 +1677,15 @@ function linksEditor(){
           <div class="item">
 
             <div>
+
               <b>${esc(l.title)}</b>
+
               <br>
-              <small>${esc(l.url)}</small>
+
+              <small>
+                ${esc(l.url)}
+              </small>
+
             </div>
 
             <div>
@@ -1630,10 +1724,12 @@ function linksEditor(){
     let url=$('lu').value.trim();
     let description=$('ld').value.trim();
 
+
     if(!title||!url)
       return alert(
         'Add a name and URL first.'
       );
+
 
     let {error}=
       await sb
@@ -1644,8 +1740,10 @@ function linksEditor(){
           description
         });
 
+
     if(error)
       return alert(error.message);
+
 
     await load();
 
@@ -1663,15 +1761,24 @@ window.editLink=async id=>{
   if(!l)
     return;
 
-  let title=prompt('Name:',l.title);
+
+  let title=prompt(
+    'Name:',
+    l.title
+  );
 
   if(title===null)
     return;
 
-  let url=prompt('URL:',l.url);
+
+  let url=prompt(
+    'URL:',
+    l.url
+  );
 
   if(url===null)
     return;
+
 
   let description=prompt(
     'Description:',
@@ -1680,6 +1787,7 @@ window.editLink=async id=>{
 
   if(description===null)
     return;
+
 
   let {error}=
     await sb
@@ -1691,10 +1799,12 @@ window.editLink=async id=>{
       })
       .eq('id',id);
 
+
   if(error){
     alert(error.message);
     return;
   }
+
 
   await load();
 
@@ -1708,16 +1818,19 @@ window.delLink=async id=>{
   if(!confirm('Delete this link?'))
     return;
 
+
   let {error}=
     await sb
       .from('links')
       .delete()
       .eq('id',id);
 
+
   if(error){
     alert(error.message);
     return;
   }
+
 
   await load();
 
@@ -1738,6 +1851,7 @@ function guestbookEditor(){
   let approved=
     guestbook.filter(x=>x.approved);
 
+
   $('editor').innerHTML=`
 
     <h1>guestbook ♡</h1>
@@ -1757,8 +1871,11 @@ function guestbookEditor(){
     >
 
       <b style="color:#955a73">
-        ${pending.length} message${pending.length===1?'':'s'}
+
+        ${pending.length}
+        message${pending.length===1?'':'s'}
         waiting for approval ♡
+
       </b>
 
       <div
@@ -1812,6 +1929,7 @@ function guestbookEditor(){
               </div>
 
               <small>
+
                 ${
                   g.created_at
                   ?
@@ -1823,6 +1941,7 @@ function guestbookEditor(){
                   :
                   ''
                 }
+
               </small>
 
             </div>
@@ -1902,6 +2021,7 @@ function guestbookEditor(){
               </div>
 
               <small>
+
                 ${
                   g.created_at
                   ?
@@ -1913,6 +2033,7 @@ function guestbookEditor(){
                   :
                   ''
                 }
+
               </small>
 
             </div>
@@ -1965,10 +2086,12 @@ window.approveGuest=async id=>{
       })
       .eq('id',id);
 
+
   if(error){
     alert(error.message);
     return;
   }
+
 
   await load();
 
@@ -1991,10 +2114,12 @@ window.hideGuest=async id=>{
       })
       .eq('id',id);
 
+
   if(error){
     alert(error.message);
     return;
   }
+
 
   await load();
 
@@ -2014,16 +2139,19 @@ window.delGuest=async id=>{
   ))
     return;
 
+
   let {error}=
     await sb
       .from('guestbook_messages')
       .delete()
       .eq('id',id);
 
+
   if(error){
     alert(error.message);
     return;
   }
+
 
   await load();
 
@@ -2054,121 +2182,26 @@ function img(u,a){
 }
 
 
-function preview(){
+function previewHeader(
+  title,
+  tagline
+){
 
-  if(tab==='guestbook'){
-
-    $('preview').innerHTML=`
-
-      <div class="site">
-
-        <div class="siteHead">
-
-          <div class="siteTitle">
-            guestbook ♡
-          </div>
-
-          <div class="tag">
-            public guestbook preview
-          </div>
-
-        </div>
-
-
-        <div class="navfake">
-          HOME ♡　
-          BLOG ♡　
-          ARTICLES ♡　
-          ABOUT ME ♡　
-          LINKS ♡　
-          GUESTBOOK ♡
-        </div>
-
-
-        <div style="padding:12px">
-
-          <div class="card">
-
-            <h3>
-              approved messages ♡
-            </h3>
-
-            ${
-              guestbook
-                .filter(g=>g.approved)
-                .slice(0,5)
-                .map(g=>`
-
-                  <div
-                    style="
-                      border:1px solid #ecd8e2;
-                      border-radius:8px;
-                      padding:8px;
-                      margin-top:6px;
-                    "
-                  >
-
-                    <b>
-                      ${esc(g.name)} ♡
-                    </b>
-
-                    <br>
-
-                    ${br(g.message)}
-
-                  </div>
-
-                `)
-                .join('')
-              ||
-              'no approved messages yet ♡'
-            }
-
-          </div>
-
-
-          <div class="card">
-
-            <h3>
-              moderation ♡
-            </h3>
-
-            ${
-              guestbook.filter(
-                g=>!g.approved
-              ).length
-            }
-
-            message(s) waiting for approval.
-
-          </div>
-
-        </div>
-
-      </div>
-
-    `;
-
-    return;
-  }
-
-
-  $('preview').innerHTML=`
+  return `
 
     <div class="site">
 
       <div class="siteHead">
 
         <div class="siteTitle">
-          ${esc(home.home_title)}
+          ${esc(title)}
         </div>
 
         <div class="tag">
-          ${esc(home.home_tagline)}
+          ${esc(tagline)}
         </div>
 
       </div>
-
 
       <div class="navfake">
         HOME ♡　
@@ -2179,9 +2212,54 @@ function preview(){
         GUESTBOOK ♡
       </div>
 
+  `;
+
+}
+
+
+function previewFooter(){
+
+  return `
+
+      <div
+        style="
+          text-align:center;
+          padding:10px;
+          font-size:9px;
+          color:#a98796;
+          border-top:1px solid #ecd8e2;
+        "
+      >
+        ${esc(home.home_footer)}
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+function preview(){
+
+  /* =========================
+     HOMEPAGE
+     ========================= */
+
+  if(tab==='home'){
+
+    $('preview').innerHTML=
+
+      previewHeader(
+        home.home_title,
+        home.home_tagline
+      )
+
+      +
+
+      `
 
       <div class="cols">
-
 
         <div>
 
@@ -2192,16 +2270,16 @@ function preview(){
             </h3>
 
             ${
-              about.about_image
+              home.home_image
               ?
-              `<div class="photo">
-
-                <img
-                  src="${esc(about.about_image)}"
-                  alt="about me"
-                >
-
-              </div>`
+              `
+              <div class="photo">
+                ${img(
+                  home.home_image,
+                  'homepage'
+                )}
+              </div>
+              `
               :
               ''
             }
@@ -2238,65 +2316,64 @@ function preview(){
 
 
           ${
-            posts
-              .slice(0,2)
-              .map(p=>`
+            posts.slice(0,2).map(p=>`
 
-                <div class="post">
+              <div class="post">
+
+                ${
+                  p.image_url
+                  ?
+                  `
+                  <div
+                    class="photo"
+                    style="aspect-ratio:16/7"
+                  >
+                    ${img(
+                      p.image_url,
+                      p.title
+                    )}
+                  </div>
+                  `
+                  :
+                  ''
+                }
+
+                <h2>
+                  ${esc(p.title)}
+                </h2>
+
+                <p>
+
+                  ${br(
+                    (p.content||'').slice(0,500)
+                  )}
 
                   ${
-                    p.image_url
+                    (p.content||'').length>500
                     ?
-                    `<div
-                      class="photo"
-                      style="aspect-ratio:16/7"
-                    >
-                      ${img(
-                        p.image_url,
-                        p.title
-                      )}
-                    </div>`
+                    '…'
                     :
                     ''
                   }
 
-                  <h2>
-                    ${esc(p.title)}
-                  </h2>
-
-                  <p>
-
-                    ${br(
-                      p.content
-                    ).slice(0,500)}
-
-                    ${
-                      p.content.length>500
-                      ?
-                      '…'
-                      :
-                      ''
-                    }
-
-                  </p>
-
-                </div>
-
-              `).join('')
-            ||
-
-            `
-              <div class="post">
-
-                <h2>
-                  a new little world ♡
-                </h2>
-
-                <p>
-                  your blog posts will appear here.
                 </p>
 
               </div>
+
+            `).join('')
+            ||
+            `
+            <div class="post">
+
+              <h2>
+                your latest posts ♡
+              </h2>
+
+              <p>
+                Your blog posts will appear here.
+              </p>
+
+            </div>
             `
           }
 
@@ -2339,25 +2416,550 @@ function preview(){
 
         </div>
 
+      </div>
+
+      `
+
+      +
+
+      previewFooter();
+
+    return;
+  }
+
+
+  /* =========================
+     BLOG
+     ========================= */
+
+  if(tab==='blog'){
+
+    $('preview').innerHTML=
+
+      previewHeader(
+        home.home_title,
+        home.home_tagline
+      )
+
+      +
+
+      `
+
+      <div class="pagePreview">
+
+        <div class="card">
+
+          <h3>
+            blog ♡
+          </h3>
+
+          <div>
+            little thoughts,
+            updates and everyday
+            moments ♡
+          </div>
+
+        </div>
+
+
+        ${
+          posts.length
+
+          ?
+
+          posts.map(p=>`
+
+            <div class="post">
+
+              ${
+                p.image_url
+                ?
+                `
+                <div
+                  class="photo"
+                  style="aspect-ratio:16/8"
+                >
+                  ${img(
+                    p.image_url,
+                    p.title
+                  )}
+                </div>
+                `
+                :
+                ''
+              }
+
+              <div class="date">
+
+                ${
+                  p.published_at
+                  ?
+                  esc(
+                    new Date(
+                      p.published_at
+                    ).toLocaleDateString()
+                  )
+                  :
+                  ''
+                }
+
+              </div>
+
+              <h2>
+                ${esc(p.title)}
+              </h2>
+
+              <p>
+                ${br(p.content)}
+              </p>
+
+            </div>
+
+          `).join('')
+
+          :
+
+          `
+
+          <div class="post">
+
+            <h2>
+              no blog posts yet ♡
+            </h2>
+
+            <p>
+              Your published blog posts
+              will appear here.
+            </p>
+
+          </div>
+
+          `
+        }
 
       </div>
 
+      `
 
-      <div
-        style="
-          text-align:center;
-          padding:10px;
-          font-size:9px;
-          color:#a98796;
-          border-top:1px solid #ecd8e2
-        "
-      >
-        ${esc(home.home_footer)}
+      +
+
+      previewFooter();
+
+    return;
+  }
+
+
+  /* =========================
+     ARTICLES
+     ========================= */
+
+  if(tab==='articles'){
+
+    let now=new Date();
+
+
+    let visibleArticles=
+      articles.filter(a=>
+        !a.published_at ||
+        new Date(a.published_at)<=now
+      );
+
+
+    $('preview').innerHTML=
+
+      previewHeader(
+        home.home_title,
+        home.home_tagline
+      )
+
+      +
+
+      `
+
+      <div class="pagePreview">
+
+        <div class="card">
+
+          <h3>
+            articles ♡
+          </h3>
+
+          <div>
+            longer thoughts,
+            stories and little
+            deep dives ♡
+          </div>
+
+        </div>
+
+
+        ${
+          visibleArticles.length
+
+          ?
+
+          visibleArticles.map(a=>`
+
+            <div class="post">
+
+              ${
+                a.image_url
+                ?
+                `
+                <div
+                  class="photo"
+                  style="aspect-ratio:16/8"
+                >
+                  ${img(
+                    a.image_url,
+                    a.title
+                  )}
+                </div>
+                `
+                :
+                ''
+              }
+
+              <div class="date">
+
+                ${
+                  a.published_at
+                  ?
+                  esc(
+                    new Date(
+                      a.published_at
+                    ).toLocaleDateString()
+                  )
+                  :
+                  ''
+                }
+
+              </div>
+
+              <h2>
+                ${esc(a.title)}
+              </h2>
+
+              <p>
+                ${br(a.content)}
+              </p>
+
+            </div>
+
+          `).join('')
+
+          :
+
+          `
+
+          <div class="post">
+
+            <h2>
+              no articles yet ♡
+            </h2>
+
+            <p>
+              Your published articles
+              will appear here.
+            </p>
+
+          </div>
+
+          `
+        }
+
       </div>
 
-    </div>
+      `
 
-  `;
+      +
+
+      previewFooter();
+
+    return;
+  }
+
+
+  /* =========================
+     ABOUT ME
+     ========================= */
+
+  if(tab==='about'){
+
+    $('preview').innerHTML=
+
+      previewHeader(
+        home.home_title,
+        home.home_tagline
+      )
+
+      +
+
+      `
+
+      <div class="pagePreview">
+
+        <div class="post">
+
+          ${
+            about.about_image
+            ?
+            `
+            <div class="photo">
+
+              ${img(
+                about.about_image,
+                'about me'
+              )}
+
+            </div>
+            `
+            :
+            ''
+          }
+
+          <h2>
+            ${esc(about.about_title)}
+          </h2>
+
+          <div
+            style="
+              color:#a45a75;
+              font-size:10px;
+              margin-bottom:10px;
+            "
+          >
+            ${esc(about.about_subtitle)}
+          </div>
+
+          <p>
+            ${br(about.about_content)}
+          </p>
+
+        </div>
+
+      </div>
+
+      `
+
+      +
+
+      previewFooter();
+
+    return;
+  }
+
+
+  /* =========================
+     LINKS
+     ========================= */
+
+  if(tab==='links'){
+
+    $('preview').innerHTML=
+
+      previewHeader(
+        home.home_title,
+        home.home_tagline
+      )
+
+      +
+
+      `
+
+      <div class="pagePreview">
+
+        <div class="card">
+
+          <h3>
+            links ♡
+          </h3>
+
+          <div>
+            little corners of the
+            internet that I love ♡
+          </div>
+
+        </div>
+
+
+        ${
+          links.length
+
+          ?
+
+          links.map(l=>`
+
+            <div class="post">
+
+              <h2>
+                ${esc(l.title)}
+              </h2>
+
+              ${
+                l.description
+                ?
+                `
+                <p>
+                  ${br(l.description)}
+                </p>
+                `
+                :
+                ''
+              }
+
+              <div
+                style="
+                  margin-top:8px;
+                  font-size:9px;
+                  color:#b05274;
+                  word-break:break-word;
+                "
+              >
+                ${esc(l.url)}
+              </div>
+
+              <div class="previewButton">
+                visit link ♡
+              </div>
+
+            </div>
+
+          `).join('')
+
+          :
+
+          `
+
+          <div class="post">
+
+            <h2>
+              no links yet ♡
+            </h2>
+
+            <p>
+              Your links will appear here.
+            </p>
+
+          </div>
+
+          `
+        }
+
+      </div>
+
+      `
+
+      +
+
+      previewFooter();
+
+    return;
+  }
+
+
+  /* =========================
+     GUESTBOOK
+     ========================= */
+
+  if(tab==='guestbook'){
+
+    $('preview').innerHTML=
+
+      previewHeader(
+        home.home_title,
+        home.home_tagline
+      )
+
+      +
+
+      `
+
+      <div class="pagePreview">
+
+        <div class="card">
+
+          <h3>
+            guestbook ♡
+          </h3>
+
+          <div>
+            leave a little message
+            for me ♡
+          </div>
+
+        </div>
+
+
+        <div class="card">
+
+          <h3>
+            approved messages ♡
+          </h3>
+
+          ${
+            guestbook
+              .filter(g=>g.approved)
+              .slice(0,5)
+              .map(g=>`
+
+                <div
+                  style="
+                    border:1px solid #ecd8e2;
+                    border-radius:8px;
+                    padding:8px;
+                    margin-top:6px;
+                  "
+                >
+
+                  <b>
+                    ${esc(g.name)} ♡
+                  </b>
+
+                  <br>
+
+                  ${br(g.message)}
+
+                </div>
+
+              `)
+              .join('')
+
+            ||
+
+            'no approved messages yet ♡'
+          }
+
+        </div>
+
+
+        <div class="card">
+
+          <h3>
+            moderation ♡
+          </h3>
+
+          ${
+            guestbook.filter(
+              g=>!g.approved
+            ).length
+          }
+
+          message(s) waiting
+          for approval.
+
+        </div>
+
+      </div>
+
+      `
+
+      +
+
+      previewFooter();
+
+    return;
+  }
 
 }
 
