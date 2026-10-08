@@ -40,7 +40,8 @@ a{
   border-bottom:1px solid var(--line);
   font-size:13px;
   letter-spacing:.5px;
-  background:#fff
+  background:#fff;
+  text-align:center
 }
 
 header{
@@ -52,6 +53,7 @@ header{
 }
 
 .logo{
+  text-transform:capitalize;
   font-family:Parisienne,cursive;
   font-size:68px;
   color:#e88eae;
@@ -65,13 +67,6 @@ header{
   font-size:14px;
   margin:7px 0 28px;
   color:#916372
-}
-
-.bow{
-  position:absolute;
-  right:8%;
-  top:55px;
-  font-size:42px
 }
 
 .nav{
@@ -171,7 +166,6 @@ header{
   font-family:"DM Serif Display",serif;
   color:#9b5c71
 }
-
 
 /* guestbook */
 
@@ -277,7 +271,6 @@ footer{
   background:#fff
 }
 
-
 @media(max-width:980px){
 
   .grid{
@@ -297,7 +290,6 @@ footer{
 
 }
 
-
 @media(max-width:700px){
 
   .grid{
@@ -316,10 +308,6 @@ footer{
     font-size:50px
   }
 
-  .bow{
-    display:none
-  }
-
 }
 </style>
 
@@ -328,20 +316,13 @@ footer{
 
 </head>
 
-
 <body>
-
 
 <div class="top">
   ♡ welcome to my little pink world ♡
 </div>
 
-
 <header>
-
-  <div class="bow">
-    🎀
-  </div>
 
   <h1 class="logo">
     my little pink world ♡
@@ -350,7 +331,6 @@ footer{
   <div class="tag">
     life　♡　fashion　♡　dreams　♡　pretty things
   </div>
-
 
   <nav class="nav">
 
@@ -385,15 +365,11 @@ footer{
 
 </header>
 
-
-
 <main class="grid">
-
 
 <!-- LEFT SIDE -->
 
 <aside>
-
 
   <section class="card">
 
@@ -432,15 +408,12 @@ footer{
 
   </section>
 
-
 </aside>
-
 
 
 <!-- MAIN -->
 
 <section>
-
 
   <div class="post">
 
@@ -463,9 +436,7 @@ footer{
         autocomplete="off"
       >
 
-
       <br><br>
-
 
       <textarea
         class="textarea"
@@ -484,9 +455,7 @@ footer{
         autocomplete="off"
       >
 
-
       <br><br>
-
 
       <button
         class="btn"
@@ -515,7 +484,6 @@ footer{
   </div>
 
 
-
   <div class="post">
 
     <h2>
@@ -532,15 +500,12 @@ footer{
 
   </div>
 
-
 </section>
-
 
 
 <!-- RIGHT SIDE -->
 
 <aside>
-
 
   <section class="card">
 
@@ -580,12 +545,9 @@ footer{
 
   </section>
 
-
 </aside>
 
-
 </main>
-
 
 
 <footer>
@@ -596,7 +558,6 @@ footer{
 </footer>
 
 
-
 <script>
 
 const sb =
@@ -604,7 +565,6 @@ const sb =
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
   );
-
 
 
 async function loadMessages(){
@@ -673,7 +633,6 @@ async function loadMessages(){
     `).join("");
 
 }
-
 
 
 async function addMessage(){
@@ -799,7 +758,6 @@ async function addMessage(){
   loadMessages();
 
 }
-
 
 
 function esc(s){
