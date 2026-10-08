@@ -637,24 +637,18 @@ have something to say?<br>
         );
 
 
-      const photo =
-        p.image_url
-
-        ?
-
-        '<div class="photo">' +
-        '<img src="' +
-        esc(p.image_url) +
-        '" alt="' +
-        esc(p.title) +
-        '">' +
-        '</div>'
-
-        :
-
-        '<div class="photo">' +
-        '🎀　🩷　✨' +
-        '</div>';
+const photo =
+  p.image_url
+    ?
+    '<div class="photo">' +
+    '<img src="' +
+    esc(p.image_url) +
+    '" alt="' +
+    esc(p.title) +
+    '">' +
+    '</div>'
+    :
+    '';
 
 
       return (
