@@ -38,7 +38,7 @@ header{max-width:1180px;margin:auto;padding:42px 24px 25px;text-align:center;pos
   const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
   document.getElementById("dynamicPosts").innerHTML=data.map(p=>{
     const d=new Date(p.published_at).toLocaleDateString(undefined,{month:"short",day:"numeric"});
-    const photo=p.image_url ? `<img src="${esc(p.image_url)}" alt="" style="width:100%;height:190px;object-fit:cover;border-radius:12px;margin-bottom:14px">` : `<div class="photo">🎀　🩷　✨</div>`;
+    const photo=p.image_url ? `<img src="${esc(p.image_url)}" alt="" style="width:100%;height:190px;object-fit:cover;border-radius:12px;margin-bottom:14px">` : '';
     return `<article class="post"><span class="date">${esc(d)}</span><h2>${esc(p.title)}</h2>${photo}<p>${esc(p.content).replace(/\n/g,"<br>")}</p></article>`;
   }).join("");
 })();
