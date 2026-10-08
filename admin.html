@@ -10,12 +10,14 @@
 
 <style>
 *{box-sizing:border-box}
+
 body{
   margin:0;
   background:#fff8fc;
   color:#654858;
   font-family:Georgia,serif
 }
+
 .top{
   position:sticky;
   top:0;
@@ -27,27 +29,33 @@ body{
   justify-content:space-between;
   align-items:center
 }
+
 .brand{
   font-size:22px;
   color:#75455b
 }
+
 .btn{
   border:1px solid #e0bfd0;
   background:white;
   color:#7b5063;
   border-radius:11px;
   padding:9px 12px;
-  cursor:pointer
+  cursor:pointer;
+  font-family:inherit
 }
+
 .primary{
   background:#d889ad;
   color:white;
   border-color:#d889ad
 }
+
 .danger{
   color:#b55372;
   background:#fff0f4
 }
+
 .layout{
   max-width:1500px;
   margin:auto;
@@ -56,18 +64,21 @@ body{
   grid-template-columns:190px 1fr 420px;
   gap:16px
 }
+
 .panel{
   background:#fff;
   border:1px solid #ecd7e2;
   border-radius:18px;
   box-shadow:0 8px 28px #9d587d18
 }
+
 .side{
   padding:12px;
   align-self:start;
   position:sticky;
   top:75px
 }
+
 .side b{
   display:block;
   padding:8px;
@@ -75,6 +86,7 @@ body{
   font-size:12px;
   text-transform:uppercase
 }
+
 .nav{
   width:100%;
   border:0;
@@ -83,33 +95,41 @@ body{
   padding:11px;
   border-radius:10px;
   color:#704d5d;
-  cursor:pointer
+  cursor:pointer;
+  font-family:inherit
 }
+
 .nav.active,
 .nav:hover{
   background:#fff0f6;
   color:#b04f78
 }
+
 .edit{
   padding:22px
 }
+
 .edit h1{
   margin:0 0 5px;
   color:#75455b
 }
+
 .muted{
   font-size:13px;
   color:#a0808e
 }
+
 .field{
   margin-top:13px
 }
+
 .field label{
   display:block;
   font-size:13px;
   margin-bottom:5px;
   color:#80596a
 }
+
 .field input,
 .field textarea{
   width:100%;
@@ -120,26 +140,31 @@ body{
   color:#654858;
   font:inherit
 }
+
 .field textarea{
   min-height:110px;
   resize:vertical
 }
+
 .row{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px
 }
+
 .actions{
   display:flex;
   gap:8px;
   flex-wrap:wrap;
   margin-top:14px
 }
+
 .list{
   display:grid;
   gap:8px;
   margin-top:16px
 }
+
 .item{
   border:1px solid #ecd7e2;
   border-radius:12px;
@@ -149,21 +174,49 @@ body{
   gap:8px;
   background:#fffafd
 }
+
 .item small{
   color:#9c7c89
 }
+
+.guestMessage{
+  margin-top:10px;
+  padding:10px;
+  border:1px solid #ecd7e2;
+  border-radius:10px;
+  background:white;
+  line-height:1.5
+}
+
+.guestStatus{
+  display:inline-block;
+  margin-top:6px;
+  padding:4px 8px;
+  border-radius:999px;
+  font-size:11px;
+  background:#fff0f6;
+  color:#b04f78
+}
+
+.guestStatus.approved{
+  background:#f2fff7;
+  color:#56856a
+}
+
 .preview{
   padding:12px;
   position:sticky;
   top:75px;
   align-self:start
 }
+
 .previewHead{
   padding:10px;
   color:#94677b;
   font-size:13px;
   border-bottom:1px solid #ecd7e2
 }
+
 .site{
   border:1px solid #ead8e2;
   border-radius:12px;
@@ -171,19 +224,23 @@ body{
   margin-top:12px;
   background:#fffafd
 }
+
 .siteHead{
   text-align:center;
   padding:24px 10px;
   border-bottom:1px solid #ecd8e2
 }
+
 .siteTitle{
   font-size:26px;
   color:#77455c
 }
+
 .tag{
   font-size:11px;
   color:#a8788e
 }
+
 .navfake{
   text-align:center;
   padding:8px;
@@ -191,12 +248,14 @@ body{
   font-size:10px;
   color:#98667d
 }
+
 .cols{
   display:grid;
   grid-template-columns:1fr 1.7fr 1fr;
   gap:7px;
   padding:8px
 }
+
 .card{
   background:#fff;
   border:1px solid #ecd8e2;
@@ -206,11 +265,13 @@ body{
   font-size:10px;
   line-height:1.45
 }
+
 .card h3{
   font-size:11px;
   color:#955a73;
   margin:0 0 5px
 }
+
 .photo{
   aspect-ratio:1;
   border-radius:7px;
@@ -220,11 +281,13 @@ body{
   overflow:hidden;
   margin-bottom:6px
 }
+
 .photo img{
   width:100%;
   height:100%;
   object-fit:cover
 }
+
 .post{
   background:#fff;
   border:1px solid #ecd8e2;
@@ -232,22 +295,26 @@ body{
   padding:10px;
   margin-bottom:7px
 }
+
 .post h2{
   font-size:14px;
   color:#77455c;
   margin:0 0 4px
 }
+
 .post p{
   font-size:10px;
   line-height:1.45;
   margin:0
 }
+
 .login{
   min-height:100vh;
   display:grid;
   place-items:center;
   padding:20px
 }
+
 .loginbox{
   width:min(420px,100%);
   background:white;
@@ -257,9 +324,11 @@ body{
   text-align:center;
   box-shadow:0 8px 30px #9d587d18
 }
+
 .hidden{
   display:none
 }
+
 .status{
   position:fixed;
   right:18px;
@@ -270,6 +339,7 @@ body{
   border-radius:10px;
   display:none
 }
+
 .status.on{
   display:block
 }
@@ -278,6 +348,7 @@ body{
   .layout{
     grid-template-columns:180px 1fr
   }
+
   .preview{
     grid-column:1/-1;
     position:static
@@ -288,12 +359,15 @@ body{
   .layout{
     grid-template-columns:1fr
   }
+
   .side{
     position:static
   }
+
   .row{
     grid-template-columns:1fr
   }
+
   .cols{
     grid-template-columns:1fr
   }
@@ -305,6 +379,7 @@ body{
 
 <div id="login" class="login">
   <div class="loginbox">
+
     <div style="font-size:40px">🎀</div>
 
     <h1>my little pink world ♡</h1>
@@ -328,6 +403,7 @@ body{
     </div>
 
     <p id="msg" class="muted"></p>
+
   </div>
 </div>
 
@@ -392,7 +468,7 @@ body{
     site
   </b>
 
-  <button class="nav" onclick="openGuestbook()">
+  <button class="nav" data-tab="guestbook">
     💌 guestbook
   </button>
 
@@ -434,7 +510,6 @@ window.supabase.createClient(
 
 let tab='home';
 
-
 let home={
   home_title:'my little pink world ♡',
   home_tagline:'life ♡ fashion ♡ dreams ♡ pretty things',
@@ -448,7 +523,6 @@ let home={
   home_image:''
 };
 
-
 let about={
   about_title:'about me ♡',
   about_subtitle:'hi, i\'m me!',
@@ -456,14 +530,12 @@ let about={
   about_image:''
 };
 
-
 let posts=[];
 let articles=[];
 let links=[];
-
+let guestbook=[];
 
 const $=x=>document.getElementById(x);
-
 
 const esc=x=>
 String(x??'').replace(
@@ -476,7 +548,6 @@ String(x??'').replace(
     "'":'&#39;'
   }[c])
 );
-
 
 const br=x=>
 esc(x).replace(/\n/g,'<br>');
@@ -519,7 +590,6 @@ async function admin(){
   }
 
   $('login').classList.add('hidden');
-
   $('app').classList.remove('hidden');
 
   return true;
@@ -529,20 +599,8 @@ async function admin(){
 function showLogin(m){
 
   $('login').classList.remove('hidden');
-
   $('app').classList.add('hidden');
-
   $('msg').textContent=m;
-
-}
-
-
-function openGuestbook(){
-
-  window.open(
-    'guestbook.html',
-    '_blank'
-  );
 
 }
 
@@ -556,10 +614,7 @@ $('loginBtn').onclick=async()=>{
     });
 
   if(error){
-
-    $('msg').textContent=
-      error.message;
-
+    $('msg').textContent=error.message;
     return;
   }
 
@@ -572,7 +627,6 @@ $('loginBtn').onclick=async()=>{
 $('logout').onclick=async()=>{
 
   await sb.auth.signOut();
-
   showLogin('');
 
 };
@@ -637,6 +691,23 @@ async function load(){
   links=l.data||[];
 
 
+  let g=
+    await sb
+      .from('guestbook_messages')
+      .select('*')
+      .order(
+        'created_at',
+        {ascending:false}
+      );
+
+  if(g.error){
+    console.error(g.error);
+    guestbook=[];
+  }else{
+    guestbook=g.data||[];
+  }
+
+
   render();
 
 }
@@ -653,7 +724,6 @@ async function save(obj){
       })
     );
 
-
   let {error}=
     await sb
       .from('site_content')
@@ -662,10 +732,8 @@ async function save(obj){
         {onConflict:'section'}
       );
 
-
   if(error)
     throw error;
-
 
   status('saved ♡');
 
@@ -687,9 +755,7 @@ function field(
       ${
         ta
         ?
-        `<textarea data-key="${key}">
-          ${esc(obj[key])}
-        </textarea>`
+        `<textarea data-key="${key}">${esc(obj[key])}</textarea>`
         :
         `<input
           data-key="${key}"
@@ -733,9 +799,7 @@ function render(){
       )
     );
 
-
   $('mode').textContent=tab;
-
 
   if(tab==='home')
     homeEditor();
@@ -752,6 +816,8 @@ function render(){
   if(tab==='links')
     linksEditor();
 
+  if(tab==='guestbook')
+    guestbookEditor();
 
   preview();
 
@@ -765,7 +831,6 @@ document
     x.onclick=()=>{
 
       tab=x.dataset.tab;
-
       render();
 
     };
@@ -784,21 +849,20 @@ function homeEditor(){
     </p>
 
     ${field(home,'home_title','site title')}
-
     ${field(home,'home_tagline','tagline')}
 
     ${field(
       home,
       'home_welcome',
       'welcome',
-      'textarea'
+      true
     )}
 
     ${field(
       home,
       'home_about',
       'about me card',
-      'textarea'
+      true
     )}
 
     <div class="row">
@@ -807,18 +871,17 @@ function homeEditor(){
         home,
         'home_currently',
         'currently',
-        'textarea'
+        true
       )}
 
       ${field(
         home,
         'home_updates',
         'little updates',
-        'textarea'
+        true
       )}
 
     </div>
-
 
     <div class="row">
 
@@ -826,26 +889,24 @@ function homeEditor(){
         home,
         'home_categories',
         'categories',
-        'textarea'
+        true
       )}
 
       ${field(
         home,
         'home_reminder',
         'little reminder',
-        'textarea'
+        true
       )}
 
     </div>
-
 
     ${field(
       home,
       'home_footer',
       'footer',
-      'textarea'
+      true
     )}
-
 
     ${field(
       home,
@@ -853,22 +914,17 @@ function homeEditor(){
       'homepage image URL'
     )}
 
-
     <div class="actions">
 
       <label class="btn">
-
         🖼️ upload image
-
         <input
           id="homeFile"
           type="file"
           accept="image/*"
           style="display:none"
         >
-
       </label>
-
 
       <button
         class="btn primary"
@@ -881,13 +937,10 @@ function homeEditor(){
 
   `;
 
-
   bind(home);
-
 
   $('saveHome').onclick=
     ()=>save(home);
-
 
   $('homeFile').onchange=
     e=>
@@ -929,7 +982,7 @@ function aboutEditor(){
       about,
       'about_content',
       'about me text',
-      'textarea'
+      true
     )}
 
     ${field(
@@ -938,22 +991,17 @@ function aboutEditor(){
       'photo URL'
     )}
 
-
     <div class="actions">
 
       <label class="btn">
-
         🖼️ upload photo
-
         <input
           id="aboutFile"
           type="file"
           accept="image/*"
           style="display:none"
         >
-
       </label>
-
 
       <button
         class="btn primary"
@@ -966,13 +1014,10 @@ function aboutEditor(){
 
   `;
 
-
   bind(about);
-
 
   $('saveAbout').onclick=
     ()=>save(about);
-
 
   $('aboutFile').onchange=
     e=>
@@ -997,7 +1042,6 @@ async function upload(
   if(!file)
     return;
 
-
   let path=
     folder+
     '/' +
@@ -1008,7 +1052,6 @@ async function upload(
       '_'
     );
 
-
   let {error}=
     await sb
       .storage
@@ -1018,22 +1061,16 @@ async function upload(
         file
       );
 
-
   if(error){
-
     alert(error.message);
-
     return;
-
   }
-
 
   let {data}=
     sb
       .storage
       .from('site-images')
       .getPublicUrl(path);
-
 
   done(data.publicUrl);
 
@@ -1052,40 +1089,32 @@ function blogEditor(){
       Short everyday posts.
     </p>
 
-
     <div class="field">
       <label>title</label>
       <input id="pt">
     </div>
-
 
     <div class="field">
       <label>post</label>
       <textarea id="pc"></textarea>
     </div>
 
-
     <div class="field">
       <label>image URL</label>
       <input id="pi">
     </div>
 
-
     <div class="actions">
 
       <label class="btn">
-
         🖼️ upload image
-
         <input
           id="pf"
           type="file"
           accept="image/*"
           style="display:none"
         >
-
       </label>
-
 
       <button
         class="btn primary"
@@ -1096,7 +1125,6 @@ function blogEditor(){
 
     </div>
 
-
     <div class="list">
 
       ${
@@ -1105,22 +1133,12 @@ function blogEditor(){
           <div class="item">
 
             <div>
-
-              <b>
-                ${esc(p.title)}
-              </b>
-
+              <b>${esc(p.title)}</b>
               <br>
-
               <small>
-                ${esc(
-                  (p.content||'')
-                    .slice(0,100)
-                )}
+                ${esc((p.content||'').slice(0,100))}
               </small>
-
             </div>
-
 
             <div>
 
@@ -1154,21 +1172,14 @@ function blogEditor(){
 
   $('addp').onclick=async()=>{
 
-    let title=
-      $('pt').value.trim();
-
-    let content=
-      $('pc').value.trim();
-
-    let image_url=
-      $('pi').value.trim()||null;
-
+    let title=$('pt').value.trim();
+    let content=$('pc').value.trim();
+    let image_url=$('pi').value.trim()||null;
 
     if(!title||!content)
       return alert(
         'Add a title and post first.'
       );
-
 
     let {error}=
       await sb
@@ -1177,14 +1188,11 @@ function blogEditor(){
           title,
           content,
           image_url,
-          published_at:
-            new Date().toISOString()
+          published_at:new Date().toISOString()
         });
-
 
     if(error)
       return alert(error.message);
-
 
     await load();
 
@@ -1206,385 +1214,61 @@ function blogEditor(){
 
 window.editPost=async id=>{
 
-  let p=
-    posts.find(x=>x.id===id);
+  let p=posts.find(x=>x.id===id);
 
   if(!p)
     return;
 
-
-  let old=
-    document.getElementById(
-      'editPostModal'
-    );
-
-  if(old)
-    old.remove();
-
-
-  document.body.insertAdjacentHTML(
-    'beforeend',
-    `
-
-    <div
-      id="editPostModal"
-      style="
-        position:fixed;
-        inset:0;
-        z-index:100;
-        background:rgba(80,40,60,.35);
-        display:grid;
-        place-items:center;
-        padding:20px;
-      "
-    >
-
-      <div
-        style="
-          width:min(650px,100%);
-          max-height:90vh;
-          overflow:auto;
-          background:#fffafd;
-          border:1px solid #ecd7e2;
-          border-radius:20px;
-          padding:24px;
-          box-shadow:0 15px 50px rgba(100,50,75,.25);
-        "
-      >
-
-        <div
-          style="
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            gap:10px
-          "
-        >
-
-          <div>
-
-            <h2
-              style="
-                margin:0;
-                color:#75455b
-              "
-            >
-              edit post ♡
-            </h2>
-
-            <p
-              class="muted"
-              style="margin:5px 0 0"
-            >
-              Change anything about this post.
-            </p>
-
-          </div>
-
-
-          <button
-            class="btn"
-            id="closeEditPost"
-          >
-            ×
-          </button>
-
-        </div>
-
-
-        <div class="field">
-
-          <label>post title</label>
-
-          <input
-            id="editPostTitle"
-            value="${esc(p.title)}"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>post</label>
-
-          <textarea
-            id="editPostContent"
-            style="min-height:220px"
-          >${esc(p.content)}</textarea>
-
-        </div>
-
-
-        <div class="field">
-
-          <label>photo</label>
-
-
-          <div
-            id="editPostImagePreview"
-            style="
-              margin-bottom:8px;
-              border-radius:12px;
-              overflow:hidden;
-              background:#f9dfeb;
-              min-height:80px;
-              display:${p.image_url?'block':'none'};
-            "
-          >
-
-            ${
-              p.image_url
-              ?
-              `<img
-                src="${esc(p.image_url)}"
-                style="
-                  width:100%;
-                  max-height:260px;
-                  object-fit:cover
-                "
-              >`
-              :
-              ''
-            }
-
-          </div>
-
-
-          <input
-            id="editPostImage"
-            value="${esc(p.image_url||'')}"
-            placeholder="image URL"
-          >
-
-
-          <div class="actions">
-
-            <label class="btn">
-
-              🖼️ replace photo
-
-              <input
-                id="editPostFile"
-                type="file"
-                accept="image/*"
-                style="display:none"
-              >
-
-            </label>
-
-
-            <button
-              class="btn danger"
-              id="removePostImage"
-              type="button"
-            >
-              🗑️ remove photo
-            </button>
-
-          </div>
-
-        </div>
-
-
-        <div
-          class="actions"
-          style="margin-top:20px"
-        >
-
-          <button
-            class="btn"
-            id="cancelEditPost"
-          >
-            cancel
-          </button>
-
-
-          <button
-            class="btn primary"
-            id="saveEditPost"
-          >
-            save changes ♡
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    `
+  let title=prompt(
+    'Post title:',
+    p.title
   );
 
+  if(title===null)
+    return;
 
-  const modal=
-    $('editPostModal');
+  let content=prompt(
+    'Post:',
+    p.content
+  );
 
-  const imageInput=
-    $('editPostImage');
+  if(content===null)
+    return;
 
-  const imagePreview=
-    $('editPostImagePreview');
+  let image_url=prompt(
+    'Image URL:',
+    p.image_url||''
+  );
 
+  if(image_url===null)
+    return;
 
-  $('closeEditPost').onclick=
-    ()=>modal.remove();
+  let {error}=
+    await sb
+      .from('posts')
+      .update({
+        title,
+        content,
+        image_url:image_url.trim()||null
+      })
+      .eq('id',id);
 
+  if(error){
+    alert(error.message);
+    return;
+  }
 
-  $('cancelEditPost').onclick=
-    ()=>modal.remove();
+  await load();
 
-
-  $('removePostImage').onclick=()=>{
-
-    imageInput.value='';
-
-    imagePreview.innerHTML='';
-
-    imagePreview.style.display='none';
-
-  };
-
-
-  $('editPostFile').onchange=
-    async e=>{
-
-      let file=
-        e.target.files[0];
-
-      if(!file)
-        return;
-
-
-      await upload(
-        file,
-        'posts',
-        url=>{
-
-          imageInput.value=url;
-
-          imagePreview.innerHTML=
-            `<img
-              src="${esc(url)}"
-              style="
-                width:100%;
-                max-height:260px;
-                object-fit:cover
-              "
-            >`;
-
-          imagePreview.style.display=
-            'block';
-
-        }
-      );
-
-    };
-
-
-  imageInput.oninput=()=>{
-
-    let url=
-      imageInput.value.trim();
-
-
-    if(url){
-
-      imagePreview.innerHTML=
-        `<img
-          src="${esc(url)}"
-          style="
-            width:100%;
-            max-height:260px;
-            object-fit:cover
-          "
-        >`;
-
-      imagePreview.style.display=
-        'block';
-
-    }else{
-
-      imagePreview.innerHTML='';
-
-      imagePreview.style.display=
-        'none';
-
-    }
-
-  };
-
-
-  $('saveEditPost').onclick=
-    async()=>{
-
-      let title=
-        $('editPostTitle')
-          .value
-          .trim();
-
-      let content=
-        $('editPostContent')
-          .value
-          .trim();
-
-      let image_url=
-        $('editPostImage')
-          .value
-          .trim()||null;
-
-
-      if(!title||!content){
-
-        alert(
-          'Please add a title and post text.'
-        );
-
-        return;
-
-      }
-
-
-      let {error}=
-        await sb
-          .from('posts')
-          .update({
-            title,
-            content,
-            image_url
-          })
-          .eq('id',id);
-
-
-      if(error){
-
-        alert(error.message);
-
-        return;
-
-      }
-
-
-      modal.remove();
-
-      await load();
-
-      status('post updated ♡');
-
-    };
+  status('post updated ♡');
 
 };
 
 
 window.delPost=async id=>{
 
-  if(
-    !confirm(
-      'Delete this post?'
-    )
-  )
+  if(!confirm('Delete this post?'))
     return;
-
 
   let {error}=
     await sb
@@ -1592,15 +1276,10 @@ window.delPost=async id=>{
       .delete()
       .eq('id',id);
 
-
   if(error){
-
     alert(error.message);
-
     return;
-
   }
-
 
   await load();
 
@@ -1619,68 +1298,41 @@ function articleEditor(){
       Longer writing, separate from your normal blog.
     </p>
 
-
     <div class="field">
-
       <label>title</label>
-
       <input id="at">
-
     </div>
 
-
     <div class="field">
-
       <label>article</label>
-
-      <textarea
-        id="ac"
-        style="min-height:220px"
-      ></textarea>
-
+      <textarea id="ac" style="min-height:220px"></textarea>
     </div>
 
-
     <div class="field">
-
       <label>image URL</label>
-
       <input id="ai">
-
     </div>
 
-
     <div class="field">
-
       <label>publish date & time</label>
-
-      <input
-        id="ap"
-        type="datetime-local"
-      >
+      <input id="ap" type="datetime-local">
 
       <small class="muted">
         Choose when this article should become visible on the website.
       </small>
-
     </div>
-
 
     <div class="actions">
 
       <label class="btn">
-
         🖼️ upload image
-
         <input
           id="af"
           type="file"
           accept="image/*"
           style="display:none"
         >
-
       </label>
-
 
       <button
         class="btn primary"
@@ -1691,7 +1343,6 @@ function articleEditor(){
 
     </div>
 
-
     <div class="list">
 
       ${
@@ -1700,36 +1351,25 @@ function articleEditor(){
           <div class="item">
 
             <div>
-
-              <b>
-                ${esc(a.title)}
-              </b>
-
+              <b>${esc(a.title)}</b>
               <br>
-
               <small>
-                ${esc(
-                  (a.content||'')
-                    .slice(0,100)
-                )}
+                ${esc((a.content||'').slice(0,100))}
               </small>
-
             </div>
-
 
             <div>
 
               <button
                 class="btn"
-                onclick="window.editArticle('${a.id}')"
+                onclick="editArticle('${a.id}')"
               >
                 edit
               </button>
 
-
               <button
                 class="btn danger"
-                onclick="window.delArticle('${a.id}')"
+                onclick="delArticle('${a.id}')"
               >
                 delete
               </button>
@@ -1748,70 +1388,44 @@ function articleEditor(){
   `;
 
 
-  $('adda').onclick=
-    async()=>{
+  $('adda').onclick=async()=>{
 
-      let title=
-        $('at').value.trim();
+    let title=$('at').value.trim();
+    let content=$('ac').value.trim();
+    let image_url=$('ai').value.trim()||null;
+    let publishValue=$('ap').value;
 
-      let content=
-        $('ac').value.trim();
-
-      let image_url=
-        $('ai').value.trim()||null;
-
-      let publishValue=
-        $('ap').value;
-
-
-      if(!title||!content){
-
-        return alert(
-          'Add a title and article first.'
-        );
-
-      }
-
-
-      if(!publishValue){
-
-        return alert(
-          'Choose a publish date and time first.'
-        );
-
-      }
-
-
-      let published_at=
-        new Date(
-          publishValue
-        ).toISOString();
-
-
-      let {error}=
-        await sb
-          .from('articles')
-          .insert({
-            title,
-            content,
-            image_url,
-            published_at
-          });
-
-
-      if(error)
-        return alert(
-          error.message
-        );
-
-
-      await load();
-
-      status(
-        'article scheduled ♡'
+    if(!title||!content)
+      return alert(
+        'Add a title and article first.'
       );
 
-    };
+    if(!publishValue)
+      return alert(
+        'Choose a publish date and time first.'
+      );
+
+    let published_at=
+      new Date(publishValue).toISOString();
+
+    let {error}=
+      await sb
+        .from('articles')
+        .insert({
+          title,
+          content,
+          image_url,
+          published_at
+        });
+
+    if(error)
+      return alert(error.message);
+
+    await load();
+
+    status('article scheduled ♡');
+
+  };
 
 
   $('af').onchange=
@@ -1827,39 +1441,45 @@ function articleEditor(){
 
 window.editArticle=async id=>{
 
-  let a=
-    articles.find(
-      x=>x.id===id
-    );
+  let a=articles.find(x=>x.id===id);
 
   if(!a)
     return;
 
+  let title=prompt(
+    'Article title:',
+    a.title
+  );
 
-  let old=
-    document.getElementById(
-      'editArticleModal'
-    );
+  if(title===null)
+    return;
 
-  if(old)
-    old.remove();
+  let content=prompt(
+    'Article:',
+    a.content
+  );
 
+  if(content===null)
+    return;
 
-  let localDate='';
+  let image_url=prompt(
+    'Image URL:',
+    a.image_url||''
+  );
 
+  if(image_url===null)
+    return;
+
+  let currentDate='';
 
   if(a.published_at){
 
-    const d=
-      new Date(
-        a.published_at
-      );
+    let d=new Date(a.published_at);
 
     const pad=
       n=>String(n).padStart(2,'0');
 
-
-    localDate=
+    currentDate=
       d.getFullYear()+'-'+
       pad(d.getMonth()+1)+'-'+
       pad(d.getDate())+'T'+
@@ -1868,269 +1488,44 @@ window.editArticle=async id=>{
 
   }
 
-
-  document.body.insertAdjacentHTML(
-    'beforeend',
-    `
-
-    <div
-      id="editArticleModal"
-      style="
-        position:fixed;
-        inset:0;
-        z-index:100;
-        background:rgba(80,40,60,.35);
-        display:grid;
-        place-items:center;
-        padding:20px;
-      "
-    >
-
-      <div
-        style="
-          width:min(650px,100%);
-          max-height:90vh;
-          overflow:auto;
-          background:#fffafd;
-          border:1px solid #ecd7e2;
-          border-radius:20px;
-          padding:24px;
-          box-shadow:0 15px 50px rgba(100,50,75,.25);
-        "
-      >
-
-        <div
-          style="
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            gap:10px
-          "
-        >
-
-          <div>
-
-            <h2
-              style="
-                margin:0;
-                color:#75455b
-              "
-            >
-              edit article ♡
-            </h2>
-
-            <p
-              class="muted"
-              style="margin:5px 0 0"
-            >
-              Change anything about this article.
-            </p>
-
-          </div>
-
-
-          <button
-            class="btn"
-            id="closeEditArticle"
-          >
-            ×
-          </button>
-
-        </div>
-
-
-        <div class="field">
-
-          <label>article title</label>
-
-          <input
-            id="editArticleTitle"
-            value="${esc(a.title)}"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>article</label>
-
-          <textarea
-            id="editArticleContent"
-            style="min-height:220px"
-          >${esc(a.content)}</textarea>
-
-        </div>
-
-
-        <div class="field">
-
-          <label>image URL</label>
-
-          <input
-            id="editArticleImage"
-            value="${esc(a.image_url||'')}"
-            placeholder="image URL"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>publish date & time</label>
-
-          <input
-            id="editArticlePublished"
-            type="datetime-local"
-            value="${localDate}"
-          >
-
-          <small class="muted">
-            Change when this article becomes visible.
-          </small>
-
-        </div>
-
-
-        <div
-          class="actions"
-          style="margin-top:20px"
-        >
-
-          <button
-            class="btn"
-            id="cancelEditArticle"
-          >
-            cancel
-          </button>
-
-
-          <button
-            class="btn primary"
-            id="saveEditArticle"
-          >
-            save changes ♡
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    `
+  let date=prompt(
+    'Publish date/time (YYYY-MM-DDTHH:MM):',
+    currentDate
   );
 
+  if(date===null)
+    return;
 
-  const modal=
-    $('editArticleModal');
+  let published_at=
+    new Date(date).toISOString();
 
+  let {error}=
+    await sb
+      .from('articles')
+      .update({
+        title,
+        content,
+        image_url:image_url.trim()||null,
+        published_at
+      })
+      .eq('id',id);
 
-  $('closeEditArticle').onclick=
-    ()=>modal.remove();
+  if(error){
+    alert(error.message);
+    return;
+  }
 
+  await load();
 
-  $('cancelEditArticle').onclick=
-    ()=>modal.remove();
-
-
-  $('saveEditArticle').onclick=
-    async()=>{
-
-      let title=
-        $('editArticleTitle')
-          .value
-          .trim();
-
-      let content=
-        $('editArticleContent')
-          .value
-          .trim();
-
-      let image_url=
-        $('editArticleImage')
-          .value
-          .trim()||null;
-
-      let publishValue=
-        $('editArticlePublished')
-          .value;
-
-
-      if(!title||!content){
-
-        alert(
-          'Please add a title and article text.'
-        );
-
-        return;
-
-      }
-
-
-      if(!publishValue){
-
-        alert(
-          'Please choose a publish date and time.'
-        );
-
-        return;
-
-      }
-
-
-      let published_at=
-        new Date(
-          publishValue
-        ).toISOString();
-
-
-      let {error}=
-        await sb
-          .from('articles')
-          .update({
-            title,
-            content,
-            image_url,
-            published_at
-          })
-          .eq('id',id);
-
-
-      if(error){
-
-        alert(error.message);
-
-        return;
-
-      }
-
-
-      modal.remove();
-
-      await load();
-
-      status(
-        'article updated ♡'
-      );
-
-    };
+  status('article updated ♡');
 
 };
 
 
-/* THIS WAS THE MISSING FUNCTION 💗 */
-
 window.delArticle=async id=>{
 
-  if(
-    !confirm(
-      'Delete this article?'
-    )
-  )
+  if(!confirm('Delete this article?'))
     return;
-
 
   let {error}=
     await sb
@@ -2138,21 +1533,14 @@ window.delArticle=async id=>{
       .delete()
       .eq('id',id);
 
-
   if(error){
-
     alert(error.message);
-
     return;
-
   }
-
 
   await load();
 
-  status(
-    'article deleted ♡'
-  );
+  status('article deleted ♡');
 
 };
 
@@ -2167,36 +1555,20 @@ function linksEditor(){
       Manage the links visitors see.
     </p>
 
-
     <div class="field">
-
       <label>name</label>
-
       <input id="lt">
-
     </div>
 
-
     <div class="field">
-
       <label>URL</label>
-
       <input id="lu">
-
     </div>
-
 
     <div class="field">
-
       <label>description</label>
-
-      <textarea
-        id="ld"
-        style="min-height:75px"
-      ></textarea>
-
+      <textarea id="ld" style="min-height:75px"></textarea>
     </div>
-
 
     <div class="actions">
 
@@ -2209,7 +1581,6 @@ function linksEditor(){
 
     </div>
 
-
     <div class="list">
 
       ${
@@ -2218,19 +1589,10 @@ function linksEditor(){
           <div class="item">
 
             <div>
-
-              <b>
-                ${esc(l.title)}
-              </b>
-
+              <b>${esc(l.title)}</b>
               <br>
-
-              <small>
-                ${esc(l.url)}
-              </small>
-
+              <small>${esc(l.url)}</small>
             </div>
-
 
             <div>
 
@@ -2262,92 +1624,62 @@ function linksEditor(){
   `;
 
 
-  $('addl').onclick=
-    async()=>{
+  $('addl').onclick=async()=>{
 
-      let title=
-        $('lt').value.trim();
+    let title=$('lt').value.trim();
+    let url=$('lu').value.trim();
+    let description=$('ld').value.trim();
 
-      let url=
-        $('lu').value.trim();
-
-      let description=
-        $('ld').value.trim();
-
-
-      if(!title||!url)
-        return alert(
-          'Add a name and URL first.'
-        );
-
-
-      let {error}=
-        await sb
-          .from('links')
-          .insert({
-            title,
-            url,
-            description
-          });
-
-
-      if(error)
-        return alert(
-          error.message
-        );
-
-
-      await load();
-
-      status(
-        'link added ♡'
+    if(!title||!url)
+      return alert(
+        'Add a name and URL first.'
       );
 
-    };
+    let {error}=
+      await sb
+        .from('links')
+        .insert({
+          title,
+          url,
+          description
+        });
+
+    if(error)
+      return alert(error.message);
+
+    await load();
+
+    status('link added ♡');
+
+  };
 
 }
 
 
 window.editLink=async id=>{
 
-  let l=
-    links.find(
-      x=>x.id===id
-    );
+  let l=links.find(x=>x.id===id);
 
   if(!l)
     return;
 
-
-  let title=
-    prompt(
-      'Name:',
-      l.title
-    );
+  let title=prompt('Name:',l.title);
 
   if(title===null)
     return;
 
-
-  let url=
-    prompt(
-      'URL:',
-      l.url
-    );
+  let url=prompt('URL:',l.url);
 
   if(url===null)
     return;
 
-
-  let description=
-    prompt(
-      'Description:',
-      l.description||''
-    );
+  let description=prompt(
+    'Description:',
+    l.description||''
+  );
 
   if(description===null)
     return;
-
 
   let {error}=
     await sb
@@ -2359,32 +1691,22 @@ window.editLink=async id=>{
       })
       .eq('id',id);
 
-
-  if(error)
+  if(error){
     alert(error.message);
-
-  else{
-
-    await load();
-
-    status(
-      'link updated ♡'
-    );
-
+    return;
   }
+
+  await load();
+
+  status('link updated ♡');
 
 };
 
 
 window.delLink=async id=>{
 
-  if(
-    !confirm(
-      'Delete this link?'
-    )
-  )
+  if(!confirm('Delete this link?'))
     return;
-
 
   let {error}=
     await sb
@@ -2392,22 +1714,331 @@ window.delLink=async id=>{
       .delete()
       .eq('id',id);
 
-
-  if(error)
+  if(error){
     alert(error.message);
-
-  else{
-
-    await load();
-
-    status(
-      'link deleted'
-    );
-
+    return;
   }
+
+  await load();
+
+  status('link deleted ♡');
 
 };
 
+
+/* =========================
+   GUESTBOOK MODERATION
+   ========================= */
+
+function guestbookEditor(){
+
+  let pending=
+    guestbook.filter(x=>!x.approved);
+
+  let approved=
+    guestbook.filter(x=>x.approved);
+
+  $('editor').innerHTML=`
+
+    <h1>guestbook ♡</h1>
+
+    <p class="muted">
+      Check messages before they appear publicly.
+    </p>
+
+
+    <div
+      class="card"
+      style="
+        margin-top:16px;
+        padding:16px;
+        background:#fff8fc;
+      "
+    >
+
+      <b style="color:#955a73">
+        ${pending.length} message${pending.length===1?'':'s'}
+        waiting for approval ♡
+      </b>
+
+      <div
+        class="muted"
+        style="margin-top:5px"
+      >
+        Visitors only see messages that you approve.
+      </div>
+
+    </div>
+
+
+    <h2
+      style="
+        color:#75455b;
+        font-size:18px;
+        margin:24px 0 8px;
+      "
+    >
+      waiting for approval
+    </h2>
+
+
+    <div class="list">
+
+      ${
+        pending.map(g=>`
+
+          <div
+            class="item"
+            style="display:block"
+          >
+
+            <div
+              style="
+                display:flex;
+                justify-content:space-between;
+                gap:10px;
+                align-items:flex-start;
+              "
+            >
+
+              <div>
+
+                <b>${esc(g.name)}</b>
+
+                <div class="guestStatus">
+                  waiting for approval
+                </div>
+
+              </div>
+
+              <small>
+                ${
+                  g.created_at
+                  ?
+                  esc(
+                    new Date(
+                      g.created_at
+                    ).toLocaleString()
+                  )
+                  :
+                  ''
+                }
+              </small>
+
+            </div>
+
+
+            <div class="guestMessage">
+              ${br(g.message)}
+            </div>
+
+
+            <div class="actions">
+
+              <button
+                class="btn primary"
+                onclick="approveGuest('${g.id}')"
+              >
+                ✓ approve ♡
+              </button>
+
+              <button
+                class="btn danger"
+                onclick="delGuest('${g.id}')"
+              >
+                🗑️ delete
+              </button>
+
+            </div>
+
+          </div>
+
+        `).join('')
+        ||
+        '<div class="muted">no messages waiting for approval ♡</div>'
+      }
+
+    </div>
+
+
+    <h2
+      style="
+        color:#75455b;
+        font-size:18px;
+        margin:28px 0 8px;
+      "
+    >
+      approved messages
+    </h2>
+
+
+    <div class="list">
+
+      ${
+        approved.map(g=>`
+
+          <div
+            class="item"
+            style="display:block"
+          >
+
+            <div
+              style="
+                display:flex;
+                justify-content:space-between;
+                gap:10px;
+                align-items:flex-start;
+              "
+            >
+
+              <div>
+
+                <b>${esc(g.name)}</b>
+
+                <div class="guestStatus approved">
+                  visible on website
+                </div>
+
+              </div>
+
+              <small>
+                ${
+                  g.created_at
+                  ?
+                  esc(
+                    new Date(
+                      g.created_at
+                    ).toLocaleString()
+                  )
+                  :
+                  ''
+                }
+              </small>
+
+            </div>
+
+
+            <div class="guestMessage">
+              ${br(g.message)}
+            </div>
+
+
+            <div class="actions">
+
+              <button
+                class="btn"
+                onclick="hideGuest('${g.id}')"
+              >
+                hide ♡
+              </button>
+
+              <button
+                class="btn danger"
+                onclick="delGuest('${g.id}')"
+              >
+                🗑️ delete
+              </button>
+
+            </div>
+
+          </div>
+
+        `).join('')
+        ||
+        '<div class="muted">no approved messages yet ♡</div>'
+      }
+
+    </div>
+
+  `;
+
+}
+
+
+window.approveGuest=async id=>{
+
+  let {error}=
+    await sb
+      .from('guestbook_messages')
+      .update({
+        approved:true
+      })
+      .eq('id',id);
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  await load();
+
+  tab='guestbook';
+
+  render();
+
+  status('message approved ♡');
+
+};
+
+
+window.hideGuest=async id=>{
+
+  let {error}=
+    await sb
+      .from('guestbook_messages')
+      .update({
+        approved:false
+      })
+      .eq('id',id);
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  await load();
+
+  tab='guestbook';
+
+  render();
+
+  status('message hidden ♡');
+
+};
+
+
+window.delGuest=async id=>{
+
+  if(!confirm(
+    'Delete this guestbook message?'
+  ))
+    return;
+
+  let {error}=
+    await sb
+      .from('guestbook_messages')
+      .delete()
+      .eq('id',id);
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  await load();
+
+  tab='guestbook';
+
+  render();
+
+  status('guestbook message deleted ♡');
+
+};
+
+
+/* =========================
+   PREVIEW
+   ========================= */
 
 function img(u,a){
 
@@ -2425,10 +2056,106 @@ function img(u,a){
 
 function preview(){
 
+  if(tab==='guestbook'){
+
+    $('preview').innerHTML=`
+
+      <div class="site">
+
+        <div class="siteHead">
+
+          <div class="siteTitle">
+            guestbook ♡
+          </div>
+
+          <div class="tag">
+            public guestbook preview
+          </div>
+
+        </div>
+
+
+        <div class="navfake">
+          HOME ♡　
+          BLOG ♡　
+          ARTICLES ♡　
+          ABOUT ME ♡　
+          LINKS ♡　
+          GUESTBOOK ♡
+        </div>
+
+
+        <div style="padding:12px">
+
+          <div class="card">
+
+            <h3>
+              approved messages ♡
+            </h3>
+
+            ${
+              guestbook
+                .filter(g=>g.approved)
+                .slice(0,5)
+                .map(g=>`
+
+                  <div
+                    style="
+                      border:1px solid #ecd8e2;
+                      border-radius:8px;
+                      padding:8px;
+                      margin-top:6px;
+                    "
+                  >
+
+                    <b>
+                      ${esc(g.name)} ♡
+                    </b>
+
+                    <br>
+
+                    ${br(g.message)}
+
+                  </div>
+
+                `)
+                .join('')
+              ||
+              'no approved messages yet ♡'
+            }
+
+          </div>
+
+
+          <div class="card">
+
+            <h3>
+              moderation ♡
+            </h3>
+
+            ${
+              guestbook.filter(
+                g=>!g.approved
+              ).length
+            }
+
+            message(s) waiting for approval.
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+  }
+
+
   $('preview').innerHTML=`
 
     <div class="site">
-
 
       <div class="siteHead">
 
@@ -2444,14 +2171,12 @@ function preview(){
 
 
       <div class="navfake">
-
         HOME ♡　
         BLOG ♡　
         ARTICLES ♡　
         ABOUT ME ♡　
         LINKS ♡　
         GUESTBOOK ♡
-
       </div>
 
 
@@ -2465,7 +2190,6 @@ function preview(){
             <h3>
               about me ♡
             </h3>
-
 
             ${
               about.about_image
@@ -2481,7 +2205,6 @@ function preview(){
               :
               ''
             }
-
 
             ${br(home.home_about)}
 
@@ -2537,11 +2260,9 @@ function preview(){
                     ''
                   }
 
-
                   <h2>
                     ${esc(p.title)}
                   </h2>
-
 
                   <p>
 
@@ -2565,17 +2286,17 @@ function preview(){
             ||
 
             `
-            <div class="post">
+              <div class="post">
 
-              <h2>
-                a new little world ♡
-              </h2>
+                <h2>
+                  a new little world ♡
+                </h2>
 
-              <p>
-                your blog posts will appear here.
-              </p>
+                <p>
+                  your blog posts will appear here.
+                </p>
 
-            </div>
+              </div>
             `
           }
 
@@ -2633,7 +2354,6 @@ function preview(){
       >
         ${esc(home.home_footer)}
       </div>
-
 
     </div>
 
