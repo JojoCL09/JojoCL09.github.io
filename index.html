@@ -230,35 +230,57 @@ footer{
   background:#fff
 }
 
+css
 @media(max-width:980px){
   .grid{
-    grid-template-columns:220px 1fr
+    grid-template-columns:1fr;
+    max-width:700px;
+    gap:18px;
   }
 
-  .grid>aside:last-child{
-    grid-column:1/-1;
+  .grid > aside:last-child{
+    grid-column:auto;
     display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px
+    grid-template-columns:1fr;
+    gap:18px;
   }
 
-  .grid>aside:last-child .card{
-    margin-bottom:0
+  .grid > aside:last-child .card{
+    margin-bottom:0;
   }
-}
-
 css
 @media(max-width:700px){
   .grid{
-    grid-template-columns:1fr
+    grid-template-columns:1fr;
+    width:100%;
+    padding:0 14px;
+    margin:18px auto 40px;
+    gap:16px;
   }
 
-  .grid>aside:last-child{
-    display:block
+  .grid > aside,
+  .grid > section,
+  .grid > aside:last-child{
+    width:100%;
+    min-width:0;
+    display:block;
+    grid-column:auto;
   }
 
-  .grid>aside:last-child .card{
-    margin-bottom:20px
+  .grid .card,
+  .grid .post{
+    width:100%;
+    min-width:0;
+    margin-bottom:16px;
+  }
+
+  .post{
+    padding:18px;
+  }
+
+  .post h2{
+    font-size:27px;
+    overflow-wrap:anywhere;
   }
 
   .logo{
@@ -286,6 +308,10 @@ css
   .nav a{
     padding:9px 13px;
     font-size:13px;
+    border-radius:16px;
+  }
+}
+
     border-radius:16px;
   }
 }
