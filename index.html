@@ -426,6 +426,77 @@ footer{
   background: #fde8ef;
   transform: translateY(-3px);
 }
+/* ♡ Reading progress */
+#readingProgress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 4px;
+  background: linear-gradient(90deg, #f6b7ca, #e88eae, #d98bb8);
+  z-index: 9999;
+  transition: width 0.08s linear;
+}
+
+/* ♡ Cute loading screen */
+#cuteLoadingScreen {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff7fa;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.45s ease, visibility 0.45s ease;
+}
+
+#cuteLoadingScreen.loading-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loading-content {
+  text-align: center;
+  padding: 24px;
+  animation: loadingFloat 1.8s ease-in-out infinite;
+}
+
+.loading-content h2 {
+  color: #a85d78;
+  font-family: "DM Serif Display", serif;
+  font-size: 28px;
+  margin: 14px 0 8px;
+}
+
+.loading-content p {
+  color: #916372;
+  font-size: 13px;
+}
+
+.loading-sparkles,
+.loading-hearts {
+  color: #e88eae;
+  font-size: 22px;
+  letter-spacing: 5px;
+}
+
+@keyframes loadingFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #cuteLoadingScreen {
+    transition: none;
+  }
+
+  .loading-content {
+    animation: none;
+  }
+}
 </style>
 </head>
 
