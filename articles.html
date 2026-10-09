@@ -703,5 +703,35 @@
 })();
 </script>
 
+<script>
+const backToTop = document.createElement("button");
+backToTop.id = "backToTop";
+backToTop.type = "button";
+backToTop.textContent = "↑ back to top ♡";
+backToTop.setAttribute("aria-label", "Back to top");
+document.body.appendChild(backToTop);
+
+function updateBackToTop() {
+  backToTop.classList.toggle("visible", window.scrollY > 350);
+}
+
+window.addEventListener("scroll", updateBackToTop, {
+  passive: true
+});
+
+backToTop.addEventListener("click", function () {
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  window.scrollTo({
+    top: 0,
+    behavior: reducedMotion ? "auto" : "smooth"
+  });
+});
+
+updateBackToTop();
+</script>
+
 </body>
 </html>
