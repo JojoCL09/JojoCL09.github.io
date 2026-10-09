@@ -337,10 +337,119 @@ footer{
     grid-template-columns:1fr 1fr
   }
 }
+  
+/* ♡ Reading progress bar */
+#readingProgress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 4px;
+  background: linear-gradient(90deg, #f6b7ca, #e88eae, #d98bb8);
+  z-index: 9999;
+  transition: width 0.08s linear;
+}
+
+/* ♡ Back to top */
+#backToTop {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 9000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border: 1px solid #f2c6d4;
+  border-radius: 999px;
+  background: #fff7fa;
+  color: #a85d78;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px #e8b9c533;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+#backToTop.visible {
+  display: flex;
+}
+
+#backToTop:hover {
+  background: #fde8ef;
+  transform: translateY(-3px);
+}
+
+/* ♡ Cute loading screen */
+#cuteLoadingScreen {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff7fa;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.45s ease, visibility 0.45s ease;
+}
+
+#cuteLoadingScreen.loading-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loading-content {
+  text-align: center;
+  padding: 24px;
+  animation: loadingFloat 1.8s ease-in-out infinite;
+}
+
+.loading-content h2 {
+  color: #a85d78;
+  font-family: "DM Serif Display", serif;
+  font-size: 28px;
+  margin: 14px 0 8px;
+}
+
+.loading-content p {
+  color: #916372;
+  font-size: 13px;
+}
+
+.loading-sparkles,
+.loading-hearts {
+  color: #e88eae;
+  font-size: 22px;
+  letter-spacing: 5px;
+}
+
+@keyframes loadingFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #cuteLoadingScreen { transition: none; }
+  .loading-content { animation: none; }
+}
+
 </style>
 </head>
 
 <body>
+
+<div id="readingProgress" aria-hidden="true"></div>
+
+<div id="cuteLoadingScreen" role="status" aria-label="Loading">
+  <div class="loading-content">
+    <div class="loading-sparkles">✧ ♡ ✧</div>
+    <h2>My Little Pink World</h2>
+    <p>loading a little bit of pink magic...</p>
+    <div class="loading-hearts">♡ ♥ ♡</div>
+  </div>
+</div>
 
 <div class="top">♡ welcome to my little pink world ♡</div>
 
@@ -448,6 +557,83 @@ footer{
 <footer>
   made with ♡ & pink sparkles · my little pink world
 </footer>
+
+<script>
+(function () {
+  // ♡ Reading progress
+  const progressBar = document.getElementById("readingProgress");
+
+  function updateReadingProgress() {
+    if (!progressBar) return;
+
+    const page = document.documentElement;
+    const scrollableHeight = page.scrollHeight - window.innerHeight;
+    const progress = scrollableHeight > 0
+      ? (window.scrollY / scrollableHeight) * 100
+      : 0;
+
+    progressBar.style.width =
+      Math.min(100, Math.max(0, progress)) + "%";
+  }
+
+  window.addEventListener("scroll", updateReadingProgress, {
+    passive: true
+  });
+  window.addEventListener("resize", updateReadingProgress);
+  window.addEventListener("load", updateReadingProgress);
+  updateReadingProgress();
+
+  // ♡ Back to top
+  const backToTop = document.createElement("button");
+  backToTop.id = "backToTop";
+  backToTop.type = "button";
+  backToTop.textContent = "↑ back to top ♡";
+  backToTop.setAttribute("aria-label", "Back to top");
+  document.body.appendChild(backToTop);
+
+  function updateBackToTop() {
+    backToTop.classList.toggle("visible", window.scrollY > 50);
+  }
+
+  window.addEventListener("scroll", updateBackToTop, {
+    passive: true
+  });
+
+  backToTop.addEventListener("click", function () {
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    window.scrollTo({
+      top: 0,
+      behavior: reducedMotion ? "auto" : "smooth"
+    });
+  });
+
+  updateBackToTop();
+
+  // ♡ Cute loading screen
+  const loadingScreen =
+    document.getElementById("cuteLoadingScreen");
+
+  function hideLoadingScreen() {
+    if (!loadingScreen) return;
+
+    loadingScreen.classList.add("loading-hidden");
+    loadingScreen.setAttribute("aria-hidden", "true");
+  }
+
+  if (document.readyState === "complete") {
+    hideLoadingScreen();
+  } else {
+    window.addEventListener("load", hideLoadingScreen, {
+      once: true
+    });
+
+    setTimeout(hideLoadingScreen, 4000);
+  }
+})();
+</script>
 
 </body>
 </html>
