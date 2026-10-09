@@ -533,11 +533,16 @@ have something to say?<br>
   );
 
 
-  setText(
-    "homeFooter",
-    "home_footer",
-    "made with ♡ & pink sparkles · my little pink world"
-  );
+
+setText(
+  "homeFooter",
+  "home_footer",
+  "made with ♡ & pink sparkles · my little pink world"
+);
+
+document.getElementById("homeFooter").innerHTML +=
+  '<p><a href="privacy.html" style="color:#a85d78;">privacy policy ♡</a></p>';
+
 
 
 if(content.home_image){
