@@ -359,6 +359,45 @@ footer{
 *{
   cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 2 L3 19 L8 14 L12 22 L16 20 L12 12 L20 12 Z' fill='%23f6b7ca' stroke='%23a85d78' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2,auto;
 }
+  
+.lovely-counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  margin: 30px auto;
+  padding: 20px;
+  max-width: 360px;
+  text-align: center;
+  background: #fff5f9;
+  border: 1px solid #f2c6d4;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px #e8b9c522;
+}
+
+.lovely-heart {
+  color: #e88eae;
+  font-size: 28px;
+}
+
+.lovely-title {
+  color: #b05274;
+  font-family: "DM Serif Display", serif;
+  font-size: 22px;
+}
+
+#lovelyVisitorCount {
+  color: #e88eae;
+  font-size: 25px;
+  font-weight: 600;
+  margin: 5px 0;
+}
+
+.lovely-note {
+  color: #916372;
+  font-size: 11px;
+}
+
 </style>
 </head>
 
@@ -461,6 +500,16 @@ footer{
   made with ♡ & pink sparkles · my little pink world
   <p><a href="privacy.html" style="color:#a85d78;">privacy policy ♡</a></p>
 </footer>
+
+<div class="lovely-counter">
+  <span class="lovely-heart">♡</span>
+  <div>
+    <div class="lovely-title">Lovely visitors</div>
+    <div id="lovelyVisitorCount">loading... ♡</div>
+    <div class="lovely-note">thank you for visiting my little world</div>
+  </div>
+  <span class="lovely-heart">♡</span>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
@@ -790,6 +839,42 @@ footer{
     popup.style.display = 'none';
     document.body.style.overflow = '';
   });
+})();
+</script>
+
+<script>
+(async function () {
+  const counter = document.getElementById("lovelyVisitorCount");
+  if (!counter) return;
+
+  try {
+    const client = supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    const sessionKey = "mlpwLovelyVisitorCounted";
+
+    let result;
+
+    if (sessionStorage.getItem(sessionKey)) {
+      result = await client.rpc("get_lovely_visitors");
+    } else {
+      result = await client.rpc("increment_lovely_visitors");
+
+      if (!result.error) {
+        sessionStorage.setItem(sessionKey, "yes");
+      }
+    }
+
+    if (result.error) throw result.error;
+
+    counter.textContent =
+      Number(result.data).toLocaleString() + " ♡";
+  } catch (error) {
+    console.error("Lovely visitors counter:", error);
+    counter.textContent = "welcome, lovely visitor ♡";
+  }
 })();
 </script>
 
