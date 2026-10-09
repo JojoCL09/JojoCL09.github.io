@@ -805,21 +805,34 @@ const photo =
   popup.style.display = 'flex';
   document.body.style.overflow = 'hidden';
 
+
+  let hasScrolled = false;
+
   function checkScroll() {
+    const canScroll =
+      scrollBox.scrollHeight > scrollBox.clientHeight + 5;
+
     const reachedBottom =
       scrollBox.scrollTop + scrollBox.clientHeight >=
       scrollBox.scrollHeight - 5;
 
-    if (reachedBottom) {
+    if (scrollBox.scrollTop > 0) {
+      hasScrolled = true;
+    }
+
+    if (hasScrolled && canScroll && reachedBottom) {
       accept.disabled = false;
       accept.style.opacity = '1';
       note.textContent = 'you reached the bottom ♡';
+    } else {
+      note.textContent = '↓ scroll to the bottom to continue ↓';
     }
   }
 
   scrollBox.addEventListener('scroll', checkScroll);
   window.addEventListener('resize', checkScroll);
   checkScroll();
+
 
 
   accept.addEventListener('click', function () {
