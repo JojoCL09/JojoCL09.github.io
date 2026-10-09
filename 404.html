@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Oops! This page wandered off into a more pastel place.">
+  <title>404 · My Little Pink World ♡</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Parisienne&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --pink: #f6b7ca;
+      --pale: #fde8ef;
+      --deep: #a85d78;
+      --text: #72535f;
+      --line: #f2c6d4;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(180deg, #fffafb, #fdebf2);
+      color: var(--text);
+      font-family: Quicksand, sans-serif;
+    }
+
+    a {
+      color: var(--deep);
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #d66f98;
+    }
+
+    .top {
+      padding: 12px 7%;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+      text-align: center;
+      font-size: 13px;
+      letter-spacing: .5px;
+    }
+
+    header {
+      max-width: 1180px;
+      width: 100%;
+      margin: auto;
+      padding: 35px 20px 25px;
+      text-align: center;
+    }
+
+    .logo {
+      margin: 0;
+      font-family: Parisienne, cursive;
+      font-size: clamp(42px, 7vw, 68px);
+      color: #e88eae;
+      text-shadow: 0 2px #fff, 0 4px 12px #f3c5d4;
+      line-height: 1.35;
+    }
+
+    .tag {
+      margin: 7px 0 28px;
+      font-family: "DM Serif Display", serif;
+      letter-spacing: 4px;
+      font-size: 14px;
+      color: #916372;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+      flex-wrap: wrap;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: #fff8fb;
+      box-shadow: 0 5px 20px #efcbd733;
+    }
+
+    nav a {
+      padding: 11px 18px;
+      border-radius: 18px;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      background: var(--pale);
+    }
+
+    main {
+      width: min(620px, calc(100% - 32px));
+      margin: 45px auto 60px;
+      padding: 35px 24px;
+      text-align: center;
+      background: #fffafa;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: 0 7px 25px #e8b9c522;
+    }
+
+    .hearts {
+      color: #f2a0bd;
+      font-size: 28px;
+      letter-spacing: 15px;
+      margin: 0 0 8px;
+    }
+
+    .number {
+      margin: 0;
+      color: #e99ab6;
+      font-family: "DM Serif Display", serif;
+      font-size: clamp(100px, 24vw, 155px);
+      line-height: 1;
+      letter-spacing: 5px;
+    }
+
+    .oops {
+      margin: 12px 0 20px;
+      color: #e88eae;
+      font-family: Parisienne, cursive;
+      font-size: 43px;
+    }
+
+    .message {
+      margin: 0 auto 30px;
+      max-width: 360px;
+      font-family: "DM Serif Display", serif;
+      font-size: 17px;
+      line-height: 1.8;
+      letter-spacing: 1px;
+    }
+
+    .little-heart {
+      color: #f2a0bd;
+      font-size: 23px;
+      margin-bottom: 24px;
+    }
+
+    .home-button {
+      display: inline-block;
+      padding: 12px 30px;
+      border: 1px solid var(--pink);
+      border-radius: 30px;
+      background: #fbd0df;
+      color: #a85d78;
+      font-family: "DM Serif Display", serif;
+      font-size: 16px;
+      letter-spacing: 1px;
+      transition: background .2s, transform .2s;
+    }
+
+    .home-button:hover {
+      background: #f7b9d0;
+      color: #8f4562;
+      transform: translateY(-2px);
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 22px 12px;
+      border-top: 1px solid var(--line);
+      background: #fff;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    footer p {
+      margin: 6px 0;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 28px 12px 18px;
+      }
+
+      .tag {
+        letter-spacing: 2px;
+        line-height: 1.8;
+      }
+
+      nav {
+        gap: 3px;
+      }
+
+      nav a {
+        padding: 9px 10px;
+      }
+
+      main {
+        margin: 28px auto 40px;
+        padding: 30px 18px;
+      }
+
+      .hearts {
+        letter-spacing: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="top">
+    ♡ welcome to my little pink world ♡
+  </div>
+
+  <header>
+    <h1 class="logo">My Little Pink World ♡</h1>
+
+    <div class="tag">
+      life　♡　fashion　♡　dreams　♡　pretty things
+    </div>
+
+    <nav aria-label="Main navigation">
+      <a href="index.html">⌂ Home</a>
+      <a href="blog.html">♡ Blog</a>
+      <a href="articles.html">♡ Articles</a>
+      <a href="about.html">♡ About Me</a>
+      <a href="links.html">♡ Links</a>
+      <a href="guestbook.html">♡ Guestbook</a>
+    </nav>
+  </header>
+
+  <main>
+    <p class="hearts" aria-hidden="true">♡ ✧ ♡</p>
+
+    <h2 class="number">404</h2>
+
+    <div class="oops">oops!</div>
+
+    <p class="message">
+      the page you're looking for<br>
+      seems to have wandered off<br>
+      into a more pastel place... ♡
+    </p>
+
+    <div class="little-heart" aria-hidden="true">♡</div>
+
+    <a class="home-button" href="index.html">
+      Back to Home ♡
+    </a>
+  </main>
+
+  <footer>
+    <p>Made with ♡ & pink sparkles · My Little Pink World</p>
+    <p><a href="privacy.html">Privacy Policy ♡</a></p>
+  </footer>
+</body>
+</html>
