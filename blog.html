@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,6 +64,7 @@ header{
   text-shadow:0 2px #fff,0 4px 12px #f3c5d4;
   margin:0
 }
+
 .tag{
   font-family:"DM Serif Display",serif;
   letter-spacing:4px;
@@ -329,6 +331,11 @@ footer{
     grid-template-columns:1fr 1fr
   }
 }
+
+/* roze muiscursor ♡ — op de hele blogpagina */
+* {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 2 L3 19 L8 14 L12 22 L16 20 L12 12 L20 12 Z' fill='%23f6b7ca' stroke='%23a85d78' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2, auto;
+}
 </style>
 </head>
 
@@ -337,33 +344,35 @@ footer{
 <div class="top">♡ welcome to my little pink world ♡</div>
 
 <header>
+  <h1 class="logo">my little pink world ♡</h1>
 
-<h1 class="logo">my little pink world ♡</h1>
+  <div class="tag">
+    life　♡　fashion　♡　dreams　♡　pretty things
+  </div>
 
-<div class="tag">
-  life　♡　fashion　♡　dreams　♡　pretty things
-</div>
-
-<nav class="nav">
-  <a href="index.html">⌂ Home</a>
-  <a href="blog.html">♡ Blog</a>
-  <a href="articles.html">♡ Articles</a>
-  <a href="about.html">♡ About Me</a>
-  <a href="links.html">♡ Links</a>
-  <a href="guestbook.html">♡ Guestbook</a>
-</nav>
-
+  <nav class="nav">
+    <a href="index.html">⌂ Home</a>
+    <a href="blog.html">♡ Blog</a>
+    <a href="articles.html">♡ Articles</a>
+    <a href="about.html">♡ About Me</a>
+    <a href="links.html">♡ Links</a>
+    <a href="guestbook.html">♡ Guestbook</a>
+  </nav>
 </header>
 
 <main class="page">
+  <h2 class="page-title">blog ♡</h2>
 
-<h2 class="page-title">blog ♡</h2>
+  <p class="page-sub">
+    little thoughts, pretty days & things i love
+  </p>
 
-<p class="page-sub">
-  little thoughts, pretty days & things i love
-</p>
+  <div id="dynamicPosts"></div>
+</main>
 
-<div id="dynamicPosts"></div>
+<footer>
+  made with ♡ & pink sparkles · my little pink world
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
@@ -425,11 +434,6 @@ footer{
 })();
 </script>
 
-</main>
-
-<footer>
-  made with ♡ & pink sparkles · my little pink world
-</footer>
-
 </body>
 </html>
+```
