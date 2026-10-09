@@ -1674,7 +1674,22 @@ window.editArticle=async id=>{
           margin:6px 0 16px;padding:12px;
           border:1px solid #e9bfd0;border-radius:12px;
           background:white;color:#694657;">
+<label for="editArticleTheme">Article theme ♡</label>
+<select id="editArticleTheme"
+  style="box-sizing:border-box;width:100%;
+  margin:6px 0 16px;padding:12px;
+  border:1px solid #e9bfd0;border-radius:12px;
+  background:white;color:#694657;">
 
+  <option value="">no theme</option>
+
+  ${themes.map(t => `
+    <option value="${t.id}"
+      ${String(a.theme_id || '') === String(t.id) ? 'selected' : ''}>
+      ${esc(t.name)}
+    </option>
+  `).join('')}
+</select>
         <label for="editArticlePublished">Publish date and time</label>
         <input id="editArticlePublished" type="datetime-local"
           value="${localDate}"
