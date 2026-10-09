@@ -697,16 +697,31 @@ async function load(){
   posts=p.data||[];
 
 
-  let a=
-    await sb
-      .from('articles')
-      .select('*')
-      .order(
-        'published_at',
-        {ascending:false}
-      );
 
-  articles=a.data||[];
+let a = await sb
+  .from('articles')
+  .select('*')
+  .order('published_at', {ascending:false});
+
+if (a.error) {
+  console.error('Could not load articles:', a.error);
+  articles = [];
+} else {
+  articles = a.data || [];
+}
+
+let th = await sb
+  .from('article_themes')
+  .select('*')
+  .order('name', {ascending:true});
+
+if (th.error) {
+  console.error('Could not load themes:', th.error);
+  themes = [];
+} else {
+  themes = th.data || [];
+}
+
 
 
   let l=
