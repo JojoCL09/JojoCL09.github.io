@@ -1722,6 +1722,100 @@ window.editArticle=async id=>{
 };
 
 
+function linksEditor(){
+  $('editor').innerHTML=`
+    <h1>links ♡</h1>
+
+    <p class="muted">
+      Manage the links visitors see.
+    </p>
+
+    <div class="field">
+      <label>name</label>
+      <input id="lt">
+    </div>
+
+    <div class="field">
+      <label>URL</label>
+      <input id="lu" type="url">
+    </div>
+
+    <div class="field">
+      <label>description</label>
+      <textarea id="ld" style="min-height:75px"></textarea>
+    </div>
+
+    <div class="actions">
+      <button class="btn primary" id="addl">
+        add link ♡
+      </button>
+    </div>
+
+    <div class="list">
+      ${
+        links.map(l=>`
+          <div class="item">
+            <div>
+              <b>${esc(l.title)}</b>
+              <br>
+              <small>${esc(l.url)}</small>
+              ${
+                l.description
+                  ? `<br><small>${esc(l.description)}</small>`
+                  : ''
+              }
+            </div>
+
+            <div>
+              <button class="btn"
+                onclick="editLink('${l.id}')">
+                edit
+              </button>
+
+              <button class="btn danger"
+                onclick="delLink('${l.id}')">
+                delete
+              </button>
+            </div>
+          </div>
+        `).join('')
+        || '<div class="muted">no links yet ♡</div>'
+      }
+    </div>
+  `;
+
+  $('addl').onclick=async()=>{
+    let title=$('lt').value.trim();
+    let url=$('lu').value.trim();
+    let description=$('ld').value.trim();
+
+    if(!title||!url){
+      return alert('Add a name and URL first.');
+    }
+
+    try{
+      const parsedUrl=new URL(url);
+      if(!['http:','https:'].includes(parsedUrl.protocol)){
+        return alert('Please enter a valid http or https URL.');
+      }
+    }catch{
+      return alert('Please enter a valid URL, including https://');
+    }
+
+    let {error}=await sb
+      .from('links')
+      .insert({title,url,description});
+
+    if(error){
+      alert(error.message);
+      return;
+    }
+
+    await load();
+    status('link added ♡');
+  };
+}
+
 
 window.editLink=async id=>{
 
