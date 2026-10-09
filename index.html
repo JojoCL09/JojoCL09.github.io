@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,21 +16,23 @@
   --pale:#fde8ef;
   --deep:#a85d78;
   --text:#72535f;
-  --line:#f2c6d4
+  --line:#f2c6d4;
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
   background:linear-gradient(180deg,#fffafb,#fdebf2);
   color:var(--text);
-  font-family:Quicksand,sans-serif
+  font-family:Quicksand,sans-serif;
 }
 
 a{
   color:inherit;
-  text-decoration:none
+  text-decoration:none;
 }
 
 .top{
@@ -46,7 +49,7 @@ header{
   margin:auto;
   padding:42px 24px 25px;
   text-align:center;
-  position:relative
+  position:relative;
 }
 
 .logo{
@@ -54,7 +57,7 @@ header{
   font-size:68px;
   color:#e88eae;
   text-shadow:0 2px #fff,0 4px 12px #f3c5d4;
-  margin:0
+  margin:0;
 }
 
 .tag{
@@ -62,7 +65,7 @@ header{
   letter-spacing:4px;
   font-size:14px;
   margin:7px 0 28px;
-  color:#916372
+  color:#916372;
 }
 
 .nav{
@@ -74,19 +77,19 @@ header{
   border-radius:22px;
   padding:8px;
   background:#fff8fb;
-  box-shadow:0 5px 20px #efcbd733
+  box-shadow:0 5px 20px #efcbd733;
 }
 
 .nav a{
   padding:11px 22px;
   border-radius:18px;
-  font-size:14px
+  font-size:14px;
 }
 
 .nav a:hover,
 .nav a.active{
   background:var(--pale);
-  color:#b05274
+  color:#b05274;
 }
 
 .grid{
@@ -94,8 +97,13 @@ header{
   margin:20px auto 70px;
   padding:0 20px;
   display:grid;
-  grid-template-columns:260px 1fr 240px;
-  gap:22px
+  grid-template-columns:260px minmax(0,1fr) 240px;
+  gap:22px;
+}
+
+.grid > aside,
+.grid > section{
+  min-width:0;
 }
 
 .card{
@@ -104,7 +112,7 @@ header{
   border-radius:16px;
   margin-bottom:20px;
   overflow:hidden;
-  box-shadow:0 7px 25px #e8b9c522
+  box-shadow:0 7px 25px #e8b9c522;
 }
 
 .card h3{
@@ -114,13 +122,13 @@ header{
   font-family:"DM Serif Display",serif;
   font-weight:400;
   color:#9b5c71;
-  font-size:20px
+  font-size:20px;
 }
 
 .pad{
   padding:17px;
   line-height:1.7;
-  font-size:14px
+  font-size:14px;
 }
 
 .avatar{
@@ -130,14 +138,14 @@ header{
   align-items:center;
   justify-content:center;
   font-size:75px;
-  overflow:hidden
+  overflow:hidden;
 }
 
 .avatar img{
   width:100%;
   height:100%;
   min-height:190px;
-  object-fit:cover
+  object-fit:cover;
 }
 
 .post{
@@ -145,7 +153,9 @@ header{
   border:1px solid var(--line);
   border-radius:15px;
   padding:22px;
-  margin-bottom:20px
+  margin-bottom:20px;
+  min-width:0;
+  overflow-wrap:anywhere;
 }
 
 .date{
@@ -155,7 +165,7 @@ header{
   padding:8px 12px;
   font-size:12px;
   color:#a45a75;
-  margin-bottom:12px
+  margin-bottom:12px;
 }
 
 .post h2{
@@ -163,7 +173,12 @@ header{
   font-weight:400;
   font-size:30px;
   color:#875467;
-  margin:0 0 13px
+  margin:0 0 13px;
+  overflow-wrap:anywhere;
+}
+
+.post p{
+  overflow-wrap:anywhere;
 }
 
 .photo{
@@ -175,14 +190,14 @@ header{
   justify-content:center;
   font-size:65px;
   margin-bottom:14px;
-  overflow:hidden
+  overflow:hidden;
 }
 
 .photo img{
   width:100%;
   height:100%;
   object-fit:cover;
-  border-radius:12px
+  border-radius:12px;
 }
 
 .btn{
@@ -192,26 +207,26 @@ header{
   border:1px solid var(--pink);
   border-radius:18px;
   color:#a95373;
-  background:#fff
+  background:#fff;
 }
 
 .btn:hover{
-  background:var(--pale)
+  background:var(--pale);
 }
 
 ul{
   list-style:none;
   padding:0;
-  margin:0
+  margin:0;
 }
 
 li{
-  padding:5px 0
+  padding:5px 0;
 }
 
 li:before{
   content:"♡ ";
-  color:#e997b2
+  color:#e997b2;
 }
 
 .quote{
@@ -219,7 +234,7 @@ li:before{
   padding:18px;
   border-radius:12px;
   text-align:center;
-  font-family:"DM Serif Display",serif
+  font-family:"DM Serif Display",serif;
 }
 
 footer{
@@ -227,44 +242,54 @@ footer{
   padding:28px;
   border-top:1px solid var(--line);
   font-size:13px;
-  background:#fff
+  background:#fff;
 }
 
-css
-@media(max-width:980px){
+/* Tablet: behoud de drie kolommen waar ze nog passen */
+@media (max-width:980px){
   .grid{
-    grid-template-columns:1fr;
-    max-width:700px;
-    gap:18px;
-  }
-
-  .grid > aside:last-child{
-    grid-column:auto;
-    display:grid;
-    grid-template-columns:1fr;
-    gap:18px;
-  }
-
-  .grid > aside:last-child .card{
-    margin-bottom:0;
-  }
-css
-@media(max-width:700px){
-  .grid{
-    grid-template-columns:1fr;
+    grid-template-columns:minmax(0,1fr);
     width:100%;
-    padding:0 14px;
+    max-width:700px;
+    margin:20px auto 40px;
+    padding:0 16px;
+    gap:18px;
+  }
+
+  .grid > aside,
+  .grid > section{
+    display:block;
+    width:100%;
+    min-width:0;
+    grid-column:1 / -1;
+  }
+
+  .grid .card,
+  .grid .post{
+    width:100%;
+    min-width:0;
+    margin-bottom:18px;
+  }
+}
+
+/* Mobiel: alles netjes onder elkaar */
+@media (max-width:700px){
+  .grid{
+    display:grid;
+    grid-template-columns:minmax(0,1fr);
+    width:100%;
+    max-width:100%;
     margin:18px auto 40px;
+    padding:0 14px;
     gap:16px;
   }
 
   .grid > aside,
-  .grid > section,
-  .grid > aside:last-child{
+  .grid > section{
+    display:block;
     width:100%;
     min-width:0;
-    display:block;
-    grid-column:auto;
+    grid-column:1 / -1;
   }
 
   .grid .card,
@@ -272,6 +297,7 @@ css
     width:100%;
     min-width:0;
     margin-bottom:16px;
+    box-sizing:border-box;
   }
 
   .post{
@@ -289,6 +315,7 @@ css
   }
 
   header{
+    width:100%;
     padding:25px 14px 18px;
   }
 
@@ -300,9 +327,11 @@ css
   }
 
   .nav{
+    width:100%;
     gap:4px;
     padding:6px;
     border-radius:18px;
+    justify-content:center;
   }
 
   .nav a{
@@ -310,15 +339,24 @@ css
     font-size:13px;
     border-radius:16px;
   }
-}
 
-    border-radius:16px;
+  .card h3{
+    font-size:19px;
+  }
+
+  .pad{
+    padding:16px;
+    font-size:14px;
+  }
+
+  .photo{
+    max-width:100%;
   }
 }
 
-/* roze muiscursor ♡ */
-* {
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 2 L3 19 L8 14 L12 22 L16 20 L12 12 L20 12 Z' fill='%23f6b7ca' stroke='%23a85d78' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2, auto;
+/* Roze muiscursor ♡ */
+*{
+  cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 2 L3 19 L8 14 L12 22 L16 20 L12 12 L20 12 Z' fill='%23f6b7ca' stroke='%23a85d78' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2,auto;
 }
 </style>
 </head>
@@ -330,125 +368,91 @@ css
 </div>
 
 <header>
+  <h1 class="logo" id="siteTitle">
+    my little pink world ♡
+  </h1>
 
-<h1 class="logo" id="siteTitle">
-  my little pink world ♡
-</h1>
+  <div class="tag" id="siteTagline">
+    life　♡　fashion　♡　dreams　♡　pretty things
+  </div>
 
-<div class="tag" id="siteTagline">
-  life　♡　fashion　♡　dreams　♡　pretty things
-</div>
-
-<nav class="nav">
-  <a href="index.html" class="active">⌂ Home</a>
-  <a href="blog.html">♡ Blog</a>
-  <a href="articles.html">♡ Articles</a>
-  <a href="about.html">♡ About Me</a>
-  <a href="links.html">♡ Links</a>
-  <a href="guestbook.html">♡ Guestbook</a>
-</nav>
-
+  <nav class="nav">
+    <a href="index.html" class="active">⌂ Home</a>
+    <a href="blog.html">♡ Blog</a>
+    <a href="articles.html">♡ Articles</a>
+    <a href="about.html">♡ About Me</a>
+    <a href="links.html">♡ Links</a>
+    <a href="guestbook.html">♡ Guestbook</a>
+  </nav>
 </header>
 
 <main class="grid">
 
-<aside>
+  <aside>
+    <section class="card">
+      <h3>about me ♡</h3>
+      <div class="avatar" id="homeImage"></div>
+      <div class="pad" id="homeAbout">
+        welcome to my little corner of the internet! ♡
+      </div>
+    </section>
 
-<section class="card">
+    <section class="card">
+      <h3>little updates ♡</h3>
+      <div class="pad" id="homeUpdates">
+        new here ♡
+      </div>
+    </section>
 
-<h3>about me ♡</h3>
+    <section class="card">
+      <h3>currently ♡</h3>
+      <div class="pad" id="homeCurrently">
+        🎀 ♡
+      </div>
+    </section>
+  </aside>
 
-<div class="avatar" id="homeImage"></div>
+  <section>
+    <div id="latestPosts">
+      <div class="post">
+        <p>loading my little world ♡</p>
+      </div>
+    </div>
+  </section>
 
-<div class="pad" id="homeAbout">
-  welcome to my little corner of the internet! ♡
-</div>
+  <aside>
+    <section class="card">
+      <h3>categories ♡</h3>
+      <div class="pad" id="homeCategories">
+        daily life<br>
+        fashion<br>
+        beauty<br>
+        music<br>
+        travel<br>
+        thoughts
+      </div>
+    </section>
 
-</section>
+    <section class="card">
+      <h3>little reminder ♡</h3>
+      <div class="pad">
+        <div class="quote" id="homeReminder">
+          you are enough<br>
+          just as you are ♡
+        </div>
+      </div>
+    </section>
 
-<section class="card">
-
-<h3>little updates ♡</h3>
-
-<div class="pad" id="homeUpdates">
-  new here ♡
-</div>
-
-</section>
-
-<section class="card">
-
-<h3>currently ♡</h3>
-
-<div class="pad" id="homeCurrently">
-  🎀 ♡
-</div>
-
-</section>
-
-</aside>
-
-<section>
-
-<div id="latestPosts">
-
-<div class="post">
-  <p>loading my little world ♡</p>
-</div>
-
-</div>
-
-</section>
-
-<aside>
-
-<section class="card">
-
-<h3>categories ♡</h3>
-
-<div class="pad" id="homeCategories">
-  daily life<br>
-  fashion<br>
-  beauty<br>
-  music<br>
-  travel<br>
-  thoughts
-</div>
-
-</section>
-
-<section class="card">
-
-<h3>little reminder ♡</h3>
-
-<div class="pad">
-
-<div class="quote" id="homeReminder">
-  you are enough<br>
-  just as you are ♡
-</div>
-
-</div>
-
-</section>
-
-<section class="card">
-
-<h3>guestbook ♡</h3>
-
-<div class="pad">
-
-have something to say?<br>
-
-<a class="btn" href="guestbook.html">
-  write a message ♡
-</a>
-
-</div>
-
-</section>
-
-</aside>
+    <section class="card">
+      <h3>guestbook ♡</h3>
+      <div class="pad">
+        have something to say?<br>
+        <a class="btn" href="guestbook.html">
+          write a message ♡
+        </a>
+      </div>
+    </section>
+  </aside>
 
 </main>
 
@@ -463,11 +467,10 @@ have something to say?<br>
 <script>
 (async function(){
 
-  const client =
-    supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
+  const client = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
 
   const keys = [
     "home_title",
@@ -482,11 +485,10 @@ have something to say?<br>
     "home_image"
   ];
 
-  const {data:contentRows} =
-    await client
-      .from("site_content")
-      .select("section,content")
-      .in("section",keys);
+  const {data:contentRows} = await client
+    .from("site_content")
+    .select("section,content")
+    .in("section",keys);
 
   const content = {};
 
@@ -495,10 +497,8 @@ have something to say?<br>
   });
 
   function setText(id,key,fallback){
-
     const value =
-      content[key] !== undefined &&
-      content[key] !== ""
+      content[key] !== undefined && content[key] !== ""
         ? content[key]
         : fallback;
 
@@ -507,10 +507,8 @@ have something to say?<br>
   }
 
   document.title =
-    (content.home_title ||
-    "my little pink world ♡")
-    .replace(/<[^>]*>/g,"")
-    + " · home";
+    (content.home_title || "my little pink world ♡")
+      .replace(/<[^>]*>/g,"") + " · home";
 
   setText(
     "topText",
@@ -536,17 +534,8 @@ have something to say?<br>
     "welcome to my little corner of the internet! ♡"
   );
 
-  setText(
-    "homeUpdates",
-    "home_updates",
-    "new here ♡"
-  );
-
-  setText(
-    "homeCurrently",
-    "home_currently",
-    "🎀 ♡"
-  );
+  setText("homeUpdates","home_updates","new here ♡");
+  setText("homeCurrently","home_currently","🎀 ♡");
 
   setText(
     "homeCategories",
@@ -570,133 +559,71 @@ have something to say?<br>
     '<p><a href="privacy.html" style="color:#a85d78;">privacy policy ♡</a></p>';
 
   if(content.home_image){
-
     document.getElementById("homeImage").innerHTML =
       '<img src="' +
       content.home_image.replace(/"/g,"&quot;") +
       '" alt="homepage photo">';
-
   }else{
-
     document.getElementById("homeImage").style.display = "none";
-
   }
 
-  const {data:posts,error} =
-    await client
-      .from("posts")
-      .select(
-        "title,content,image_url,published_at"
-      )
-      .lte(
-        "published_at",
-        new Date().toISOString()
-      )
-      .order(
-        "published_at",
-        {ascending:false}
-      )
-      .limit(2);
+  const {data:posts,error} = await client
+    .from("posts")
+    .select("title,content,image_url,published_at")
+    .lte("published_at",new Date().toISOString())
+    .order("published_at",{ascending:false})
+    .limit(2);
 
-  const esc = s =>
-    String(s ?? "")
-      .replace(
-        /[&<>"']/g,
-        c=>({
-          "&":"&amp;",
-          "<":"&lt;",
-          ">":"&gt;",
-          '"':"&quot;",
-          "'":"&#039;"
-        }[c])
-      );
+  const esc = s => String(s ?? "").replace(/[&<>"']/g,c=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  }[c]));
 
   if(error){
-
-    document.getElementById(
-      "latestPosts"
-    ).innerHTML =
+    document.getElementById("latestPosts").innerHTML =
       '<div class="post"><p>♡</p></div>';
-
     return;
   }
 
   if(!posts || !posts.length){
-
-    document.getElementById(
-      "latestPosts"
-    ).innerHTML =
+    document.getElementById("latestPosts").innerHTML =
       '<article class="post">' +
       '<span class="date">welcome ♡</span>' +
       '<h2>my little pink world ♡</h2>' +
       '<p>' +
-      esc(
-        content.home_welcome ||
-        "welcome to my little pink world ♡"
-      ) +
+      esc(content.home_welcome || "welcome to my little pink world ♡") +
       '</p>' +
       '</article>';
-
     return;
   }
 
-  document.getElementById(
-    "latestPosts"
-  ).innerHTML =
-
+  document.getElementById("latestPosts").innerHTML =
     posts.map(p=>{
-
-      const d =
-        new Date(
-          p.published_at
-        ).toLocaleDateString(
-          undefined,
-          {
-            month:"short",
-            day:"numeric"
-          }
-        );
-
-      const photo =
-        p.image_url
-          ?
-          '<div class="photo">' +
-          '<img src="' +
-          esc(p.image_url) +
-          '" alt="' +
-          esc(p.title) +
-          '">' +
-          '</div>'
-          :
-          '';
-
-      return (
-
-        '<article class="post">' +
-
-        '<span class="date">' +
-        esc(d) +
-        '</span>' +
-
-        '<h2>' +
-        esc(p.title) +
-        '</h2>' +
-
-        photo +
-
-        '<p>' +
-        esc(p.content).slice(0,220) +
-        (p.content.length > 220 ? "…" : "") +
-        '</p>' +
-
-        '<a class="btn" href="blog.html">' +
-        'read the blog ♡' +
-        '</a>' +
-
-        '</article>'
-
+      const d = new Date(p.published_at).toLocaleDateString(
+        undefined,
+        {month:"short",day:"numeric"}
       );
 
+      const photo = p.image_url
+        ? '<div class="photo">' +
+          '<img src="' + esc(p.image_url) +
+          '" alt="' + esc(p.title) + '">' +
+          '</div>'
+        : '';
+
+      return (
+        '<article class="post">' +
+        '<span class="date">' + esc(d) + '</span>' +
+        '<h2>' + esc(p.title) + '</h2>' +
+        photo +
+        '<p>' + esc(p.content).slice(0,220) +
+        (p.content.length > 220 ? "…" : "") + '</p>' +
+        '<a class="btn" href="blog.html">read the blog ♡</a>' +
+        '</article>'
+      );
     }).join("");
 
 })();
@@ -813,15 +740,15 @@ have something to say?<br>
 </div>
 
 <script>
-(function () {
+(function(){
   const popup = document.getElementById('privacy-popup');
   const scrollBox = document.getElementById('privacy-popup-scroll');
   const accept = document.getElementById('privacy-popup-accept');
   const note = document.getElementById('privacy-popup-note');
 
-  if (!popup || !scrollBox || !accept || !note) return;
+  if(!popup || !scrollBox || !accept || !note) return;
 
-  if (localStorage.getItem('pinkWorldPrivacyRead') === 'yes') {
+  if(localStorage.getItem('pinkWorldPrivacyRead') === 'yes'){
     return;
   }
 
@@ -830,7 +757,7 @@ have something to say?<br>
 
   let hasScrolled = false;
 
-  function checkScroll() {
+  function checkScroll(){
     const canScroll =
       scrollBox.scrollHeight > scrollBox.clientHeight + 5;
 
@@ -838,27 +765,27 @@ have something to say?<br>
       scrollBox.scrollTop + scrollBox.clientHeight >=
       scrollBox.scrollHeight - 5;
 
-    if (scrollBox.scrollTop > 0) {
+    if(scrollBox.scrollTop > 0){
       hasScrolled = true;
     }
 
-    if (hasScrolled && canScroll && reachedBottom) {
+    if(hasScrolled && canScroll && reachedBottom){
       accept.disabled = false;
       accept.style.opacity = '1';
       note.textContent = 'you reached the bottom ♡';
-    } else {
+    }else{
       note.textContent = '↓ scroll to the bottom to continue ↓';
     }
   }
 
-  scrollBox.addEventListener('scroll', checkScroll);
-  window.addEventListener('resize', checkScroll);
+  scrollBox.addEventListener('scroll',checkScroll);
+  window.addEventListener('resize',checkScroll);
   checkScroll();
 
-  accept.addEventListener('click', function () {
-    if (accept.disabled) return;
+  accept.addEventListener('click',function(){
+    if(accept.disabled) return;
 
-    localStorage.setItem('pinkWorldPrivacyRead', 'yes');
+    localStorage.setItem('pinkWorldPrivacyRead','yes');
     popup.style.display = 'none';
     document.body.style.overflow = '';
   });
