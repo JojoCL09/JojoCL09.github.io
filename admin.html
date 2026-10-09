@@ -1550,7 +1550,8 @@ function articleEditor(){
     let content=$('ac').value.trim();
     let image_url=$('ai').value.trim()||null;
     let publishValue=$('ap').value;
-
+let themeValue = $('ath').value;
+let theme_id = themeValue ? Number(themeValue) : null;
 
     if(!title||!content)
       return alert(
