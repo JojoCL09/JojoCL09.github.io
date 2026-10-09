@@ -831,15 +831,17 @@ const photo =
   window.addEventListener('resize', checkScroll);
   checkScroll();
 
+```javascript
   accept.addEventListener('click', function () {
     if (accept.disabled) return;
 
     localStorage.setItem('pinkWorldPrivacyRead', 'yes');
     popup.style.display = 'none';
     document.body.style.overflow = '';
-     });
+  });
 })();
 </script>
 
 </body>
 </html>
+
