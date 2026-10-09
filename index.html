@@ -65,8 +65,6 @@ header{
   color:#916372
 }
 
-
-
 .nav{
   display:flex;
   justify-content:center;
@@ -265,8 +263,11 @@ footer{
   .logo{
     font-size:50px
   }
+}
 
-  
+/* roze muiscursor ♡ */
+* {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 2 L3 19 L8 14 L12 22 L16 20 L12 12 L20 12 Z' fill='%23f6b7ca' stroke='%23a85d78' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2, auto;
 }
 </style>
 </head>
@@ -314,7 +315,6 @@ footer{
 
 </section>
 
-
 <section class="card">
 
 <h3>little updates ♡</h3>
@@ -324,7 +324,6 @@ footer{
 </div>
 
 </section>
-
 
 <section class="card">
 
@@ -338,7 +337,6 @@ footer{
 
 </aside>
 
-
 <section>
 
 <div id="latestPosts">
@@ -350,7 +348,6 @@ footer{
 </div>
 
 </section>
-
 
 <aside>
 
@@ -369,7 +366,6 @@ footer{
 
 </section>
 
-
 <section class="card">
 
 <h3>little reminder ♡</h3>
@@ -384,7 +380,6 @@ footer{
 </div>
 
 </section>
-
 
 <section class="card">
 
@@ -406,20 +401,15 @@ have something to say?<br>
 
 </main>
 
-
-
 <footer id="homeFooter">
   made with ♡ & pink sparkles · my little pink world
   <p><a href="privacy.html" style="color:#a85d78;">privacy policy ♡</a></p>
 </footer>
 
-
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
 
 <script>
-
 (async function(){
 
   const client =
@@ -427,7 +417,6 @@ have something to say?<br>
       SUPABASE_URL,
       SUPABASE_PUBLISHABLE_KEY
     );
-
 
   const keys = [
     "home_title",
@@ -442,20 +431,17 @@ have something to say?<br>
     "home_image"
   ];
 
-
   const {data:contentRows} =
     await client
       .from("site_content")
       .select("section,content")
       .in("section",keys);
 
-
   const content = {};
 
   (contentRows || []).forEach(row=>{
     content[row.section] = row.content;
   });
-
 
   function setText(id,key,fallback){
 
@@ -469,13 +455,11 @@ have something to say?<br>
       String(value).replace(/\n/g,"<br>");
   }
 
-
   document.title =
     (content.home_title ||
     "my little pink world ♡")
     .replace(/<[^>]*>/g,"")
     + " · home";
-
 
   setText(
     "topText",
@@ -483,13 +467,11 @@ have something to say?<br>
     "♡ welcome to my little pink world ♡"
   );
 
-
   setText(
     "siteTitle",
     "home_title",
     "my little pink world ♡"
   );
-
 
   setText(
     "siteTagline",
@@ -497,13 +479,11 @@ have something to say?<br>
     "life　♡　fashion　♡　dreams　♡　pretty things"
   );
 
-
   setText(
     "homeAbout",
     "home_about",
     "welcome to my little corner of the internet! ♡"
   );
-
 
   setText(
     "homeUpdates",
@@ -511,13 +491,11 @@ have something to say?<br>
     "new here ♡"
   );
 
-
   setText(
     "homeCurrently",
     "home_currently",
     "🎀 ♡"
   );
-
 
   setText(
     "homeCategories",
@@ -525,39 +503,33 @@ have something to say?<br>
     "daily life\nfashion\nbeauty\nmusic\ntravel\nthoughts"
   );
 
-
   setText(
     "homeReminder",
     "home_reminder",
     "you are enough\njust as you are ♡"
   );
 
+  setText(
+    "homeFooter",
+    "home_footer",
+    "made with ♡ & pink sparkles · my little pink world"
+  );
 
+  document.getElementById("homeFooter").innerHTML +=
+    '<p><a href="privacy.html" style="color:#a85d78;">privacy policy ♡</a></p>';
 
-setText(
-  "homeFooter",
-  "home_footer",
-  "made with ♡ & pink sparkles · my little pink world"
-);
+  if(content.home_image){
 
-document.getElementById("homeFooter").innerHTML +=
-  '<p><a href="privacy.html" style="color:#a85d78;">privacy policy ♡</a></p>';
+    document.getElementById("homeImage").innerHTML =
+      '<img src="' +
+      content.home_image.replace(/"/g,"&quot;") +
+      '" alt="homepage photo">';
 
+  }else{
 
+    document.getElementById("homeImage").style.display = "none";
 
-if(content.home_image){
-
-  document.getElementById("homeImage").innerHTML =
-    '<img src="' +
-    content.home_image.replace(/"/g,"&quot;") +
-    '" alt="homepage photo">';
-
-}else{
-
-  document.getElementById("homeImage").style.display = "none";
-
-}
-
+  }
 
   const {data:posts,error} =
     await client
@@ -575,7 +547,6 @@ if(content.home_image){
       )
       .limit(2);
 
-
   const esc = s =>
     String(s ?? "")
       .replace(
@@ -589,7 +560,6 @@ if(content.home_image){
         }[c])
       );
 
-
   if(error){
 
     document.getElementById(
@@ -599,7 +569,6 @@ if(content.home_image){
 
     return;
   }
-
 
   if(!posts || !posts.length){
 
@@ -620,7 +589,6 @@ if(content.home_image){
     return;
   }
 
-
   document.getElementById(
     "latestPosts"
   ).innerHTML =
@@ -638,20 +606,18 @@ if(content.home_image){
           }
         );
 
-
-const photo =
-  p.image_url
-    ?
-    '<div class="photo">' +
-    '<img src="' +
-    esc(p.image_url) +
-    '" alt="' +
-    esc(p.title) +
-    '">' +
-    '</div>'
-    :
-    '';
-
+      const photo =
+        p.image_url
+          ?
+          '<div class="photo">' +
+          '<img src="' +
+          esc(p.image_url) +
+          '" alt="' +
+          esc(p.title) +
+          '">' +
+          '</div>'
+          :
+          '';
 
       return (
 
@@ -683,8 +649,8 @@ const photo =
     }).join("");
 
 })();
-
 </script>
+
 <!-- Privacy popup ♡ -->
 <div id="privacy-popup" style="
   display:none;
@@ -716,60 +682,58 @@ const photo =
       Welcome to my little pink world ♡
     </p>
 
+    <div id="privacy-popup-scroll" tabindex="0" style="
+      height:300px;
+      overflow-y:auto;
+      padding:14px;
+      background:white;
+      border:1px solid #ecd7e2;
+      border-radius:12px;
+      line-height:1.7;
+      font-size:14px;
+    ">
+      <h3>Privacy Policy ♡</h3>
+      <p><strong>Last updated: 9 October 2026</strong></p>
 
-<div id="privacy-popup-scroll" tabindex="0" style="
-  height:300px;
-  overflow-y:auto;
-  padding:14px;
-  background:white;
-  border:1px solid #ecd7e2;
-  border-radius:12px;
-  line-height:1.7;
-  font-size:14px;
-">
-  <h3>Privacy Policy ♡</h3>
-  <p><strong>Last updated: 9 October 2026</strong></p>
+      <p>Welcome to My Little Pink World ♡. Your privacy matters to me. This page explains what information may be processed when you visit my website or leave a guestbook message.</p>
 
-  <p>Welcome to My Little Pink World ♡. Your privacy matters to me. This page explains what information may be processed when you visit my website or leave a guestbook message.</p>
+      <h3>1. Who runs this website?</h3>
+      <p>My Little Pink World ♡ is a personal blog.</p>
+      <p>Website: <a href="https://mylittlepinkworld.github.io/">mylittlepinkworld.github.io</a></p>
+      <p>Contact: <a href="mailto:Jojocl392@gmail.com">Jojocl392@gmail.com</a></p>
 
-  <h3>1. Who runs this website?</h3>
-  <p>My Little Pink World ♡ is a personal blog.</p>
-  <p>Website: <a href="https://mylittlepinkworld.github.io/">mylittlepinkworld.github.io</a></p>
-  <p>Contact: <a href="mailto:Jojocl392@gmail.com">Jojocl392@gmail.com</a></p>
+      <h3>2. Information collected</h3>
+      <p>If you leave a guestbook message, your submitted name and message, together with the submission date and time, are stored. Messages are reviewed before appearing publicly.</p>
+      <p>Please do not share your home address, phone number, passwords or other sensitive information in the guestbook.</p>
+      <p>The website also uses an authenticated administration area to manage content. GitHub Pages hosts the website and Supabase provides database, authentication and other website features. These providers may process technical information.</p>
 
-  <h3>2. Information collected</h3>
-  <p>If you leave a guestbook message, your submitted name and message, together with the submission date and time, are stored. Messages are reviewed before appearing publicly.</p>
-  <p>Please do not share your home address, phone number, passwords or other sensitive information in the guestbook.</p>
-  <p>The website also uses an authenticated administration area to manage content. GitHub Pages hosts the website and Supabase provides database, authentication and other website features. These providers may process technical information.</p>
+      <h3>3. Why information is used</h3>
+      <p>Guestbook information is used to display approved messages. Administrative information is used to secure the website editor and manage content. Information is not intentionally collected for advertising or sold for advertising purposes.</p>
 
-  <h3>3. Why information is used</h3>
-  <p>Guestbook information is used to display approved messages. Administrative information is used to secure the website editor and manage content. Information is not intentionally collected for advertising or sold for advertising purposes.</p>
+      <h3>4. Public guestbook messages</h3>
+      <p>If approved, your submitted name and message can be seen by other visitors. Contact <a href="mailto:Jojocl392@gmail.com">Jojocl392@gmail.com</a> if you would like to request removal.</p>
 
-  <h3>4. Public guestbook messages</h3>
-  <p>If approved, your submitted name and message can be seen by other visitors. Contact <a href="mailto:Jojocl392@gmail.com">Jojocl392@gmail.com</a> if you would like to request removal.</p>
+      <h3>5. Hosting and third-party services</h3>
+      <p>GitHub Pages hosts this website. Supabase provides authentication, database storage and website functionality. Please consult their privacy policies for details about their handling of information.</p>
 
-  <h3>5. Hosting and third-party services</h3>
-  <p>GitHub Pages hosts this website. Supabase provides authentication, database storage and website functionality. Please consult their privacy policies for details about their handling of information.</p>
+      <h3>6. Data retention</h3>
+      <p>Guestbook messages may remain stored while needed to operate the guestbook. Approved messages may remain visible until removed. Service providers may retain some technical records under their own policies.</p>
 
-  <h3>6. Data retention</h3>
-  <p>Guestbook messages may remain stored while needed to operate the guestbook. Approved messages may remain visible until removed. Service providers may retain some technical records under their own policies.</p>
+      <h3>7. Your privacy rights</h3>
+      <p>Depending on applicable law and circumstances, you may have rights to access, correct or request deletion of your personal information, and other rights.</p>
+      <p>Contact <a href="mailto:Jojocl392@gmail.com">Jojocl392@gmail.com</a> with a request. In Belgium, you can also visit <a href="https://www.dataprotectionauthority.be/" target="_blank" rel="noopener noreferrer">the Belgian Data Protection Authority</a>.</p>
 
-  <h3>7. Your privacy rights</h3>
-  <p>Depending on applicable law and circumstances, you may have rights to access, correct or request deletion of your personal information, and other rights.</p>
-  <p>Contact <a href="mailto:Jojocl392@gmail.com">Jojocl392@gmail.com</a> with a request. In Belgium, you can also visit <a href="https://www.dataprotectionauthority.be/" target="_blank" rel="noopener noreferrer">the Belgian Data Protection Authority</a>.</p>
+      <h3>8. Children's privacy</h3>
+      <p>Please do not submit sensitive personal information through the guestbook. Parents or guardians with concerns can contact <a href="mailto:Jojocl392@gmail.com">Jojocl392@gmail.com</a>.</p>
 
-  <h3>8. Children's privacy</h3>
-  <p>Please do not submit sensitive personal information through the guestbook. Parents or guardians with concerns can contact <a href="mailto:Jojocl392@gmail.com">Jojocl392@gmail.com</a>.</p>
+      <h3>9. Changes to this policy</h3>
+      <p>This policy may be updated if the website or its data practices change. The latest version will be published on the <a href="privacy.html" target="_blank" rel="noopener noreferrer">full Privacy Policy page</a>.</p>
 
-  <h3>9. Changes to this policy</h3>
-  <p>This policy may be updated if the website or its data practices change. The latest version will be published on the <a href="privacy.html" target="_blank" rel="noopener noreferrer">full Privacy Policy page</a>.</p>
-
-  <h3>10. Contact</h3>
-  <p>My Little Pink World ♡</p>
-  <p>Email: <a href="mailto:Jojocl392@gmail.com">Jojocl392@gmail.com</a></p>
-  <p>Thank you for visiting my little corner of the internet. ♡</p>
-</div>
-
+      <h3>10. Contact</h3>
+      <p>My Little Pink World ♡</p>
+      <p>Email: <a href="mailto:Jojocl392@gmail.com">Jojocl392@gmail.com</a></p>
+      <p>Thank you for visiting my little corner of the internet. ♡</p>
+    </div>
 
     <p id="privacy-popup-note" style="
       text-align:center;
@@ -813,7 +777,6 @@ const photo =
   popup.style.display = 'flex';
   document.body.style.overflow = 'hidden';
 
-
   let hasScrolled = false;
 
   function checkScroll() {
@@ -841,8 +804,6 @@ const photo =
   window.addEventListener('resize', checkScroll);
   checkScroll();
 
-
-
   accept.addEventListener('click', function () {
     if (accept.disabled) return;
 
@@ -855,4 +816,3 @@ const photo =
 
 </body>
 </html>
-
