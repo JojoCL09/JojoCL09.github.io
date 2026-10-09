@@ -1,7 +1,7 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="description" content="guestbook · my little pink world">
@@ -272,7 +272,6 @@ footer{
 }
 
 @media(max-width:980px){
-
   .grid{
     grid-template-columns:220px 1fr
   }
@@ -287,11 +286,9 @@ footer{
   .grid>aside:last-child .card{
     margin-bottom:0
   }
-
 }
 
 @media(max-width:700px){
-
   .grid{
     grid-template-columns:1fr
   }
@@ -307,7 +304,11 @@ footer{
   .logo{
     font-size:50px
   }
+}
 
+/* roze muiscursor ♡ — op de hele guestbookpagina */
+* {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 2 L3 19 L8 14 L12 22 L16 20 L12 12 L20 12 Z' fill='%23f6b7ca' stroke='%23a85d78' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2, auto;
 }
 </style>
 
@@ -323,7 +324,6 @@ footer{
 </div>
 
 <header>
-
   <h1 class="logo">
     my little pink world ♡
   </h1>
@@ -333,262 +333,155 @@ footer{
   </div>
 
   <nav class="nav">
-
-    <a href="index.html">
-      ⌂ Home
-    </a>
-
-    <a href="blog.html">
-      ♡ Blog
-    </a>
-
-    <a href="articles.html">
-      ♡ Articles
-    </a>
-
-    <a href="about.html">
-      ♡ About Me
-    </a>
-
-    <a href="links.html">
-      ♡ Links
-    </a>
-
-    <a
-      href="guestbook.html"
-      class="active"
-    >
-      ♡ Guestbook
-    </a>
-
+    <a href="index.html">⌂ Home</a>
+    <a href="blog.html">♡ Blog</a>
+    <a href="articles.html">♡ Articles</a>
+    <a href="about.html">♡ About Me</a>
+    <a href="links.html">♡ Links</a>
+    <a href="guestbook.html" class="active">♡ Guestbook</a>
   </nav>
-
 </header>
 
 <main class="grid">
 
-<!-- LEFT SIDE -->
-
-<aside>
-
-  <section class="card">
-
-    <h3>
-      guestbook ♡
-    </h3>
-
-    <div class="pad">
-
-      leave a little message
-      and become part of
-      my little pink world ♡
-
-    </div>
-
-  </section>
-
-
-  <section class="card">
-
-    <h3>
-      little reminder ♡
-    </h3>
-
-    <div class="pad">
-
-      <div class="quote">
-
-        your words
-        can make someone's
-        day a little brighter ♡
-
+  <!-- LEFT SIDE -->
+  <aside>
+    <section class="card">
+      <h3>guestbook ♡</h3>
+      <div class="pad">
+        leave a little message
+        and become part of
+        my little pink world ♡
       </div>
+    </section>
 
-    </div>
-
-  </section>
-
-</aside>
-
-
-<!-- MAIN -->
-
-<section>
-
-  <div class="post">
-
-    <h2>
-      guestbook ♡
-    </h2>
-
-    <p>
-      leave a little message for me ♡
-    </p>
-
-
-    <div class="guestForm">
-
-      <input
-        class="input"
-        id="name"
-        maxlength="30"
-        placeholder="your name"
-        autocomplete="off"
-      >
-
-      <br><br>
-
-      <textarea
-        class="textarea"
-        id="message"
-        maxlength="500"
-        placeholder="write something cute..."
-      ></textarea>
-
-
-      <!-- hidden bot trap -->
-
-      <input
-        class="hp"
-        id="website"
-        tabindex="-1"
-        autocomplete="off"
-      >
-
-      <br><br>
-
-      <button
-        class="btn"
-        id="sendBtn"
-        onclick="addMessage()"
-      >
-        send ♡
-      </button>
-
-
-      <div class="note">
-
-        your message will be checked
-        before it appears publicly ♡
-
+    <section class="card">
+      <h3>little reminder ♡</h3>
+      <div class="pad">
+        <div class="quote">
+          your words
+          can make someone's
+          day a little brighter ♡
+        </div>
       </div>
+    </section>
+  </aside>
 
+  <!-- MAIN -->
+  <section>
+    <div class="post">
+      <h2>guestbook ♡</h2>
 
-      <div
-        id="error"
-        class="error"
-      ></div>
+      <p>leave a little message for me ♡</p>
 
-    </div>
+      <div class="guestForm">
+        <input
+          class="input"
+          id="name"
+          maxlength="30"
+          placeholder="your name"
+          autocomplete="off"
+        >
 
-  </div>
+        <br><br>
 
+        <textarea
+          class="textarea"
+          id="message"
+          maxlength="500"
+          placeholder="write something cute..."
+        ></textarea>
 
-  <div class="post">
+        <!-- hidden bot trap -->
+        <input
+          class="hp"
+          id="website"
+          tabindex="-1"
+          autocomplete="off"
+        >
 
-    <h2>
-      little messages ♡
-    </h2>
+        <br><br>
 
-    <div id="messages">
+        <button
+          class="btn"
+          id="sendBtn"
+          onclick="addMessage()"
+        >
+          send ♡
+        </button>
 
-      <div class="loading">
-        loading little messages ♡
+        <div class="note">
+          your message will be checked
+          before it appears publicly ♡
+        </div>
+
+        <div id="error" class="error"></div>
       </div>
-
     </div>
 
-  </div>
+    <div class="post">
+      <h2>little messages ♡</h2>
 
-</section>
-
-
-<!-- RIGHT SIDE -->
-
-<aside>
-
-  <section class="card">
-
-    <h3>
-      guestbook info ♡
-    </h3>
-
-    <div class="pad">
-
-      messages are checked
-      before appearing here ♡
-
-      <br><br>
-
-      thank you for leaving
-      a little love!
-
+      <div id="messages">
+        <div class="loading">
+          loading little messages ♡
+        </div>
+      </div>
     </div>
-
   </section>
 
+  <!-- RIGHT SIDE -->
+  <aside>
+    <section class="card">
+      <h3>guestbook info ♡</h3>
+      <div class="pad">
+        messages are checked
+        before appearing here ♡
 
-  <section class="card">
+        <br><br>
 
-    <h3>
-      pretty things ♡
-    </h3>
+        thank you for leaving
+        a little love!
+      </div>
+    </section>
 
-    <div class="pad">
-
-      ♡ be kind<br>
-      ♡ spread love<br>
-      ♡ stay cute<br>
-      ♡ enjoy the internet
-
-    </div>
-
-  </section>
-
-</aside>
+    <section class="card">
+      <h3>pretty things ♡</h3>
+      <div class="pad">
+        ♡ be kind<br>
+        ♡ spread love<br>
+        ♡ stay cute<br>
+        ♡ enjoy the internet
+      </div>
+    </section>
+  </aside>
 
 </main>
 
-
 <footer>
-
   made with ♡ & pink sparkles ·
   my little pink world
-
 </footer>
 
-
 <script>
-
 const sb =
   window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
   );
 
-
 async function loadMessages(){
-
-  const box =
-    document.getElementById("messages");
-
+  const box = document.getElementById("messages");
 
   const {data,error} =
     await sb
       .from("guestbook_messages")
-      .select(
-        "name,message,created_at"
-      )
+      .select("name,message,created_at")
       .eq("approved",true)
-      .order(
-        "created_at",
-        {ascending:false}
-      )
+      .order("created_at",{ascending:false})
       .limit(30);
 
-
   if(error){
-
     box.innerHTML = `
       <div class="guest">
         could not load messages
@@ -597,13 +490,10 @@ async function loadMessages(){
     `;
 
     console.error(error);
-
     return;
   }
 
-
   if(!data || data.length===0){
-
     box.innerHTML = `
       <div class="guest">
         be the first to leave
@@ -614,176 +504,110 @@ async function loadMessages(){
     return;
   }
 
-
   box.innerHTML =
     data.map(x=>`
-
       <div class="guest">
-
-        <b>
-          ${esc(x.name)} ♡
-        </b>
-
+        <b>${esc(x.name)} ♡</b>
         <br>
-
         ${esc(x.message)}
-
       </div>
-
     `).join("");
-
 }
 
-
 async function addMessage(){
-
   const name =
-    document
-      .getElementById("name")
-      .value
-      .trim();
-
+    document.getElementById("name").value.trim();
 
   const message =
-    document
-      .getElementById("message")
-      .value
-      .trim();
-
+    document.getElementById("message").value.trim();
 
   const honeypot =
-    document
-      .getElementById("website")
-      .value
-      .trim();
-
+    document.getElementById("website").value.trim();
 
   const errorBox =
     document.getElementById("error");
 
-
   const button =
     document.getElementById("sendBtn");
 
-
   errorBox.textContent = "";
 
-
   /* bot trap */
-
   if(honeypot){
     return;
   }
 
-
   if(!name || !message){
-
     errorBox.textContent =
       "please fill in both fields ♡";
-
     return;
   }
-
 
   if(name.length>30){
-
     errorBox.textContent =
       "your name is a little too long ♡";
-
     return;
   }
-
 
   if(message.length>500){
-
     errorBox.textContent =
       "your message is a little too long ♡";
-
     return;
   }
 
-
   button.disabled=true;
-
-  button.textContent =
-    "sending... ♡";
-
+  button.textContent = "sending... ♡";
 
   const {error} =
     await sb
       .from("guestbook_messages")
       .insert({
-
         name:name,
-
         message:message,
-
         approved:false
-
       });
 
-
   if(error){
-
     console.error(error);
 
     errorBox.textContent =
       "something went wrong, please try again ♡";
 
     button.disabled=false;
-
-    button.textContent =
-      "send ♡";
-
+    button.textContent = "send ♡";
     return;
   }
-
 
   document.getElementById("name").value="";
   document.getElementById("message").value="";
 
-
   button.disabled=false;
-
-  button.textContent =
-    "send ♡";
-
+  button.textContent = "send ♡";
 
   alert(
     "your message was sent ♡\n\n" +
     "it will appear here after it has been approved!"
   );
 
-
   loadMessages();
-
 }
 
-
 function esc(s){
-
   return String(s).replace(
     /[&<>"']/g,
-
     c=>({
-
       "&":"&amp;",
       "<":"&lt;",
       ">":"&gt;",
       '"':"&quot;",
       "'":"&#039;"
-
     }[c])
-
   );
-
 }
 
-
 loadMessages();
-
 </script>
-
 
 </body>
 </html>
+```
