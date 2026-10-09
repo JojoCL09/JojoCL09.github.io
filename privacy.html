@@ -4,46 +4,210 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Privacy Policy for My Little Pink World, including guestbook messages and personal information.">
+  <meta name="description" content="Privacy Policy for My Little Pink World.">
   <title>Privacy Policy ♡ · My Little Pink World</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Parisienne&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+
   <style>
+    :root {
+      --pink: #f6b7ca;
+      --light: #fff7fa;
+      --pale: #fde8ef;
+      --deep: #a85d78;
+      --text: #72535f;
+      --line: #f2c6d4;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      padding: 24px 16px;
       background: linear-gradient(180deg, #fffafb, #fdebf2);
-      color: #72535f;
-      font-family: Georgia, serif;
+      color: var(--text);
+      font-family: Quicksand, sans-serif;
       line-height: 1.8;
     }
-    main {
-      max-width: 780px;
-      margin: 30px auto;
-      padding: 28px;
-      background: #fffafa;
-      border: 1px solid #f2c6d4;
+
+    a {
+      color: var(--deep);
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #d66f98;
+      text-decoration: underline;
+    }
+
+    .top {
+      padding: 12px 7%;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+      letter-spacing: .5px;
+      background: #fff;
+      text-align: center;
+    }
+
+    header {
+      max-width: 1180px;
+      margin: auto;
+      padding: 42px 24px 25px;
+      text-align: center;
+    }
+
+    .logo {
+      font-family: Parisienne, cursive;
+      font-size: clamp(42px, 7vw, 68px);
+      color: #e88eae;
+      text-shadow: 0 2px #fff, 0 4px 12px #f3c5d4;
+      margin: 0;
+      line-height: 1.35;
+    }
+
+    .tag {
+      font-family: "DM Serif Display", serif;
+      letter-spacing: 4px;
+      font-size: 14px;
+      margin: 7px 0 28px;
+      color: #916372;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+      flex-wrap: wrap;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 8px;
+      background: #fff8fb;
+      box-shadow: 0 5px 20px #efcbd733;
+    }
+
+    .nav a {
+      padding: 11px 22px;
       border-radius: 18px;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      background: var(--pale);
+      color: #b05274;
+      text-decoration: none;
+    }
+
+    main {
+      max-width: 980px;
+      margin: 28px auto 70px;
+      padding: 34px 42px;
+      background: #fffafa;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: 0 7px 25px #e8b9c522;
       overflow-wrap: anywhere;
     }
-    h1, h2, h3 { color: #a85479; }
-    h1 { text-align: center; }
-    a { color: #a85479; }
-    .updated { text-align: center; color: #a08090; }
-    nav, footer { text-align: center; margin: 24px 0; }
-    nav a { margin: 0 7px; }
-    @media (max-width: 500px) {
-      main { padding: 19px; }
+
+    h1, h2, h3 {
+      font-family: "DM Serif Display", serif;
+      color: var(--deep);
+      line-height: 1.4;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 38px;
+      margin-top: 0;
+    }
+
+    h2 {
+      font-size: 27px;
+      margin-top: 30px;
+    }
+
+    h3 {
+      font-size: 21px;
+      margin-top: 24px;
+    }
+
+    .updated {
+      text-align: center;
+      color: #a08090;
+      margin-bottom: 28px;
+    }
+
+    ul {
+      padding-left: 24px;
+    }
+
+    li {
+      padding: 4px 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px 16px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      background: #fff;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding: 30px 16px 22px;
+      }
+
+      .tag {
+        letter-spacing: 2px;
+        line-height: 1.8;
+      }
+
+      .nav a {
+        padding: 9px 12px;
+      }
+
+      main {
+        margin: 20px 12px 45px;
+        padding: 24px 20px;
+      }
+
+      h1 {
+        font-size: 31px;
+      }
+
+      h2 {
+        font-size: 24px;
+      }
     }
   </style>
 </head>
+
 <body>
-  <nav aria-label="Main navigation">
-    <a href="index.html">HOME ♡</a> |
-    <a href="blog.html">BLOG ♡</a> |
-    <a href="articles.html">ARTICLES ♡</a> |
-    <a href="about.html">ABOUT ME ♡</a> |
-    <a href="links.html">LINKS ♡</a> |
-    <a href="guestbook.html">GUESTBOOK ♡</a>
-  </nav>
+  <div class="top">
+    ♡ welcome to my little pink world ♡
+  </div>
+
+  <header>
+    <h1 class="logo">My Little Pink World ♡</h1>
+
+    <div class="tag">
+      life　♡　fashion　♡　dreams　♡　pretty things
+    </div>
+
+    <nav class="nav" aria-label="Main navigation">
+      <a href="index.html">⌂ Home</a>
+      <a href="blog.html">♡ Blog</a>
+      <a href="articles.html">♡ Articles</a>
+      <a href="about.html">♡ About Me</a>
+      <a href="links.html">♡ Links</a>
+      <a href="guestbook.html">♡ Guestbook</a>
+    </nav>
+  </header>
 
   <main>
     <h1>Privacy Policy ♡</h1>
@@ -113,7 +277,7 @@
   <footer>
     <a href="index.html">Back to Home ♡</a>
     <p>Made with ♡ & pink sparkles · My Little Pink World</p>
+    <p><a href="privacy.html">Privacy Policy ♡</a></p>
   </footer>
 </body>
 </html>
-```
