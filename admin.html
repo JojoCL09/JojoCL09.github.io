@@ -1572,12 +1572,13 @@ let theme_id = themeValue ? Number(themeValue) : null;
     let {error}=
       await sb
         .from('articles')
-        .insert({
-          title,
-          content,
-          image_url,
-          published_at
-        });
+   .insert({
+  title,
+  content,
+  image_url,
+  published_at,
+  theme_id
+});
 
 
     if(error)
