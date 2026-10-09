@@ -1445,6 +1445,16 @@ function articleEditor(){
       <input id="ai">
     </div>
 
+<div class="field">
+  <label for="ath">article theme ♡</label>
+  <select id="ath">
+    <option value="">no theme</option>
+    ${themes.map(t =>
+      `<option value="${t.id}">${esc(t.name)}</option>`
+    ).join('')}
+  </select>
+</div>
+
     <div class="field">
 
       <label>
