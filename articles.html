@@ -3,298 +3,482 @@
 <html lang="en">
 <head>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="description" content="Explore articles on My Little Pink World, a pastel pink blog filled with inspiration, ideas and lovely little reads.">
-<title>articles · my little pink world</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="description" content="Explore articles on My Little Pink World, a pastel pink blog filled with inspiration, ideas and lovely little reads.">
+  <title>articles · my little pink world</title>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Parisienne&family=Quicksand:wght@400;500;600&display=swap');
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Parisienne&family=Quicksand:wght@400;500;600&display=swap');
 
-:root{
-  --pink:#f6b7ca;
-  --pale:#fde8ef;
-  --text:#72535f;
-  --line:#f2c6d4;
-}
+    :root {
+      --pink: #f6b7ca;
+      --pale: #fde8ef;
+      --text: #72535f;
+      --line: #f2c6d4;
+    }
 
-*{
-  box-sizing:border-box;
-}
+    * {
+      box-sizing: border-box;
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 2 L3 19 L8 14 L12 22 L16 20 L12 12 L20 12 Z' fill='%23f6b7ca' stroke='%23a85d78' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2, auto;
+    }
 
-body{
-  margin:0;
-  background:linear-gradient(180deg,#fffafb,#fdebf2);
-  color:var(--text);
-  font-family:Quicksand,sans-serif;
-}
+    body {
+      margin: 0;
+      background: linear-gradient(180deg,#fffafb,#fdebf2);
+      color: var(--text);
+      font-family: Quicksand,sans-serif;
+    }
 
-a{
-  color:inherit;
-  text-decoration:none;
-}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-.top{
-  padding:12px 7%;
-  border-bottom:1px solid var(--line);
-  font-size:13px;
-  letter-spacing:.5px;
-  background:#fff;
-  text-align:center;
-}
+    .top {
+      padding: 12px 7%;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+      letter-spacing: .5px;
+      background: #fff;
+      text-align: center;
+    }
 
-header{
-  max-width:1180px;
-  margin:auto;
-  padding:42px 24px 25px;
-  text-align:center;
-  position:relative;
-}
+    header {
+      max-width: 1180px;
+      margin: auto;
+      padding: 42px 24px 25px;
+      text-align: center;
+    }
 
-.logo{
-  text-transform:capitalize;
-  font-family:Parisienne,cursive;
-  font-size:68px;
-  color:#e88eae;
-  text-shadow:0 2px #fff,0 4px 12px #f3c5d4;
-  margin:0;
-}
+    .logo {
+      text-transform: capitalize;
+      font-family: Parisienne,cursive;
+      font-size: 68px;
+      color: #e88eae;
+      text-shadow: 0 2px #fff,0 4px 12px #f3c5d4;
+      margin: 0;
+    }
 
-.tag{
-  font-family:"DM Serif Display",serif;
-  letter-spacing:4px;
-  font-size:14px;
-  margin:7px 0 28px;
-  color:#916372;
-}
+    .tag {
+      font-family: "DM Serif Display",serif;
+      letter-spacing: 4px;
+      font-size: 14px;
+      margin: 7px 0 28px;
+      color: #916372;
+    }
 
-.nav{
-  display:flex;
-  justify-content:center;
-  gap:7px;
-  flex-wrap:wrap;
-  border:1px solid var(--line);
-  border-radius:22px;
-  padding:8px;
-  background:#fff8fb;
-  box-shadow:0 5px 20px #efcbd733;
-}
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+      flex-wrap: wrap;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 8px;
+      background: #fff8fb;
+      box-shadow: 0 5px 20px #efcbd733;
+    }
 
-.nav a{
-  padding:11px 22px;
-  border-radius:18px;
-  font-size:14px;
-}
+    .nav a {
+      padding: 11px 22px;
+      border-radius: 18px;
+      font-size: 14px;
+    }
 
-.nav a:hover,
-.nav a.active{
-  background:var(--pale);
-  color:#b05274;
-}
+    .nav a:hover,
+    .nav a.active {
+      background: var(--pale);
+      color: #b05274;
+    }
 
-.page{
-  max-width:900px;
-  margin:25px auto 70px;
-  padding:0 20px;
-}
+    .page {
+      max-width: 1180px;
+      margin: 25px auto 70px;
+      padding: 0 20px;
+    }
 
-.page-title{
-  text-align:center;
-  font-family:"DM Serif Display",serif;
-  font-size:38px;
-  color:#91576d;
-  font-weight:400;
-}
+    .page-title {
+      text-align: center;
+      font-family: "DM Serif Display",serif;
+      font-size: 38px;
+      color: #91576d;
+      font-weight: 400;
+    }
 
-.page-sub{
-  text-align:center;
-  margin-bottom:28px;
-}
+    .page-sub {
+      text-align: center;
+      margin-bottom: 28px;
+    }
 
-.article{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:24px;
-  margin-bottom:22px;
-  box-shadow:0 7px 25px #e8b9c522;
-}
+    .articles-layout {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) 250px;
+      gap: 25px;
+      align-items: start;
+    }
 
-.article h2{
-  font-family:"DM Serif Display",serif;
-  font-weight:400;
-  font-size:30px;
-  color:#875467;
-  margin:0 0 10px;
-}
+    .article {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 22px;
+      box-shadow: 0 7px 25px #e8b9c522;
+      overflow-wrap: anywhere;
+    }
 
-.date{
-  display:inline-block;
-  background:var(--pale);
-  border-radius:10px;
-  padding:7px 11px;
-  font-size:12px;
-  color:#a45a75;
-  margin-bottom:14px;
-}
+    .article h2 {
+      font-family: "DM Serif Display",serif;
+      font-weight: 400;
+      font-size: 30px;
+      color: #875467;
+      margin: 0 0 10px;
+    }
 
-.article-image{
-  width:100%;
-  max-height:360px;
-  object-fit:cover;
-  border-radius:12px;
-  margin:8px 0 16px;
-}
+    .date {
+      display: inline-block;
+      background: var(--pale);
+      border-radius: 10px;
+      padding: 7px 11px;
+      font-size: 12px;
+      color: #a45a75;
+      margin-bottom: 14px;
+    }
 
-.article-content{
-  line-height:1.8;
-  font-size:15px;
-}
+    .article-image {
+      width: 100%;
+      max-height: 360px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin: 8px 0 16px;
+    }
 
-.empty{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:30px;
-  text-align:center;
-}
+    .article-content {
+      line-height: 1.8;
+      font-size: 15px;
+      overflow-wrap: anywhere;
+    }
 
-footer{
-  text-align:center;
-  padding:28px;
-  border-top:1px solid var(--line);
-  font-size:13px;
-  background:#fff;
-}
+    .article-theme {
+      display: inline-block;
+      margin: 0 0 12px 8px;
+      padding: 7px 11px;
+      border-radius: 10px;
+      background: #fff5f9;
+      color: #b05b7b;
+      font-size: 12px;
+    }
 
-@media(max-width:700px){
-  .logo{font-size:50px}
-  .bow{display:none}
-}
+    .themes-box {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 7px 25px #e8b9c522;
+      position: sticky;
+      top: 20px;
+    }
 
-/* roze muiscursor ♡ — op de hele artikelenpagina */
-* {
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 2 L3 19 L8 14 L12 22 L16 20 L12 12 L20 12 Z' fill='%23f6b7ca' stroke='%23a85d78' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2, auto;
-}
-</style>
+    .themes-box h3 {
+      font-family: "DM Serif Display",serif;
+      font-weight: 400;
+      color: #91576d;
+      font-size: 25px;
+      margin: 0 0 8px;
+    }
+
+    .themes-box p {
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 0 0 15px;
+    }
+
+    .theme-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .theme-button {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fffafd;
+      color: #a35d78;
+      padding: 12px;
+      text-align: left;
+      font-family: inherit;
+      font-size: 13px;
+      transition: background .2s;
+    }
+
+    .theme-button:hover,
+    .theme-button.active {
+      background: var(--pale);
+      border-color: #e9a8bf;
+      color: #8e4562;
+    }
+
+    .empty {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      background: #fff;
+    }
+
+    @media(max-width:800px) {
+      .articles-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .themes-box {
+        position: static;
+      }
+
+      .theme-buttons {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      .theme-button {
+        text-align: center;
+      }
+    }
+
+    @media(max-width:700px) {
+      .logo {
+        font-size: 50px;
+      }
+
+      .article {
+        padding: 18px;
+      }
+
+      .article h2 {
+        font-size: 26px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="top">♡ welcome to my little pink world ♡</div>
+  <div class="top">♡ welcome to my little pink world ♡</div>
 
-<header>
-  <h1 class="logo" id="siteTitle">
-    my little pink world ♡
-  </h1>
+  <header>
+    <h1 class="logo" id="siteTitle">
+      my little pink world ♡
+    </h1>
 
-  <div class="tag">
-    life　♡　fashion　♡　dreams　♡　pretty things
-  </div>
-
-  <nav class="nav">
-    <a href="index.html">⌂ Home</a>
-    <a href="blog.html">♡ Blog</a>
-    <a href="articles.html" class="active">♡ Articles</a>
-    <a href="about.html">♡ About Me</a>
-    <a href="links.html">♡ Links</a>
-    <a href="guestbook.html">♡ Guestbook</a>
-  </nav>
-</header>
-
-<main class="page">
-
-  <h2 class="page-title">articles ♡</h2>
-
-  <p class="page-sub">
-    longer thoughts, stories & things i want to share
-  </p>
-
-  <div id="articles">
-    <div class="empty">
-      loading my articles ♡
+    <div class="tag">
+      life　♡　fashion　♡　dreams　♡　pretty things
     </div>
-  </div>
 
-</main>
+    <nav class="nav">
+      <a href="index.html">⌂ Home</a>
+      <a href="blog.html">♡ Blog</a>
+      <a href="articles.html" class="active">♡ Articles</a>
+      <a href="about.html">♡ About Me</a>
+      <a href="links.html">♡ Links</a>
+      <a href="guestbook.html">♡ Guestbook</a>
+    </nav>
+  </header>
 
-<footer>
-  made with ♡ & pink sparkles · my little pink world
-</footer>
+  <main class="page">
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script>
+    <h2 class="page-title">articles ♡</h2>
 
-<script>
-(async function(){
+    <p class="page-sub">
+      longer thoughts, stories & things i want to share
+    </p>
 
-  const client = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-  );
+    <div class="articles-layout">
 
-  const {data,error} = await client
-    .from("articles")
-    .select("title,content,image_url,published_at")
-    .lte("published_at",new Date().toISOString())
-    .order("published_at",{ascending:false});
-
-  const container=document.getElementById("articles");
-
-  const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#039;"
-  }[c]));
-
-  if(error){
-    container.innerHTML=
-      '<div class="empty">♡ something went wrong loading the articles ♡</div>';
-    return;
-  }
-
-  if(!data || !data.length){
-    container.innerHTML=
-      '<div class="empty">no articles yet ♡<br><small>come back soon!</small></div>';
-    return;
-  }
-
-  container.innerHTML=data.map(article=>{
-
-    const date=new Date(article.published_at)
-      .toLocaleDateString(undefined,{
-        year:"numeric",
-        month:"long",
-        day:"numeric"
-      });
-
-    const image=article.image_url
-      ? `<img class="article-image" src="${esc(article.image_url)}" alt="${esc(article.title)}">`
-      : "";
-
-    return `
-      <article class="article">
-
-        <span class="date">${esc(date)}</span>
-
-        <h2>${esc(article.title)}</h2>
-
-        ${image}
-
-        <div class="article-content">
-          ${esc(article.content).replace(/\n/g,"<br>")}
+      <section id="articles" aria-live="polite">
+        <div class="empty">
+          loading my articles ♡
         </div>
+      </section>
 
-      </article>
-    `;
+      <aside class="themes-box">
+        <h3>themes ♡</h3>
+        <p>find something lovely to read ♡</p>
 
-  }).join("");
+        <div class="theme-buttons" id="themeButtons">
+          <button class="theme-button active" type="button">
+            ♡ all articles
+          </button>
+        </div>
+      </aside>
 
-})();
-</script>
+    </div>
+
+  </main>
+
+  <footer>
+    made with ♡ & pink sparkles · my little pink world
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+
+  <script>
+    (async function () {
+
+      const client = supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+      const container = document.getElementById("articles");
+      const themeButtons = document.getElementById("themeButtons");
+
+      let articles = [];
+      let themes = [];
+      let selectedTheme = "all";
+
+      const esc = s => String(s ?? "").replace(
+        /[&<>"']/g,
+        c => ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#039;"
+        }[c])
+      );
+
+      const [articleResult, themeResult] = await Promise.all([
+        client
+          .from("articles")
+          .select("title,content,image_url,published_at,theme_id")
+          .lte("published_at", new Date().toISOString())
+          .order("published_at", { ascending: false }),
+
+        client
+          .from("article_themes")
+          .select("id,name")
+          .order("name", { ascending: true })
+      ]);
+
+      if (articleResult.error) {
+        console.error(articleResult.error);
+        container.innerHTML =
+          '<div class="empty">♡ something went wrong loading the articles ♡</div>';
+        return;
+      }
+
+      if (themeResult.error) {
+        console.error(themeResult.error);
+        themeButtons.innerHTML =
+          '<p>themes could not be loaded ♡</p>';
+      }
+
+      articles = articleResult.data || [];
+      themes = themeResult.data || [];
+
+      function renderThemes() {
+
+        themeButtons.innerHTML = "";
+
+        function addButton(label, value) {
+          const button = document.createElement("button");
+
+          button.type = "button";
+          button.className = "theme-button";
+          button.textContent = label;
+
+          if (String(selectedTheme) === String(value)) {
+            button.classList.add("active");
+          }
+
+          button.addEventListener("click", () => {
+            selectedTheme = value;
+            renderThemes();
+            renderArticles();
+          });
+
+          themeButtons.appendChild(button);
+        }
+
+        addButton("♡ all articles", "all");
+
+        themes.forEach(theme => {
+          addButton("♡ " + theme.name, theme.id);
+        });
+      }
+
+      function renderArticles() {
+
+        const filtered = selectedTheme === "all"
+          ? articles
+          : articles.filter(article =>
+              String(article.theme_id) === String(selectedTheme)
+            );
+
+        if (!filtered.length) {
+          container.innerHTML =
+            '<div class="empty">no articles here yet ♡<br><small>come back soon!</small></div>';
+          return;
+        }
+
+        container.innerHTML = filtered.map(article => {
+
+          const date = new Date(article.published_at)
+            .toLocaleDateString(undefined, {
+              year: "numeric",
+              month: "long",
+              day: "numeric"
+            });
+
+          const image = article.image_url
+            ? `<img class="article-image"
+                src="${esc(article.image_url)}"
+                alt="${esc(article.title)}">`
+            : "";
+
+          const theme = themes.find(t =>
+            String(t.id) === String(article.theme_id)
+          );
+
+          const themeLabel = theme
+            ? `<span class="article-theme">♡ ${esc(theme.name)}</span>`
+            : "";
+
+          return `
+            <article class="article">
+
+              <span class="date">${esc(date)}</span>
+
+              ${themeLabel}
+
+              <h2>${esc(article.title)}</h2>
+
+              ${image}
+
+              <div class="article-content">
+                ${esc(article.content).replace(/\n/g, "<br>")}
+              </div>
+
+            </article>
+          `;
+        }).join("");
+      }
+
+      renderThemes();
+      renderArticles();
+
+    })();
+  </script>
 
 </body>
 </html>
-
