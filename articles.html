@@ -660,7 +660,7 @@
   document.body.appendChild(backToTop);
 
   function updateBackToTop() {
-    backToTop.classList.toggle("visible", window.scrollY > 350);
+    backToTop.classList.toggle("visible", window.scrollY > 50);
   }
 
   window.addEventListener("scroll", updateBackToTop, {
