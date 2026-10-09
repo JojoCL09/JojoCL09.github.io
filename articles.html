@@ -122,13 +122,22 @@
       background: #fff;
       border: 1px solid var(--line);
       border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 22px;
+      padding: 20px 22px;
+      margin-bottom: 16px;
       box-shadow: 0 7px 25px #e8b9c522;
       overflow-wrap: anywhere;
     }
 
-    .article h2 {
+    .article-summary {
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .article-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .article-summary h2 {
       font-family: "DM Serif Display",serif;
       font-weight: 400;
       font-size: 30px;
@@ -168,6 +177,29 @@
       background: #fff5f9;
       color: #b05b7b;
       font-size: 12px;
+    }
+
+    .article-excerpt {
+      margin: 10px 0 0;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #856875;
+    }
+
+    .read-more {
+      display: inline-block;
+      margin-top: 10px;
+      color: #b05274;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .article[open] .read-more {
+      display: none;
+    }
+
+    .article-full {
+      padding-top: 16px;
     }
 
     .themes-box {
@@ -242,6 +274,12 @@
 
       .themes-box {
         position: static;
+        order: -1;
+        padding: 17px;
+      }
+
+      .themes-box h3 {
+        font-size: 23px;
       }
 
       .theme-buttons {
@@ -260,24 +298,30 @@
       }
 
       .article {
-        padding: 18px;
+        padding: 16px;
       }
 
-      .article h2 {
-        font-size: 26px;
+      .article-summary h2 {
+        font-size: 24px;
+      }
+
+      .page-title {
+        font-size: 32px;
+      }
+
+      .nav a {
+        padding: 9px 12px;
+        font-size: 13px;
       }
     }
   </style>
 </head>
 
 <body>
-
   <div class="top">♡ welcome to my little pink world ♡</div>
 
   <header>
-    <h1 class="logo" id="siteTitle">
-      my little pink world ♡
-    </h1>
+    <h1 class="logo" id="siteTitle">my little pink world ♡</h1>
 
     <div class="tag">
       life　♡　fashion　♡　dreams　♡　pretty things
@@ -294,7 +338,6 @@
   </header>
 
   <main class="page">
-
     <h2 class="page-title">articles ♡</h2>
 
     <p class="page-sub">
@@ -302,11 +345,8 @@
     </p>
 
     <div class="articles-layout">
-
       <section id="articles" aria-live="polite">
-        <div class="empty">
-          loading my articles ♡
-        </div>
+        <div class="empty">loading my articles ♡</div>
       </section>
 
       <aside class="themes-box">
@@ -319,9 +359,7 @@
           </button>
         </div>
       </aside>
-
     </div>
-
   </main>
 
   <footer>
@@ -333,7 +371,6 @@
 
   <script>
     (async function () {
-
       const client = supabase.createClient(
         SUPABASE_URL,
         SUPABASE_PUBLISHABLE_KEY
@@ -387,7 +424,6 @@
       themes = themeResult.data || [];
 
       function renderThemes() {
-
         themeButtons.innerHTML = "";
 
         function addButton(label, value) {
@@ -418,7 +454,6 @@
       }
 
       function renderArticles() {
-
         const filtered = selectedTheme === "all"
           ? articles
           : articles.filter(article =>
@@ -432,7 +467,6 @@
         }
 
         container.innerHTML = filtered.map(article => {
-
           const date = new Date(article.published_at)
             .toLocaleDateString(undefined, {
               year: "numeric",
@@ -454,31 +488,35 @@
             ? `<span class="article-theme">♡ ${esc(theme.name)}</span>`
             : "";
 
+          const fullText = String(article.content || "").trim();
+          const firstSentenceMatch = fullText.match(/^.*?[.!?](?=\s|$)/s);
+          const excerpt = (firstSentenceMatch ? firstSentenceMatch[0] : fullText)
+            .slice(0, 240);
+
           return `
-            <article class="article">
+            <details class="article">
+              <summary class="article-summary">
+                <span class="date">${esc(date)}</span>
+                ${themeLabel}
+                <h2>${esc(article.title)}</h2>
+                <p class="article-excerpt">${esc(excerpt)}${excerpt.length < fullText.length ? "…" : ""}</p>
+                <span class="read-more">read the full article ♡</span>
+              </summary>
 
-              <span class="date">${esc(date)}</span>
-
-              ${themeLabel}
-
-              <h2>${esc(article.title)}</h2>
-
-              ${image}
-
-              <div class="article-content">
-                ${esc(article.content).replace(/\n/g, "<br>")}
+              <div class="article-full">
+                ${image}
+                <div class="article-content">
+                  ${esc(fullText).replace(/\n/g, "<br>")}
+                </div>
               </div>
-
-            </article>
+            </details>
           `;
         }).join("");
       }
 
       renderThemes();
       renderArticles();
-
     })();
   </script>
-
 </body>
 </html>
