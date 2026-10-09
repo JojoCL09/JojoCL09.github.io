@@ -1729,7 +1729,8 @@ window.editArticle=async id=>{
     const content=document.getElementById('editArticleContent').value.trim();
     const image_url=document.getElementById('editArticleImage').value.trim()||null;
     const publishValue=document.getElementById('editArticlePublished').value;
-
+const themeValue = document.getElementById('editArticleTheme').value;
+const theme_id = themeValue ? Number(themeValue) : null;
     if(!title||!content){
       alert('Please add a title and article text.');
       return;
@@ -1754,7 +1755,7 @@ window.editArticle=async id=>{
     try{
       const {error}=await sb
         .from('articles')
-        .update({title,content,image_url,published_at})
+     .update({title,content,image_url,published_at,theme_id})
         .eq('id',id);
 
       if(error){
