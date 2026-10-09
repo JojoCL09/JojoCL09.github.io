@@ -1749,6 +1749,134 @@ window.editArticle=async id=>{
 };
 
 
+function themesEditor() {
+  $('editor').innerHTML = `
+    <h1>article themes 🎀</h1>
+
+    <p class="muted">
+      Add, rename or delete the themes used to organise your articles.
+    </p>
+
+    <div class="field">
+      <label for="themeName">new theme name</label>
+      <input id="themeName" placeholder="e.g. lifestyle, fashion, diaries">
+    </div>
+
+    <div class="actions">
+      <button class="btn primary" id="addTheme">
+        add theme ♡
+      </button>
+    </div>
+
+    <div class="list">
+      ${
+        themes.map(theme => `
+          <div class="item">
+            <div>
+              <b>🎀 ${esc(theme.name)}</b>
+            </div>
+
+            <div class="actions" style="margin:0">
+              <button class="btn" data-rename-theme="${theme.id}">
+                rename
+              </button>
+
+              <button class="btn danger" data-delete-theme="${theme.id}">
+                delete
+              </button>
+            </div>
+          </div>
+        `).join('')
+        || '<div class="muted">No themes yet ♡</div>'
+      }
+    </div>
+  `;
+
+  $('addTheme').onclick = async () => {
+    const name = $('themeName').value.trim();
+
+    if (!name) {
+      alert('Please enter a theme name.');
+      return;
+    }
+
+    const { error } = await sb
+      .from('article_themes')
+      .insert({ name });
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    await load();
+    tab = 'themes';
+    render();
+    status('theme added ♡');
+  };
+
+  document.querySelectorAll('[data-rename-theme]').forEach(button => {
+    button.onclick = async () => {
+      const id = button.dataset.renameTheme;
+      const theme = themes.find(t => String(t.id) === String(id));
+
+      if (!theme) return;
+
+      const name = prompt('New theme name:', theme.name);
+
+      if (name === null) return;
+
+      if (!name.trim()) {
+        alert('The theme name cannot be empty.');
+        return;
+      }
+
+      const { error } = await sb
+        .from('article_themes')
+        .update({ name: name.trim() })
+        .eq('id', id);
+
+      if (error) {
+        alert(error.message);
+        return;
+      }
+
+      await load();
+      tab = 'themes';
+      render();
+      status('theme renamed ♡');
+    };
+  });
+
+  document.querySelectorAll('[data-delete-theme]').forEach(button => {
+    button.onclick = async () => {
+      const id = button.dataset.deleteTheme;
+      const theme = themes.find(t => String(t.id) === String(id));
+
+      if (!theme) return;
+
+      if (!confirm(
+        `Delete "${theme.name}"? Articles will remain but lose this theme.`
+      )) return;
+
+      const { error } = await sb
+        .from('article_themes')
+        .delete()
+        .eq('id', id);
+
+      if (error) {
+        alert(error.message);
+        return;
+      }
+
+      await load();
+      tab = 'themes';
+      render();
+      status('theme deleted ♡');
+    };
+  });
+}
+
 function linksEditor(){
   $('editor').innerHTML=`
     <h1>links ♡</h1>
