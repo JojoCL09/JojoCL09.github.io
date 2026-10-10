@@ -180,6 +180,77 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { transition: none !important; }
     }
+    
+/* ♡ Achievement unlocked popup */
+.achievement-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(114, 53, 83, 0.45);
+  backdrop-filter: blur(5px);
+}
+
+.achievement-popup[hidden] {
+  display: none;
+}
+
+.achievement-popup-card {
+  width: min(380px, 100%);
+  padding: 30px 22px;
+  text-align: center;
+  background: #fff8fc;
+  border: 2px solid #f2c6d4;
+  border-radius: 26px;
+  box-shadow: 0 12px 45px #a85d7833;
+  animation: achievementPop .35s ease-out;
+}
+
+.achievement-popup-icon {
+  font-size: 58px;
+  margin: 12px 0;
+}
+
+.achievement-popup-card h2 {
+  margin: 8px 0;
+  color: #a85d78;
+}
+
+.achievement-popup-card p {
+  line-height: 1.7;
+}
+
+.achievement-popup-card button {
+  margin-top: 12px;
+  padding: 12px 22px;
+  border: 0;
+  border-radius: 20px;
+  background: #e88eae;
+  color: white;
+  font: inherit;
+  cursor: pointer;
+}
+
+@keyframes achievementPop {
+  from {
+    opacity: 0;
+    transform: scale(.85) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .achievement-popup-card {
+    animation: none;
+  }
+}
+
   </style>
 </head>
 
@@ -375,5 +446,33 @@
       });
     })();
   </script>
+  
+<div
+  id="achievementPopup"
+  class="achievement-popup"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="achievementPopupTitle"
+  hidden
+>
+  <div class="achievement-popup-card">
+    <div aria-hidden="true">✧･ﾟ: *✧･ﾟ:* ♡ *:･ﾟ✧*:･ﾟ✧</div>
+
+    <div id="achievementPopupIcon" class="achievement-popup-icon">🏆</div>
+
+    <h2 id="achievementPopupTitle">Achievement unlocked!</h2>
+
+    <p id="achievementPopupName">First Visit</p>
+
+    <p id="achievementPopupDescription">
+      You earned a little pink badge! ♡
+    </p>
+
+    <button id="achievementPopupClose" type="button">
+      yay, thank you! ♡
+    </button>
+  </div>
+</div>
+
 </body>
 </html>
