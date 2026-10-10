@@ -1,0 +1,378 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Collect cute little achievements at My Little Pink World.">
+  <title>little achievements ♡ · my little pink world</title>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --pink: #f6b7ca;
+      --light: #fff7fa;
+      --pale: #fde8ef;
+      --deep: #a85d78;
+      --text: #72535f;
+      --line: #f2c6d4;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #fffafb, #fdebf2);
+      color: var(--text);
+      font-family: Quicksand, sans-serif;
+    }
+
+    header {
+      text-align: center;
+      padding: 36px 16px 22px;
+    }
+
+    h1, h2, h3 {
+      font-family: "DM Serif Display", serif;
+      font-weight: 400;
+      color: var(--deep);
+    }
+
+    h1 {
+      font-size: clamp(36px, 8vw, 58px);
+      margin: 0 0 8px;
+    }
+
+    header p { line-height: 1.8; }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    nav a, .button {
+      display: inline-block;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: white;
+      color: var(--deep);
+      text-decoration: none;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    nav a:hover, .button:hover { background: var(--pale); }
+
+    main {
+      width: min(900px, calc(100% - 28px));
+      margin: 20px auto 55px;
+    }
+
+    .intro, .progress-card, .achievement, .notice {
+      background: #fffafa;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: 0 7px 25px #e8b9c522;
+    }
+
+    .intro, .progress-card {
+      text-align: center;
+      padding: 22px;
+      margin-bottom: 20px;
+    }
+
+    .intro h2, .progress-card h2 { margin-top: 0; }
+
+    .progress-track {
+      height: 12px;
+      overflow: hidden;
+      background: var(--pale);
+      border-radius: 20px;
+      margin: 16px 0 8px;
+    }
+
+    #progressFill {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, #f6b7ca, #d98bb8);
+      border-radius: inherit;
+      transition: width .3s ease;
+    }
+
+    .achievement-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .achievement {
+      padding: 22px 16px;
+      text-align: center;
+    }
+
+    .badge-icon {
+      display: grid;
+      place-items: center;
+      width: 78px;
+      height: 78px;
+      margin: 0 auto 12px;
+      border: 2px solid var(--line);
+      border-radius: 50%;
+      background: var(--pale);
+      font-size: 36px;
+    }
+
+    .achievement h3 { margin: 8px 0; }
+
+    .achievement p {
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .achievement.locked {
+      opacity: .65;
+      box-shadow: none;
+    }
+
+    .achievement.locked .badge-icon {
+      filter: grayscale(1);
+      background: #f4f0f2;
+    }
+
+    .status {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--deep);
+    }
+
+    .notice {
+      margin-top: 20px;
+      padding: 16px;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .actions {
+      text-align: center;
+      margin-top: 22px;
+    }
+
+    .reset {
+      color: #a34862;
+      margin-top: 8px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 26px 12px;
+      border-top: 1px solid var(--line);
+      background: white;
+      font-size: 13px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>little achievements ♡</h1>
+    <p>Collect little moments around my pink world 🎀</p>
+
+    <nav aria-label="Main navigation">
+      <a href="index.html">⌂ Home</a>
+      <a href="blog.html">♡ Blog</a>
+      <a href="articles.html">♡ Articles</a>
+      <a href="about.html">♡ About Me</a>
+      <a href="guestbook.html">♡ Guestbook</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h2>your little collection ✨</h2>
+      <p>Every little visit is something to celebrate!</p>
+    </section>
+
+    <section class="progress-card">
+      <h2>your progress ♡</h2>
+      <p id="progressText" aria-live="polite">0 of 3 badges collected</p>
+      <div
+        class="progress-track"
+        id="progressTrack"
+        role="progressbar"
+        aria-label="Achievement progress"
+        aria-valuemin="0"
+        aria-valuemax="3"
+        aria-valuenow="0"
+      >
+        <div id="progressFill"></div>
+      </div>
+      <p id="progressMessage">Your little adventure starts here ♡</p>
+    </section>
+
+    <section class="achievement-grid" aria-label="Your achievements">
+      <article class="achievement" id="card-first">
+        <div class="badge-icon">💗</div>
+        <h3>First Visit</h3>
+        <p>Visit your achievements page to collect your first badge.</p>
+        <div class="status" id="status-first">♡ Not collected yet</div>
+      </article>
+
+      <article class="achievement locked" id="card-articles">
+        <div class="badge-icon">📖</div>
+        <h3>Article Explorer</h3>
+        <p>Discover the articles page of My Little Pink World.</p>
+        <div class="status" id="status-articles">🔒 Locked</div>
+      </article>
+
+      <article class="achievement locked" id="card-explorer">
+        <div class="badge-icon">🧭</div>
+        <h3>Little Explorer</h3>
+        <p>Visit three different tracked pages on the website.</p>
+        <div class="status" id="status-explorer">🔒 Locked</div>
+      </article>
+    </section>
+
+    <aside class="notice">
+      ♡ These achievements are saved in this browser on this device.
+      They are not shared between devices, and clearing browser data may
+      remove them. They celebrate page visits, not verified reading.
+    </aside>
+
+    <div class="actions">
+      <p>Keep exploring, lovely visitor! 🎀</p>
+      <button class="button reset" id="resetButton" type="button">
+        Reset my badges ♡
+      </button>
+      <p id="resetMessage" aria-live="polite"></p>
+    </div>
+  </main>
+
+  <footer>
+    made with ♡ & pink sparkles · my little pink world
+    <p><a href="privacy.html" style="color:#a85d78;">privacy policy ♡</a></p>
+  </footer>
+
+  <script>
+    (function () {
+      const KEY = "mlpwAchievementsV1";
+      const trackedPages = [
+        "index.html",
+        "blog.html",
+        "articles.html",
+        "about.html",
+        "links.html",
+        "guestbook.html",
+        "achievements.html"
+      ];
+
+      function readData() {
+        try {
+          const data = JSON.parse(localStorage.getItem(KEY) || "{}");
+          return {
+            firstVisit: data.firstVisit === true,
+            articleExplorer: data.articleExplorer === true,
+            pages: Array.isArray(data.pages)
+              ? data.pages.filter(p => trackedPages.includes(p))
+              : []
+          };
+        } catch {
+          return { firstVisit: false, articleExplorer: false, pages: [] };
+        }
+      }
+
+      let data = readData();
+
+      // Opening this page earns the first badge.
+      data.firstVisit = true;
+
+      function saveData() {
+        try {
+          localStorage.setItem(KEY, JSON.stringify(data));
+          return true;
+        } catch {
+          return false;
+        }
+      }
+
+      function render() {
+        const explorer = data.pages.length >= 3;
+        const badges = [
+          ["first", data.firstVisit],
+          ["articles", data.articleExplorer],
+          ["explorer", explorer]
+        ];
+
+        let collected = 0;
+
+        badges.forEach(([id, earned]) => {
+          const card = document.getElementById("card-" + id);
+          const status = document.getElementById("status-" + id);
+
+          card.classList.toggle("locked", !earned);
+
+          if (earned) {
+            collected++;
+            status.textContent = "✓ Collected ♡";
+          } else {
+            status.textContent = "🔒 Locked";
+          }
+        });
+
+        document.getElementById("progressText").textContent =
+          collected + " of 3 badges collected";
+
+        document.getElementById("progressFill").style.width =
+          (collected / 3 * 100) + "%";
+
+        document.getElementById("progressTrack").setAttribute(
+          "aria-valuenow", String(collected)
+        );
+
+        document.getElementById("progressMessage").textContent =
+          collected === 3
+            ? "All badges collected! You're a pink world star ♡"
+            : "Keep exploring to collect more little badges ♡";
+      }
+
+      const currentPage = location.pathname.split("/").pop() || "index.html";
+
+      if (trackedPages.includes(currentPage) &&
+          !data.pages.includes(currentPage)) {
+        data.pages.push(currentPage);
+      }
+
+      saveData();
+      render();
+
+      document.getElementById("resetButton").addEventListener("click", () => {
+        if (!window.confirm("Reset all your little badges? ♡")) return;
+
+        try {
+          localStorage.removeItem(KEY);
+          data = { firstVisit: false, articleExplorer: false, pages: [] };
+          data.firstVisit = true;
+          data.pages = ["achievements.html"];
+          saveData();
+          render();
+          document.getElementById("resetMessage").textContent =
+            "Your badges have been reset ♡";
+        } catch {
+          document.getElementById("resetMessage").textContent =
+            "Your browser could not update the badges. Please check browser storage settings.";
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
