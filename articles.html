@@ -462,7 +462,13 @@
   border-color: #e88eae;
   box-shadow: 0 0 0 3px #f6b7ca44;
 }
-
+.reading-time {
+  display: inline-block;
+  margin: 4px 6px;
+  font-size: 0.75rem;
+  color: #c080a0;
+  letter-spacing: 0.5px;
+}
   </style>
 </head>
 
@@ -662,7 +668,15 @@ if (!filtered.length) {
               month: "long",
               day: "numeric"
             });
+const text = String(article.content || "")
+  .replace(/<[^>]*>/g, " ")
+  .trim();
 
+const wordCount = text
+  ? text.split(/\s+/).length
+  : 0;
+
+const readingTime = Math.max(1, Math.ceil(wordCount / 200));
           const image = article.image_url
             ? `<img class="article-image"
                 src="${esc(article.image_url)}"
@@ -686,6 +700,7 @@ if (!filtered.length) {
             <details class="article">
               <summary class="article-summary">
                 <span class="date">${esc(date)}</span>
+                <span class="reading-time">♡ ${readingTime} min read</span>
                 ${themeLabel}
                 <h2>${esc(article.title)}</h2>
                 <p class="article-excerpt">${esc(excerpt)}${excerpt.length < fullText.length ? "…" : ""}</p>
