@@ -335,118 +335,205 @@
     <p><a href="privacy.html" style="color:#a85d78;">privacy policy ♡</a></p>
   </footer>
 
-  <script>
-    (function () {
-      const KEY = "mlpwAchievementsV1";
-      const trackedPages = [
-        "index.html",
-        "blog.html",
-        "articles.html",
-        "about.html",
-        "links.html",
-        "guestbook.html",
-        "achievements.html"
-      ];
 
-      function readData() {
-        try {
-          const data = JSON.parse(localStorage.getItem(KEY) || "{}");
-          return {
-            firstVisit: data.firstVisit === true,
-            articleExplorer: data.articleExplorer === true,
-            pages: Array.isArray(data.pages)
-              ? data.pages.filter(p => trackedPages.includes(p))
-              : []
-          };
-        } catch {
-          return { firstVisit: false, articleExplorer: false, pages: [] };
-        }
+<script>
+(function () {
+  const KEY = "mlpwAchievementsV1";
+
+  const trackedPages = [
+    "index.html",
+    "blog.html",
+    "articles.html",
+    "about.html",
+    "links.html",
+    "guestbook.html",
+    "achievements.html"
+  ];
+
+  const badgeInfo = {
+    first: {
+      icon: "🌸",
+      name: "First Visit",
+      description: "Welcome to My Little Pink World! ♡"
+    },
+    articles: {
+      icon: "📚",
+      name: "Article Explorer",
+      description: "You explored the articles! Keep sparkling ♡"
+    },
+    explorer: {
+      icon: "🗺️",
+      name: "Little Explorer",
+      description: "You visited three different pages! ♡"
+    }
+  };
+
+  function readData() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(KEY) || "{}");
+      return {
+        firstVisit: saved.firstVisit === true,
+        articleExplorer: saved.articleExplorer === true,
+        pages: Array.isArray(saved.pages)
+          ? saved.pages.filter(p => trackedPages.includes(p))
+          : []
+      };
+    } catch {
+      return {
+        firstVisit: false,
+        articleExplorer: false,
+        pages: []
+      };
+    }
+  }
+
+  let data = readData();
+
+  function saveData() {
+    try {
+      localStorage.setItem(KEY, JSON.stringify(data));
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  function showPopup(id) {
+    const info = badgeInfo[id];
+    if (!info) return;
+
+    document.getElementById("achievementPopupIcon").textContent =
+      info.icon;
+    document.getElementById("achievementPopupName").textContent =
+      info.name;
+    document.getElementById("achievementPopupDescription").textContent =
+      info.description;
+
+    document.getElementById("achievementPopup").hidden = false;
+    document.getElementById("achievementPopupClose").focus();
+  }
+
+  function render() {
+    const explorer = data.pages.length >= 3;
+
+    const badges = [
+      ["first", data.firstVisit],
+      ["articles", data.articleExplorer],
+      ["explorer", explorer]
+    ];
+
+    let collected = 0;
+
+    badges.forEach(([id, earned]) => {
+      const card = document.getElementById("card-" + id);
+      const status = document.getElementById("status-" + id);
+
+      if (!card || !status) return;
+
+      card.classList.toggle("locked", !earned);
+
+      if (earned) {
+        collected++;
+        status.textContent = "✓ Collected ♡";
+      } else {
+        status.textContent = "🔒 Locked";
       }
+    });
 
-      let data = readData();
+    document.getElementById("progressText").textContent =
+      collected + " of 3 badges collected";
 
-      // Opening this page earns the first badge.
-      data.firstVisit = true;
+    document.getElementById("progressFill").style.width =
+      (collected / 3 * 100) + "%";
 
-      function saveData() {
-        try {
-          localStorage.setItem(KEY, JSON.stringify(data));
-          return true;
-        } catch {
-          return false;
-        }
+    document.getElementById("progressTrack").setAttribute(
+      "aria-valuenow", String(collected)
+    );
+
+    document.getElementById("progressMessage").textContent =
+      collected === 3
+        ? "All badges collected! You're a pink world star ♡"
+        : "Keep exploring to collect more little badges ♡";
+  }
+
+  function closePopup() {
+    document.getElementById("achievementPopup").hidden = true;
+  }
+
+  document.getElementById("achievementPopupClose")
+    .addEventListener("click", closePopup);
+
+  document.getElementById("achievementPopup")
+    .addEventListener("click", function (event) {
+      if (event.target === this) closePopup();
+    });
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") closePopup();
+  });
+
+  const currentPage =
+    location.pathname.split("/").pop() || "index.html";
+
+  const newlyEarned = [];
+
+  if (!data.firstVisit) {
+    data.firstVisit = true;
+    newlyEarned.push("first");
+  }
+
+  if (
+    currentPage === "articles.html" &&
+    !data.articleExplorer
+  ) {
+    data.articleExplorer = true;
+    newlyEarned.push("articles");
+  }
+
+  if (
+    trackedPages.includes(currentPage) &&
+    !data.pages.includes(currentPage)
+  ) {
+    data.pages.push(currentPage);
+
+    if (data.pages.length >= 3) {
+      newlyEarned.push("explorer");
+    }
+  }
+
+  saveData();
+  render();
+
+  if (newlyEarned.length > 0) {
+    showPopup(newlyEarned[0]);
+  }
+
+  document.getElementById("resetButton")
+    .addEventListener("click", function () {
+      if (!window.confirm("Reset all your little badges? ♡")) return;
+
+      try {
+        localStorage.removeItem(KEY);
+
+        data = {
+          firstVisit: true,
+          articleExplorer: false,
+          pages: ["achievements.html"]
+        };
+
+        saveData();
+        render();
+
+        document.getElementById("resetMessage").textContent =
+          "Your badges have been reset ♡";
+      } catch {
+        document.getElementById("resetMessage").textContent =
+          "Your browser could not update the badges. Please check browser storage settings.";
       }
+    });
+})();
+</script>
 
-      function render() {
-        const explorer = data.pages.length >= 3;
-        const badges = [
-          ["first", data.firstVisit],
-          ["articles", data.articleExplorer],
-          ["explorer", explorer]
-        ];
-
-        let collected = 0;
-
-        badges.forEach(([id, earned]) => {
-          const card = document.getElementById("card-" + id);
-          const status = document.getElementById("status-" + id);
-
-          card.classList.toggle("locked", !earned);
-
-          if (earned) {
-            collected++;
-            status.textContent = "✓ Collected ♡";
-          } else {
-            status.textContent = "🔒 Locked";
-          }
-        });
-
-        document.getElementById("progressText").textContent =
-          collected + " of 3 badges collected";
-
-        document.getElementById("progressFill").style.width =
-          (collected / 3 * 100) + "%";
-
-        document.getElementById("progressTrack").setAttribute(
-          "aria-valuenow", String(collected)
-        );
-
-        document.getElementById("progressMessage").textContent =
-          collected === 3
-            ? "All badges collected! You're a pink world star ♡"
-            : "Keep exploring to collect more little badges ♡";
-      }
-
-      const currentPage = location.pathname.split("/").pop() || "index.html";
-
-      if (trackedPages.includes(currentPage) &&
-          !data.pages.includes(currentPage)) {
-        data.pages.push(currentPage);
-      }
-
-      saveData();
-      render();
-
-      document.getElementById("resetButton").addEventListener("click", () => {
-        if (!window.confirm("Reset all your little badges? ♡")) return;
-
-        try {
-          localStorage.removeItem(KEY);
-          data = { firstVisit: false, articleExplorer: false, pages: [] };
-          data.firstVisit = true;
-          data.pages = ["achievements.html"];
-          saveData();
-          render();
-          document.getElementById("resetMessage").textContent =
-            "Your badges have been reset ♡";
-        } catch {
-          document.getElementById("resetMessage").textContent =
-            "Your browser could not update the badges. Please check browser storage settings.";
-        }
-      });
-    })();
-  </script>
-  
 <div
   id="achievementPopup"
   class="achievement-popup"
