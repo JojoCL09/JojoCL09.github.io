@@ -411,6 +411,34 @@
   .loading-content { animation: none; }
 }
 
+/* ♡ Article like button */
+.article-like {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
+  padding: 10px 15px;
+  border: 1px solid #f2c6d4;
+  border-radius: 999px;
+  background: #fff7fa;
+  color: #a85d78;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.article-like:hover {
+  background: #fde8ef;
+  transform: translateY(-2px);
+}
+
+.article-like.liked {
+  background: #fce2ec;
+  border-color: #e8a1ba;
+  color: #c0527c;
+}
+
   </style>
 </head>
 
