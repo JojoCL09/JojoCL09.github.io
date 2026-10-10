@@ -581,25 +581,38 @@
           themeButtons.appendChild(button);
         }
 
-        addButton("♡ all articles", "all");
+      
+addButton("♡ all articles", "all");
+addButton("♥ my liked articles", "liked");
 
-        themes.forEach(theme => {
-          addButton("♡ " + theme.name, theme.id);
-        });
+themes.forEach(theme => {
+  addButton("♡ " + theme.name, theme.id);
+});
+
       }
 
       function renderArticles() {
-        const filtered = selectedTheme === "all"
-          ? articles
-          : articles.filter(article =>
-              String(article.theme_id) === String(selectedTheme)
-            );
+       
+const likedTitles = getLikedArticles();
 
-        if (!filtered.length) {
-          container.innerHTML =
-            '<div class="empty">no articles here yet ♡<br><small>come back soon!</small></div>';
-          return;
-        }
+const filtered = selectedTheme === "all"
+  ? articles
+  : selectedTheme === "liked"
+    ? articles.filter(article =>
+        likedTitles.includes(article.title)
+      )
+    : articles.filter(article =>
+        String(article.theme_id) === String(selectedTheme)
+      );
+
+        
+if (!filtered.length) {
+  container.innerHTML = selectedTheme === "liked"
+    ? '<div class="empty">♡ no liked articles yet ♡<br><small>tap the like button on an article to save it here!</small></div>'
+    : '<div class="empty">no articles here yet ♡<br><small>come back soon!</small></div>';
+  return;
+}
+
 
         container.innerHTML = filtered.map(article => {
           const date = new Date(article.published_at)
@@ -700,7 +713,11 @@ container.addEventListener("click", event => {
 
   try {
     localStorage.setItem(LIKES_KEY, JSON.stringify(updated));
-    updateLikeButtons();
+updateLikeButtons();
+
+if (selectedTheme === "liked") {
+  renderArticles();
+}
   } catch {
     alert("Your like could not be saved in this browser ♡");
   }
