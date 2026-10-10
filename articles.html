@@ -546,7 +546,8 @@
 
       const container = document.getElementById("articles");
       const themeButtons = document.getElementById("themeButtons");
-
+const searchInput = document.getElementById("articleSearch");
+let searchQuery = "";
       let articles = [];
       let themes = [];
       let selectedTheme = "all";
@@ -626,17 +627,24 @@ themes.forEach(theme => {
 
       function renderArticles() {
        
-const likedTitles = getLikedArticles();
 
-const filtered = selectedTheme === "all"
-  ? articles
-  : selectedTheme === "liked"
-    ? articles.filter(article =>
-        likedTitles.includes(article.title)
-      )
-    : articles.filter(article =>
-        String(article.theme_id) === String(selectedTheme)
-      );
+const likedTitles = getLikedArticles();
+const query = searchQuery.toLowerCase();
+
+const filtered = articles.filter(article => {
+  const matchesTheme = selectedTheme === "all"
+    ? true
+    : selectedTheme === "liked"
+      ? likedTitles.includes(article.title)
+      : String(article.theme_id) === String(selectedTheme);
+
+  const matchesSearch =
+    String(article.title || "").toLowerCase().includes(query) ||
+    String(article.content || "").toLowerCase().includes(query);
+
+  return matchesTheme && matchesSearch;
+});
+
 
         
 if (!filtered.length) {
@@ -757,6 +765,10 @@ if (selectedTheme === "liked") {
 });
 
       renderThemes();
+      searchInput.addEventListener("input", () => {
+  searchQuery = searchInput.value.trim();
+  renderArticles();
+});
 renderArticles();
 updateLikeButtons();
     })();
