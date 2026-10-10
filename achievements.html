@@ -362,6 +362,13 @@
     </button>
   </div>
 </div>
-<script src="achievements.js"></script>
+<script>
+  document.getElementById("achievementPopup").hidden = false;
+
+  document.getElementById("achievementPopupClose")
+    .addEventListener("click", function () {
+      document.getElementById("achievementPopup").hidden = true;
+    });
+</script>
 </body>
 </html>
