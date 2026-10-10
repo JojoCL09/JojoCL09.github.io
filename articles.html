@@ -639,20 +639,19 @@
               
 </summary>
 
-<button
-  class="article-like"
-  type="button"
-  data-like-title="${esc(article.title)}"
->
-  ♡ Like this article
-</button>
-
 <div class="article-full">
 
                 ${image}
                 <div class="article-content">
                   ${esc(fullText).replace(/\n/g, "<br>")}
                 </div>
+                <button
+  class="article-like"
+  type="button"
+  data-like-title="${esc(article.title)}"
+>
+  ♡ Like this article
+</button>
               </div>
             </details>
           `;
