@@ -654,42 +654,14 @@ footer{
   </aside>
 
 </main>
-<section class="newsletter" id="newsletter">
-  <h2>♡ a little note from me ♡</h2>
-  <p>
-    Get a little pink magic in your inbox
-    whenever a new article is here! 🎀
-  </p>
 
-  <form id="newsletterForm">
-    <label for="newsletterEmail">
-      Your email address ♡
-    </label>
-    <br><br>
-
-    <input
-      type="email"
-      id="newsletterEmail"
-      name="email"
-      placeholder="your@email.com"
-      autocomplete="email"
-      required
-    >
-
-    <br>
-
-    <button type="submit">
-      subscribe ♡
-    </button>
-
-    <p id="newsletterMessage" aria-live="polite">
-      Only subscribe if you want to receive updates ♡
-    </p>
-  </form>
-</section>
 <footer id="homeFooter">
   made with ♡ & pink sparkles · my little pink world
-  <p><a href="privacy.html" style="color:#a85d78;">privacy policy ♡</a></p>
+  <p>
+    <a href="privacy.html" style="color:#a85d78;">
+      privacy policy ♡
+    </a>
+  </p>
 </footer>
 
 <div class="lovely-counter">
@@ -870,64 +842,7 @@ footer{
 })();
 </script>
 
-<script>
-(function () {
-  const form = document.getElementById("newsletterForm");
-  const emailInput = document.getElementById("newsletterEmail");
-  const message = document.getElementById("newsletterMessage");
 
-  if (!form || !emailInput || !message) return;
-
-  form.addEventListener("submit", async function (event) {
-    event.preventDefault();
-
-    const email = emailInput.value.trim().toLowerCase();
-    const button = form.querySelector('button[type="submit"]');
-
-    if (!emailInput.checkValidity()) {
-      emailInput.reportValidity();
-      return;
-    }
-
-    button.disabled = true;
-    message.textContent = "saving your little note... ♡";
-
-    try {
-      const response = await fetch(
-        `${SUPABASE_URL}/rest/v1/newsletter_subscribers`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "apikey": SUPABASE_PUBLISHABLE_KEY,
-            "Authorization": `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
-            "Prefer": "return=minimal"
-          },
-          body: JSON.stringify({ email })
-        }
-      );
-
-      if (response.status === 409) {
-        message.textContent = "You're already on the list ♡";
-        return;
-      }
-
-      if (!response.ok) {
-        throw new Error("Subscription failed");
-      }
-
-      message.textContent =
-        "Thank you for subscribing! ♡ Your email has been saved.";
-      form.reset();
-    } catch (error) {
-      console.error("Newsletter signup:", error);
-      message.textContent =
-        "Oops! We couldn't save your signup. Please try again later ♡";
-    } finally {
-      button.disabled = false;
-    }
-  });
-})();
 </script>
 
 <!-- Privacy popup ♡ -->
