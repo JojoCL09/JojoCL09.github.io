@@ -439,6 +439,30 @@
   color: #c0527c;
 }
 
+/* ♡ Article search */
+.article-search {
+  max-width: 650px;
+  margin: 0 auto 25px;
+}
+
+#articleSearch {
+  width: 100%;
+  padding: 15px 18px;
+  border: 1px solid #f2c6d4;
+  border-radius: 16px;
+  background: #fff;
+  color: #72535f;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  box-shadow: 0 5px 20px #efcbd722;
+}
+
+#articleSearch:focus {
+  border-color: #e88eae;
+  box-shadow: 0 0 0 3px #f6b7ca44;
+}
+
   </style>
 </head>
 
@@ -478,6 +502,15 @@
     <p class="page-sub">
       longer thoughts, stories & things i want to share
     </p>
+
+<div class="article-search">
+  <input
+    id="articleSearch"
+    type="search"
+    placeholder="♡ search articles..."
+    aria-label="Search articles"
+  >
+</div>
 
     <div class="articles-layout">
       <section id="articles" aria-live="polite">
