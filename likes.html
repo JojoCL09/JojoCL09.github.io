@@ -1,0 +1,495 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="All your favourite articles in one lovely little place.">
+  <title>my likes ♡ my little pink world</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Parisienne&family=Quicksand:wght@400;500;600&display=swap');
+
+    :root {
+      --pink: #f6b7ca;
+      --pale: #fde8ef;
+      --text: #72535f;
+      --line: #f2c6d4;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #fffafb, #fdebf2);
+      color: var(--text);
+      font-family: Quicksand, sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .top {
+      padding: 12px;
+      border-bottom: 1px solid var(--line);
+      background: white;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    header {
+      max-width: 1180px;
+      margin: auto;
+      padding: 35px 20px 25px;
+      text-align: center;
+    }
+
+    .logo {
+      margin: 0;
+      color: #e88eae;
+      font: 68px Parisienne, cursive;
+      text-shadow: 0 2px white, 0 4px 12px #f3c5d4;
+    }
+
+    .tag {
+      margin: 7px 0 25px;
+      color: #916372;
+      font: 14px "DM Serif Display", serif;
+      letter-spacing: 3px;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 7px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: #fff8fb;
+    }
+
+    .nav a {
+      padding: 10px 16px;
+      border-radius: 18px;
+      font-size: 14px;
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      background: var(--pale);
+      color: #b05274;
+    }
+
+    main {
+      max-width: 850px;
+      margin: 35px auto 70px;
+      padding: 0 20px;
+    }
+
+    .page-title {
+      color: #91576d;
+      text-align: center;
+      font: 38px "DM Serif Display", serif;
+    }
+
+    .page-sub {
+      margin-bottom: 30px;
+      text-align: center;
+      line-height: 1.7;
+    }
+
+    .article {
+      margin-bottom: 18px;
+      padding: 22px;
+      overflow-wrap: anywhere;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: white;
+      box-shadow: 0 7px 25px #e8b9c522;
+    }
+
+    .article h2 {
+      margin: 8px 0;
+      color: #875467;
+      font: 28px "DM Serif Display", serif;
+    }
+
+    .date {
+      color: #a45a75;
+      font-size: 12px;
+    }
+
+    .excerpt {
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .article-image {
+      width: 100%;
+      max-height: 300px;
+      margin-top: 12px;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .action-button {
+      display: inline-block;
+      padding: 10px 15px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff7fa;
+      color: #a85d78;
+      font: inherit;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .action-button:hover {
+      background: var(--pale);
+    }
+
+    .empty {
+      padding: 35px 20px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: white;
+      text-align: center;
+      line-height: 1.9;
+    }
+
+    .empty a {
+      color: #b05274;
+      text-decoration: underline;
+    }
+
+    footer {
+      padding: 28px;
+      border-top: 1px solid var(--line);
+      background: white;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    #readingProgress {
+      position: fixed;
+      z-index: 9999;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #f6b7ca, #e88eae, #d98bb8);
+    }
+
+    #backToTop {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 9000;
+      display: none;
+      padding: 12px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff7fa;
+      color: #a85d78;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    #backToTop.visible { display: block; }
+
+    #cuteLoadingScreen {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff7fa;
+      transition: opacity .45s, visibility .45s;
+    }
+
+    #cuteLoadingScreen.loading-hidden {
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loading-content {
+      padding: 24px;
+      text-align: center;
+      animation: loadingFloat 1.8s ease-in-out infinite;
+    }
+
+    .loading-content h2 {
+      color: #a85d78;
+      font: 28px "DM Serif Display", serif;
+    }
+
+    .loading-content p,
+    .loading-hearts,
+    .loading-sparkles {
+      color: #e88eae;
+    }
+
+    @keyframes loadingFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    @media (max-width: 600px) {
+      .logo { font-size: 48px; }
+      .page-title { font-size: 32px; }
+      .article h2 { font-size: 24px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .loading-content { animation: none; }
+      #cuteLoadingScreen { transition: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="readingProgress" aria-hidden="true"></div>
+
+  <div id="cuteLoadingScreen" role="status" aria-label="Loading">
+    <div class="loading-content">
+      <div class="loading-sparkles">✧ ♡ ✧</div>
+      <h2>My Little Pink World</h2>
+      <p>loading a little bit of pink magic...</p>
+      <div class="loading-hearts">♡ ♥ ♡</div>
+    </div>
+  </div>
+
+  <div class="top">♡ your own little collection of lovely reads ♡</div>
+
+  <header>
+    <h1 class="logo">my little pink world ♡</h1>
+    <div class="tag">life　♡　fashion　♡　dreams　♡　pretty things</div>
+
+    <nav class="nav">
+      <a href="index.html">⌂ Home</a>
+      <a href="blog.html">♡ Blog</a>
+      <a href="articles.html">♡ Articles</a>
+      <a href="likes.html" class="active">♥ My Likes</a>
+      <a href="about.html">♡ About Me</a>
+      <a href="links.html">♡ Links</a>
+      <a href="guestbook.html">♡ Guestbook</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2 class="page-title">my favourite reads ♡</h2>
+    <p class="page-sub">
+      all the articles you've loved, collected in one little place 🎀
+    </p>
+
+    <section id="likedArticles" aria-live="polite">
+      <div class="empty">loading your favourite reads ♡</div>
+    </section>
+  </main>
+
+  <footer>made with ♡ & pink sparkles · my little pink world</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+
+  <script>
+    (async function () {
+      const container = document.getElementById("likedArticles");
+      const LIKES_KEY = "mlpw-liked-articles";
+
+      function escapeHTML(value) {
+        return String(value ?? "").replace(/[&<>"']/g, char => ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#039;"
+        }[char]));
+      }
+
+      function getLikes() {
+        try {
+          const saved = JSON.parse(
+            localStorage.getItem(LIKES_KEY) || "[]"
+          );
+          return Array.isArray(saved) ? saved : [];
+        } catch {
+          return [];
+        }
+      }
+
+      function showEmpty() {
+        container.innerHTML = `
+          <div class="empty">
+            <div style="font-size:36px">♡</div>
+            <h2>no favourites just yet!</h2>
+            <p>
+              When you find an article you love, tap
+              <strong>♡ Like this article</strong> and it will appear here.
+            </p>
+            <a href="articles.html">discover the articles ♡</a>
+          </div>
+        `;
+      }
+
+      function renderLikes(allArticles) {
+        const likedTitles = getLikes();
+        const likedArticles = allArticles.filter(article =>
+          likedTitles.includes(article.title)
+        );
+
+        if (!likedArticles.length) {
+          showEmpty();
+          return;
+        }
+
+        container.innerHTML = likedArticles.map(article => {
+          const date = article.published_at
+            ? new Date(article.published_at).toLocaleDateString(
+                undefined,
+                { year: "numeric", month: "long", day: "numeric" }
+              )
+            : "";
+
+          const excerpt = String(article.content || "").slice(0, 240);
+          const image = article.image_url
+            ? `<img class="article-image"
+                src="${escapeHTML(article.image_url)}"
+                alt="${escapeHTML(article.title)}">`
+            : "";
+
+          return `
+            <article class="article">
+              <span class="date">${escapeHTML(date)}</span>
+              <h2>${escapeHTML(article.title)}</h2>
+              ${image}
+              <p class="excerpt">
+                ${escapeHTML(excerpt)}${String(article.content || "").length > 240 ? "…" : ""}
+              </p>
+              <div class="actions">
+                <a class="action-button"
+                   href="articles.html">
+                  Read article ♡
+                </a>
+                <button class="action-button unlike-button"
+                  type="button"
+                  data-title="${escapeHTML(article.title)}">
+                  ♥ Remove like
+                </button>
+              </div>
+            </article>
+          `;
+        }).join("");
+      }
+
+      container.addEventListener("click", event => {
+        const button = event.target.closest(".unlike-button");
+        if (!button) return;
+
+        const title = button.dataset.title;
+        const updated = getLikes().filter(item => item !== title);
+
+        try {
+          localStorage.setItem(LIKES_KEY, JSON.stringify(updated));
+          renderLikes(window.mlpwArticles || []);
+        } catch {
+          alert("Your change could not be saved in this browser ♡");
+        }
+      });
+
+      try {
+        if (!window.supabase || !window.SUPABASE_URL ||
+            !window.SUPABASE_PUBLISHABLE_KEY) {
+          throw new Error("Supabase configuration is missing.");
+        }
+
+        const client = window.supabase.createClient(
+          window.SUPABASE_URL,
+          window.SUPABASE_PUBLISHABLE_KEY
+        );
+
+        const { data, error } = await client
+          .from("articles")
+          .select("title,content,image_url,published_at")
+          .lte("published_at", new Date().toISOString())
+          .order("published_at", { ascending: false });
+
+        if (error) throw error;
+
+        window.mlpwArticles = data || [];
+        renderLikes(window.mlpwArticles);
+      } catch (error) {
+        console.error(error);
+        container.innerHTML = `
+          <div class="empty">
+            Sorry, your favourite articles couldn't be loaded right now ♡
+            <p>Please check your connection and try again.</p>
+          </div>
+        `;
+      }
+    })();
+  </script>
+
+  <script>
+    (function () {
+      const progress = document.getElementById("readingProgress");
+      const backToTop = document.createElement("button");
+      backToTop.id = "backToTop";
+      backToTop.type = "button";
+      backToTop.textContent = "↑ back to top ♡";
+      backToTop.setAttribute("aria-label", "Back to top");
+      document.body.appendChild(backToTop);
+
+      function updatePageControls() {
+        const page = document.documentElement;
+        const height = page.scrollHeight - window.innerHeight;
+        const percent = height > 0 ? window.scrollY / height * 100 : 0;
+
+        progress.style.width = Math.max(0, Math.min(100, percent)) + "%";
+        backToTop.classList.toggle("visible", window.scrollY > 50);
+      }
+
+      window.addEventListener("scroll", updatePageControls, { passive: true });
+      window.addEventListener("resize", updatePageControls);
+      updatePageControls();
+
+      backToTop.addEventListener("click", () => {
+        const reduced = window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches;
+        window.scrollTo({
+          top: 0,
+          behavior: reduced ? "auto" : "smooth"
+        });
+      });
+
+      const loading = document.getElementById("cuteLoadingScreen");
+
+      function hideLoading() {
+        loading.classList.add("loading-hidden");
+        loading.setAttribute("aria-hidden", "true");
+      }
+
+      if (document.readyState === "complete") {
+        hideLoading();
+      } else {
+        window.addEventListener("load", hideLoading, { once: true });
+        setTimeout(hideLoading, 4000);
+      }
+    })();
+  </script>
+</body>
+</html>
