@@ -636,9 +636,19 @@
                 <h2>${esc(article.title)}</h2>
                 <p class="article-excerpt">${esc(excerpt)}${excerpt.length < fullText.length ? "…" : ""}</p>
                 <span class="read-more">read the full article ♡</span>
-              </summary>
+              
+</summary>
 
-              <div class="article-full">
+<button
+  class="article-like"
+  type="button"
+  data-like-title="${esc(article.title)}"
+>
+  ♡ Like this article
+</button>
+
+<div class="article-full">
+
                 ${image}
                 <div class="article-content">
                   ${esc(fullText).replace(/\n/g, "<br>")}
@@ -649,8 +659,57 @@
         }).join("");
       }
 
+const LIKES_KEY = "mlpw-liked-articles";
+
+function getLikedArticles() {
+  try {
+    const saved = JSON.parse(
+      localStorage.getItem(LIKES_KEY) || "[]"
+    );
+
+    return Array.isArray(saved) ? saved : [];
+  } catch {
+    return [];
+  }
+}
+
+function updateLikeButtons() {
+  const liked = getLikedArticles();
+
+  document.querySelectorAll(".article-like").forEach(button => {
+    const isLiked = liked.includes(button.dataset.likeTitle);
+
+    button.classList.toggle("liked", isLiked);
+    button.textContent = isLiked
+      ? "♥ Liked!"
+      : "♡ Like this article";
+
+    button.setAttribute("aria-pressed", String(isLiked));
+  });
+}
+
+container.addEventListener("click", event => {
+  const button = event.target.closest(".article-like");
+  if (!button) return;
+
+  const title = button.dataset.likeTitle;
+  const liked = getLikedArticles();
+
+  const updated = liked.includes(title)
+    ? liked.filter(item => item !== title)
+    : [...liked, title];
+
+  try {
+    localStorage.setItem(LIKES_KEY, JSON.stringify(updated));
+    updateLikeButtons();
+  } catch {
+    alert("Your like could not be saved in this browser ♡");
+  }
+});
+
       renderThemes();
-      renderArticles();
+renderArticles();
+updateLikeButtons();
     })();
   </script>
  
